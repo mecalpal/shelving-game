@@ -1,0 +1,151 @@
+body {
+    font-family: "Montserrat", "Arial", sans-serif;
+}
+
+button {
+    font-family: "Montserrat", "Arial", sans-serif;
+    font-size: 1.4em;
+    border: none;
+    outline: none;
+    background-color: #4F7A64;
+    padding: 0.4em 0.8em;
+    border-radius: 100px;
+    color: #FFF;
+    font-weight: 600;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: #295840;
+}
+
+
+.book .book-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.book-container {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: center;
+    align-items: end;
+    /*background-color: #5c4e3f;*/
+    padding: 16px;
+    position: relative;
+}
+
+.book-container::after {
+    content: "";
+    position: absolute;
+    height: 10%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    /*background-color: #715842;*/
+    z-index: 1;
+}
+
+.book {
+    background-color: #7aa97d;
+    height: 350px;
+    width: 75px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    display: flex;
+    position: relative;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: end;
+    z-index: 2;
+}
+
+.book.book-color-red {
+    background-color: #DA4646;
+}
+
+.book.book-color-orange {
+    background-color: #DA7042;
+}
+
+.book.book-color-brown {
+    background-color: #A26650;
+}
+
+.book.book-color-yellow {
+    background-color: #F6AF67;
+}
+
+.book.book-color-light-green {
+    background-color: #809F55;
+}
+
+.book.book-color-dark-green {
+    background-color: #3E875F;
+}
+
+.book.book-color-light-blue {
+    background-color: #578EA2;
+}
+
+.book.book-color-dark-blue {
+    background-color: #644C96;
+}
+
+.book.book-color-purple {
+    background-color: #A95DC2;
+}
+
+.book.book-color-maroon {
+    background-color: #BD595B;
+}
+
+.book.book-size-1 {
+    height: 405px;
+    width: 106px;
+}
+
+.book.book-size-2 {
+    height: 505px;
+    width: 78px;
+}
+
+.book.book-size-3 {
+    height: 545px;
+    width: 98px;
+}
+
+.book.book-size-4 {
+    height: 405px;
+    width: 142px;
+}
+
+.book.book-size-5 {
+    height: 471px;
+    width: 107px;
+}
+
+.book.book-size-6 {
+    height: 505px;
+    width: 123px;
+}
+
+.book.book-size-7 {
+    height: 441px;
+    width: 98px;
+}
+
+.book p {
+    background-color: #fff;
+    font-family: 'Arial', sans-serif;
+    padding: 0.5em;
+    font-weight: 600;
+    width: 100%;
+    height: 75px;
+    z-index: 2;
+    border-radius: 4px;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shelving</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body id="app">
+
+    <!-- TITLE SCREEN -->
+    <div class="view-title">
+        <h1>Shelving Game</h1>
+        <button target="view-onboarding">Library of Congress Classification</button>
+        <button>Dewey Decimal</button>
+    </div>
+
+    <!-- ONBOARDING SCREENS -->
+    <div class="view-onboarding">
+        <h2>Onboarding</h2>
+        <p id="onboarding-text"></p>
+        <button id="onboarding-next">Next</button>
+    </div>
+
+    <!-- ORIENTATION SCREENS -->
+    <div class="view-orientation">
+        <h2>Orientation</h2>
+        <p id="orientation-text"></p>
+        <button id="orientation-next">Next</button>
+    </div>
+
+    <!-- MODULE OVERVIEW SCREENS -->
+    <div class="view-module-overview">
+        <h2>Overview</h2>
+        <button target="view-quiz">Next</button>
+    </div>
+
+
+    <!-- QUIZ SCREENS -->
+    <div class="view-quiz">
+        <!-- READ SCREENS -->
+        <div id="read-section">
+            <h2 id="read-heading"></h2>
+            <div id="read-content"></div>
+            <button id="read-next">Next</button>
+        </div>
+        <div id="quiz-section" style="display:none;">
+            <h2 class="quiz-heading">Placeholder</h2>
+            <p class="quiz-body">Placeholder</p>
+            <ul class="book-container module-quiz"></ul>
+            <div id="quiz-message"><button id="quiz-submit">Submit</button></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/script.js"> </script>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</body>
+
+</html>
