@@ -59,7 +59,7 @@ function checkQuizAnswers() {
             break;
         }
     }
-    
+
     let element;
     /* if correct counter is equal to the answerKey length, 
     then all answers are correct and user gets feedback and next button */
@@ -279,6 +279,7 @@ function incrementQuiz() {
     } return true;
 }
 
+
 function loadOnboarding() {
     const myApp = getApp();
     const config = getConfig();
@@ -304,7 +305,11 @@ function loadRead() {
     const config = getConfig();
 
     const readContent = config.quiz[`module${myApp.module}`][`part${myApp.part}`].read;
+    if (myApp.part === 2) {
+        $("#progress-bar").attr("progress", 4);
+    }
 
+    $("#read-eyebrow").text(`Module ${myApp.module}`);
     $("#read-heading").text(readContent.heading);
     $("#read-content").html(readContent.content);
 }
@@ -324,6 +329,7 @@ function loadPractice() {
     // calls createBooks by passing in viewElement and the answer key content in config for the current view state in app instance
     createBooks(viewElement, config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
 
+    $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
     console.log(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`]);
 }
 
@@ -672,7 +678,7 @@ $(function () {
 });
 
 // shuffle subject letters for new call number
-function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 7, divide1 = 2) {
+function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 7, divide1 = 2, yearShift = 5) {
     const letterMatrix = [
         ['B', 'BD', 'BH', 'BL', 'BR', 'BS'],
         ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
@@ -704,7 +710,7 @@ function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 
     }
 
     const shiftDecimal = function (number) {
-        return parseInt(number) / divide1;
+        return Math.floor(parseInt(number) / divide1);
     }
 
     let subjectLetter = "";
@@ -715,6 +721,7 @@ function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 
     let cutterNumbers = [];
     let phase = "subject";
     let year = "";
+    let volumeCopy = "";
 
 
     // iterating through call number one character at a time
@@ -767,19 +774,46 @@ function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 
                     phase = "volumeCopy";
                 }
             }
+        } else if (phase === "volumeCopy") {
+            volumeCopy += callNumber.charAt(i);
         }
     }
 
 
-    console.log(cutterLetters);
-    console.log(shiftCutterLetter(cutterLetters[0]));
-    return shiftSubjectLetter(subjectLetter);
+    let newCallNumber = "";
 
-    return callNumber;
+    console.log(subjectLetter);
+    // 1. get subjectLetter/s and shift it
+    newCallNumber += `${shiftSubjectLetter(subjectLetter)} `;
+    // 2. get subjectNumbers and shift it
+    newCallNumber += `${shiftWholeNumber(subjectNumber)} `;
+    // 3. for each cutter
+    // 3a. add a dot 
+    // 3b. shift cutter letter 
+    // 3c. shift cutter number 
+    for (let i = 0; i < cutterLetters.length; i++) {
+        if (i === 0) { newCallNumber += "."; }
+
+        newCallNumber += shiftCutterLetter(cutterLetters[i]);
+
+        newCallNumber += `${shiftDecimal(cutterNumbers[i])} `;
+    }
+    // 4. shift the year
+    newCallNumber += `${parseInt(year) + yearShift} `;
+    // 5. add the volume copy 
+
+    newCallNumber += volumeCopy;
+
+    newCallNumber = newCallNumber.replace(/\s+$/, '');
+
+    return newCallNumber;
+
 }
 
 $(document).ready(function () {
     let myApp = getApp();
-    myApp.setView('view-title');
+    myApp.setView('view-module-overview');
     console.log(shuffleCallNumber("HD 58.9 .I473 1994"));
+    console.log(shuffleCallNumber("HF 1418.5 .R6425 2011"));
+    console.log(shuffleCallNumber("C 17.63 .R64 L12 2000 v.1"));
 });
