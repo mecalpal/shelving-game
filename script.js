@@ -8,6 +8,8 @@ class App {
         this.question = 1;
         this.onboardingStep = 0;
         this.orientationStep = 0;
+        this.level = 1;
+        this.gamePhase = 'cartSort';
     }
 
     // sets a view and hides all others
@@ -423,6 +425,14 @@ $(document).on("click", "#quiz-try-again", function () {
 const appState = (function () {
     // create app instance for the whole application - one and done!
     const app = new App($('#app'));
+
+    const letterMatrix = [
+        ['B', 'BD', 'BH', 'BL', 'BR', 'BS'],
+        ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
+        ['G', 'GA', 'GE', 'GF', 'GR', 'GV'],
+        ['H', 'HA', 'HD', 'HF', 'HQ', 'HV'],
+        ['L', 'LB', 'LF', 'LH', 'LJ', 'LT']
+    ];
     // content data for the app 
     const config = {
         onboarding: [
@@ -629,27 +639,27 @@ const appState = (function () {
                         feedback: "PLACEHOLDER"
                     }
                 }
-            },
-
-            practice: {
-                level1: {
-                    cartSort: {
-                        heading: "Task 1: Cart Sort",
-                        text: "Arrange books on the cart and click submit when done to check work. ",
-                        answer: ["HD58.9 .I473 1994", "HD59 .H64 1994", "HD59 .S365 2012", "HD59.5 .H42 1997", "HD60 .I77 1996", "HD60.5 .U5 .P6", "HD62.15 .A57 1995", "HD62.15 .M47 1997", "HF32 .A53", "HF32 .B2"]
-                    },
-                    shelfSort: {
-                        heading: "Task 2: Shelf Sort",
-                        text: "placeholder",
-                        answer: ['PLACEHOLDER']
-                    },
-                    QA: {
-                        heading: "Task 3: Quality Assurance",
-                        text: "placeholder",
-                        answer: ['PLACEHOLDER']
-                    }
-                },
             }
+        },
+
+        practice: {
+            level1: {
+                cartSort: {
+                    heading: "Task 1: Cart Sort",
+                    text: "Arrange books on the cart and click submit when done to check work. ",
+                    answer: ["HD58.9 .I473 1994", "HD59 .H64 1994", "HD59 .S365 2012", "HD59.5 .H42 1997", "HD60 .I77 1996", "HD60.5 .U5 .P6", "HD62.15 .A57 1995", "HD62.15 .M47 1997", "HF32 .A53", "HF32 .B2"]
+                },
+                shelfSort: {
+                    heading: "Task 2: Shelf Sort",
+                    text: "placeholder",
+                    answer: ['PLACEHOLDER']
+                },
+                QA: {
+                    heading: "Task 3: Quality Assurance",
+                    text: "placeholder",
+                    answer: ['PLACEHOLDER']
+                }
+            },
         }
     };
 
@@ -661,6 +671,10 @@ const appState = (function () {
     // enables access to config from anywhere in the script 
     window.getConfig = function () {
         return config;
+    }
+
+    window.getLetterMatrix = function () {
+        return letterMatrix;
     }
 
 })();
@@ -677,52 +691,21 @@ $(function () {
     $(".book-container.module-quiz").disableSelection(); // Optional: Prevents text selection while dragging
 });
 
-// shuffle subject letters for new call number
-function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 7, divide1 = 2, yearShift = 5) {
-    const letterMatrix = [
-        ['B', 'BD', 'BH', 'BL', 'BR', 'BS'],
-        ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
-        ['G', 'GA', 'GE', 'GF', 'GR', 'GV'],
-        ['H', 'HA', 'HD', 'HF', 'HQ', 'HV'],
-        ['L', 'LB', 'LF', 'LH', 'LJ', 'LT']
-    ];
+// 1. parse call number function, one parameter (call number string)
+function parseCallNumber(callNumber) {
 
-    const shiftSubjectLetter = function (letters) {
-        let row;
-        let column;
-        for (let i = 0; i < letterMatrix.length; i++) {
-            if (letterMatrix[i].includes(letters)) {
-                row = i;
-                column = letterMatrix[i].indexOf(letters);
-                break;
-            }
-        }
-        return letterMatrix[row + down][column + right];
-    }
+    let parts = {
+        subjectLetter: "",
+        subjectNumber: "",
+        cutterLetters: [],
+        cutterNumbers: [],
+        year: "",
+        volumeCopy: ""
+    };
 
-    const shiftCutterLetter = function (letter) {
-        let currentCode = letter.charCodeAt(0);
-        return String.fromCharCode(currentCode + right2);
-    }
-
-    const shiftWholeNumber = function (number) {
-        return parseInt(number) + add1;
-    }
-
-    const shiftDecimal = function (number) {
-        return Math.floor(parseInt(number) / divide1);
-    }
-
-    let subjectLetter = "";
-    let subjectNumber = "";
+    let phase = "subject";
     let currentCutterLetter = "";
     let currentCutterNumbers = "";
-    let cutterLetters = [];
-    let cutterNumbers = [];
-    let phase = "subject";
-    let year = "";
-    let volumeCopy = "";
-
 
     // iterating through call number one character at a time
     for (let i = 0; i < callNumber.length; i++) {
@@ -730,14 +713,14 @@ function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 
             // if the character is an uppercase letter
             if (callNumber.charAt(i).match(/[A-Z]/i)) {
                 // add to subject letters we found so far
-                subjectLetter = subjectLetter + callNumber.charAt(i);
+                parts.subjectLetter = parts.subjectLetter + callNumber.charAt(i);
                 // this might be a cutter letter
             } else if (callNumber.charAt(i).match(/^\d+$/)) {
-                subjectNumber = subjectNumber + callNumber.charAt(i);
+                parts.subjectNumber = parts.subjectNumber + callNumber.charAt(i);
             } else if (callNumber.charAt(i) === ".") {
-                subjectNumber = subjectNumber + callNumber.charAt(i);
+                parts.subjectNumber = parts.subjectNumber + callNumber.charAt(i);
             } else {
-                if (subjectNumber !== "") {
+                if (parts.subjectNumber !== "") {
                     phase = "cutter";
                 }
             }
@@ -753,67 +736,244 @@ function shuffleCallNumber(callNumber, down = -1, right = 1, right2 = 5, add1 = 
                     currentCutterNumbers = currentCutterNumbers + callNumber.charAt(i);
                 } else {
                     phase = "year"
-                    year = year + callNumber.charAt(i);
+                    parts.year = parts.year + callNumber.charAt(i);
                 }
             } else {
                 if (currentCutterLetter !== "") {
-                    cutterLetters.push(currentCutterLetter);
+                    parts.cutterLetters.push(currentCutterLetter);
                     currentCutterLetter = "";
                 }
                 if (currentCutterNumbers !== "") {
-                    cutterNumbers.push(currentCutterNumbers);
+                    parts.cutterNumbers.push(currentCutterNumbers);
                     currentCutterNumbers = "";
                 }
             }
 
         } else if (phase === "year") {
             if (callNumber.charAt(i).match(/^\d+$/)) {
-                year = year + callNumber.charAt(i);
+                parts.year = parts.year + callNumber.charAt(i);
             } else {
-                if (year !== "") {
+                if (parts.year !== "") {
                     phase = "volumeCopy";
                 }
             }
         } else if (phase === "volumeCopy") {
-            volumeCopy += callNumber.charAt(i);
+            parts.volumeCopy += callNumber.charAt(i);
         }
+    }
+
+    return parts;
+}
+
+// shuffle subject letters for new call number
+function shuffleCallNumber(parts, instructions) {
+    const letterMatrix = getLetterMatrix();
+
+    const shiftSubjectLetter = function (letters) {
+        let row;
+        let column;
+        for (let i = 0; i < letterMatrix.length; i++) {
+            if (letterMatrix[i].includes(letters)) {
+                row = i;
+                column = letterMatrix[i].indexOf(letters);
+                break;
+            }
+        }
+        return letterMatrix[row + instructions.subjectLetter2][column + instructions.subjectLetter1];
+    }
+
+    const shiftCutterLetter = function (letter) {
+        let currentCode = letter.charCodeAt(0);
+        return String.fromCharCode(currentCode + instructions.cutter);
+    }
+
+    const shiftWholeNumber = function (number) {
+        return parseInt(number) + instructions.wholeNumber;
+    }
+
+    const shiftDecimal = function (number) {
+        return Math.floor(parseInt(number) / instructions.decimalNumber);
     }
 
 
     let newCallNumber = "";
 
-    console.log(subjectLetter);
     // 1. get subjectLetter/s and shift it
-    newCallNumber += `${shiftSubjectLetter(subjectLetter)} `;
+    newCallNumber += `${shiftSubjectLetter(parts.subjectLetter)} `;
     // 2. get subjectNumbers and shift it
-    newCallNumber += `${shiftWholeNumber(subjectNumber)} `;
+    newCallNumber += `${shiftWholeNumber(parts.subjectNumber)} `;
     // 3. for each cutter
     // 3a. add a dot 
     // 3b. shift cutter letter 
     // 3c. shift cutter number 
-    for (let i = 0; i < cutterLetters.length; i++) {
+    for (let i = 0; i < parts.cutterLetters.length; i++) {
         if (i === 0) { newCallNumber += "."; }
 
-        newCallNumber += shiftCutterLetter(cutterLetters[i]);
+        newCallNumber += shiftCutterLetter(parts.cutterLetters[i]);
 
-        newCallNumber += `${shiftDecimal(cutterNumbers[i])} `;
+        newCallNumber += `${shiftDecimal(parts.cutterNumbers[i])} `;
     }
     // 4. shift the year
-    newCallNumber += `${parseInt(year) + yearShift} `;
-    // 5. add the volume copy 
+    if (parts.year !== "") {
+        newCallNumber += `${parseInt(parts.year) + instructions.year} `;
+    } else {
+        newCallNumber += "";
+    }
 
-    newCallNumber += volumeCopy;
+    // 5. add the volume copy 
+    newCallNumber += parts.volumeCopy;
 
     newCallNumber = newCallNumber.replace(/\s+$/, '');
 
     return newCallNumber;
+}
+
+function shuffleLevel() {
+
+    const myApp = getApp();
+    const config = getConfig();
+
+    // get all call numbers from the corresponding level listing 
+    const originalCallNumbers = config.practice[`level${myApp.level}`][myApp.gamePhase].answer;
+
+    const wiggleSubjectLetter = function (letters) {
+        const letterMatrix = getLetterMatrix();
+
+        let row;
+        let column;
+        for (let i = 0; i < letterMatrix.length; i++) {
+            if (letterMatrix[i].includes(letters)) {
+                row = i;
+                column = letterMatrix[i].indexOf(letters);
+                break;
+            }
+        }
+
+
+        return { left: column, right: letterMatrix[row].length - 1 - column, up: row, down: letterMatrix.length - 1 - row };
+    }
+
+    const wiggleCutterLetter = function (letter) {
+        const currentCode = letter.charCodeAt(0);
+        return { left: currentCode - 65, right: 90 - currentCode };
+    }
+
+    const wiggleYear = function (year) {
+        const minYear = 1975;
+        const maxYear = new Date().getFullYear();
+        const cleanYear = parseInt(year);
+        return { left: cleanYear - minYear, right: maxYear - cleanYear };
+    }
+
+    // parse through array of call numbers and pass to parse call number function
+
+    let parsedCallNumbers = [];
+    for (let i = 0; i < originalCallNumbers.length; i++) {
+        parsedCallNumbers.push(parseCallNumber(originalCallNumbers[i]));
+    }
+
+    // store parts for each call number in a new array 
+    // loop through the array of parsed call numbers
+    // check for wiggle room 
+
+    let subjectLeft = 100;
+    let subjectRight = 100;
+    let subjectUp = 100;
+    let subjectDown = 100;
+
+    let cutterLeft = 100;
+    let cutterRight = 100;
+
+    let yearLeft = 10000;
+    let yearRight = 10000;
+
+    for (let i = 0; i < parsedCallNumbers.length; i++) {
+        const subjectBounds = wiggleSubjectLetter(parsedCallNumbers[i].subjectLetter);
+        const cutterBounds = [];
+        const yearBounds = parsedCallNumbers[i].year === "" ? null : wiggleYear(parsedCallNumbers[i].year);
+
+        for (let j = 0; j < parsedCallNumbers[i].cutterLetters.length; j++) {
+            cutterBounds.push(wiggleCutterLetter(parsedCallNumbers[i].cutterLetters[j]));
+        }
+
+        if (subjectBounds.left < subjectLeft) {
+            subjectLeft = subjectBounds.left;
+        }
+
+        if (subjectBounds.right < subjectRight) {
+            subjectRight = subjectBounds.right;
+        }
+
+        if (subjectBounds.up < subjectUp) {
+            subjectUp = subjectBounds.up;
+        }
+
+        if (subjectBounds.down < subjectDown) {
+            subjectDown = subjectBounds.down;
+        }
+
+        for (j = 0; j < cutterBounds.length; j++) {
+            if (cutterBounds[j].left < cutterLeft) {
+                cutterLeft = cutterBounds[j].left;
+            }
+
+            if (cutterBounds[j].right < cutterRight) {
+                cutterRight = cutterBounds[j].right;
+            }
+        }
+
+        if (yearBounds !== null) {
+            if (yearBounds.left < yearLeft) {
+                yearLeft = yearBounds.left;
+            }
+
+            if (yearBounds.right < yearRight) {
+                yearRight = yearBounds.right;
+            }
+        }
+
+    }
+
+    const chooseDirection = function (left, right) {
+        let movement = 0;
+        if (left === 10000 || right === 10000) {
+            return 0;
+        }
+        if (left > right) {
+            movement = Math.floor(Math.random() * left) * -1;
+        } else {
+            movement = Math.floor(Math.random() * right);
+        }
+        return movement;
+    }
+
+    const instructions = {
+        subjectLetter1: chooseDirection(subjectLeft, subjectRight),
+        subjectLetter2: chooseDirection(subjectUp, subjectDown),
+        wholeNumber: Math.floor(Math.random() * (17 - 1)) + 1,
+        decimalNumber: Math.floor(Math.random() * (4 - 1)) + 1,
+        cutter: chooseDirection(cutterLeft, cutterRight),
+        year: chooseDirection(yearLeft, yearRight)
+    };
+
+    let shuffledCallNumbers = [];
+
+
+    for (let i = 0; i < parsedCallNumbers.length; i++) {
+        shuffledCallNumbers.push(shuffleCallNumber(parsedCallNumbers[i], instructions));
+    }
+
+    return shuffledCallNumbers;
+
+    // determine appropriate shift parameter that works for all call numbers
+    // loop through array and shift all call numbers and store shifted call numbers in a new array 
+    // return the array of shifted call numbers 
+
 
 }
 
 $(document).ready(function () {
     let myApp = getApp();
     myApp.setView('view-module-overview');
-    console.log(shuffleCallNumber("HD 58.9 .I473 1994"));
-    console.log(shuffleCallNumber("HF 1418.5 .R6425 2011"));
-    console.log(shuffleCallNumber("C 17.63 .R64 L12 2000 v.1"));
+    console.log(shuffleLevel());
 });
