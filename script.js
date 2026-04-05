@@ -762,6 +762,11 @@ function parseCallNumber(callNumber) {
         }
     }
 
+    if (phase === "cutter") {
+        parts.cutterLetters.push(currentCutterLetter);
+        parts.cutterNumbers.push(currentCutterNumbers);
+    }
+
     return parts;
 }
 
@@ -788,7 +793,7 @@ function shuffleCallNumber(parts, instructions) {
     }
 
     const shiftWholeNumber = function (number) {
-        return parseInt(number) + instructions.wholeNumber;
+        return Number(number) + instructions.wholeNumber;
     }
 
     const shiftDecimal = function (number) {
