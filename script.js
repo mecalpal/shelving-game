@@ -797,7 +797,7 @@ function shuffleCallNumber(parts, instructions) {
     }
 
     const shiftDecimal = function (number) {
-        return Math.floor(parseInt(number) / instructions.decimalNumber);
+        return Math.ceil(parseInt(number) / instructions.decimalNumber);
     }
 
 
