@@ -17,6 +17,7 @@
   - [ ] Check answers & pop ups for right or wrong - could be refactor of existing checkQuizAnswers or a new function
   - [ ] Increment practice level function (optional)
 - [ ] Fill out practice questions in config
+- [ ] Style intro story to feel more game-like
 - [ ] Talking owl ;)
 - [ ] Resize books
 - [ ] Styling cleanup for introduction/tutorials
