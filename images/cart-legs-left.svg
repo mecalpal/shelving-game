@@ -1,0 +1,8 @@
+<svg width="16" height="3" viewBox="0 0 16 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="3" height="3" fill="#789750"/>
+<rect x="3" width="3" height="3" fill="#B3DB7C"/>
+<rect x="6" width="3" height="3" fill="#93C254"/>
+<rect x="9" width="2.5" height="3" fill="#87B34D"/>
+<rect width="1.5" height="3" transform="matrix(-1 0 0 1 13 0)" fill="#789750"/>
+<rect x="13" width="3" height="3" fill="#B3DB7C"/>
+</svg>
