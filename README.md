@@ -22,5 +22,6 @@
 - [ ] Talking owl ;)
 - [ ] Resize books
 - [ ] Styling cleanup for introduction/tutorials
+- [ ] Some responsive styling cleanup
 - [ ] Firebase authentication & database
 - [ ] UI for authentication
