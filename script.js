@@ -3,6 +3,7 @@
 class App {
     constructor(element) {
         this.element = element;
+        this.view = "view-title";
         this.module = 1;
         this.part = 1;
         this.question = 1;
@@ -14,19 +15,13 @@ class App {
 
     // sets a view and hides all others
     setView(className) {
-        // copies parameter className into local variable targetClass
-        let targetClass = className;
-        // declares matchingView variable
-        let matchingView;
+
+        this.view = className;
+
         /* loops over each div that is a direct child 
         of #app (body) whose class attribute 
         starts with "view-" */
         this.element.children('[class^="view-"]').each(function () {
-            /* if the element's class matches the class passed into the function,
-             save the element to matchingView variable*/
-            if ($(this).hasClass(targetClass)) {
-                matchingView = $(this);
-            }
             // checks if current element is already hidden 
             if ($(this).css('display') === 'none') {
             } else {
@@ -35,9 +30,39 @@ class App {
             }
         });
         // after the loop, fade in the target view (200 ms)
-        matchingView.fadeIn(200);
+        this.element.find($(`.${className}`)).fadeIn(200);
+    }
+
+    displayModal(correct, title, body, button) {
+        let viewContainer = this.element.find($(`.${this.view}`));
+
+        if (viewContainer.children(".modal-container").length) {
+            const modal = $(`
+                <div class="modal-background" style="display:none;">
+                    <div class= "modal">
+                        <span class="material-symbols-outlined ${correct ? 'icon-correct' : 'icon-incorrect'}">
+                        ${correct ? "check_circle" : "cancel"}
+                        </span>
+                        <p class="modal-heading">${title}</p>
+                        <p class="modal-body">${body}</p>
+                        <button id="${button.id}">${button.text}</button>
+                    </div>
+                </div>
+                `);
+
+            viewContainer.children(`.modal-container`).append(modal);
+            modal.fadeIn(200);
+        }
+    }
+
+    hideModal() {
+        $('.modal-background').fadeOut(200, function () {
+            $(this).remove();
+        })
     }
 }
+
+
 
 function checkQuizAnswers() {
     // access config 
@@ -68,16 +93,18 @@ function checkQuizAnswers() {
     if (correct === answerKey.length) {
         // grab feedback from config for current view
         const feedback = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
-        element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
+        // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
+        myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
         /* otherwise, if correct counter is not equal to the answerKey length,
         then user gets a try again button  */
     } else {
-        element = $('<p></p><button id="quiz-try-again">Try Again</button>');
+        // element = $('<p></p><button id="quiz-try-again">Try Again</button>');
+        myApp.displayModal(false, 'Not quite!', 'Double check the order and try again.', { text: 'Try again', id: 'quiz-try-again' });
     }
     // clears the submit button
-    $("#quiz-message").empty();
+    // $("#quiz-message").empty();
     // adds the element (either a next + feedback or try again)
-    $("#quiz-message").append(element);
+    // $("#quiz-message").append(element);
 }
 
 
@@ -263,6 +290,8 @@ function incrementQuiz() {
             // if on question 3 of part 1, then set question to 1 and increment part to 2
             myApp.question = 1;
             myApp.part++;
+            myApp.setView('view-module-overview');
+            loadModuleOverview()
         } else {
             /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
             and put them in an array of length 3 (there are 3 modules).
@@ -272,6 +301,8 @@ function incrementQuiz() {
                 myApp.question = 1;
                 myApp.part = 1;
                 myApp.module++;
+                myApp.setView('view-module-overview');
+                loadModuleOverview()
             } else {
                 // if none of these conditions are met (on the final question in the final part of the final module), return false
                 return false;
@@ -317,7 +348,7 @@ function loadRead() {
 }
 
 // reads the current question from config and populates the quiz view
-function loadPractice() {
+function loadQuiz() {
     // access config 
     const config = getConfig();
     // select the view-quiz div and saves to viewElement variable
@@ -335,6 +366,45 @@ function loadPractice() {
     console.log(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`]);
 }
 
+function loadModuleOverview() {
+    const myApp = getApp();
+    const config = getConfig();
+    let moduleIteration = 1;
+
+    $(`#overview-cards`).empty();
+
+    for (let module in config.quiz) {
+        let partIteration = 1;
+        let completed = false;
+        let moduleCard = $(`
+            <div class="module-card">
+            <p class="module-title">Module ${moduleIteration}</p>
+            </div>
+        `);
+        if (myApp.module > moduleIteration) {
+            completed = true;
+        }
+        for (let part in config.quiz[module]) {
+            let completedPart = false;
+            if ((myApp.module === moduleIteration && myApp.part > partIteration) || completed) {
+                completedPart = true;
+            }
+            let partCard = $(`
+
+                <div class ="part-section" completed="${completedPart}">
+                <span class="material-symbols-outlined">${completedPart ? "check_circle" : "radio_button_unchecked"}</span>
+                <p><strong>Part ${partIteration}: </strong>${config.quiz[module][part].read.heading}</p>
+                
+                </div>
+
+            `);
+            moduleCard.append(partCard);
+            partIteration++;
+        }
+        $(`#overview-cards`).append(moduleCard);
+        moduleIteration++;
+    }
+}
 
 $("button").on("click", function () {
     // access app instance
@@ -345,7 +415,7 @@ $("button").on("click", function () {
     if (target !== undefined) {
         myApp.setView(target);
     }
-    // if current view has nextQuestion attribute equal to true, then call loadPractice()
+    // if current view has nextQuestion attribute equal to true, then call loadQuiz()
     if (target === "view-quiz") {
         loadRead();
     }
@@ -385,7 +455,7 @@ $(document).on("click", "#orientation-next", function () {
 $(document).on("click", "#read-next", function () {
     $("#quiz-section").fadeIn(200);
     $("#read-next").hide();
-    loadPractice();
+    loadQuiz();
 });
 
 // call checkQuizAnswers on submit button click
@@ -399,6 +469,7 @@ $(document).on("click", "#quiz-next", function () {
     const previousPart = myApp.part;
     const previousModule = myApp.module;
 
+    myApp.hideModal();
     incrementQuiz(); // this might change myApp.part
 
     // if part changed after incrementing, load new read content
@@ -407,18 +478,18 @@ $(document).on("click", "#quiz-next", function () {
         $("#read-next").show();
         loadRead();
     } else {
-        loadPractice();
+        loadQuiz();
     }
 
-    $("#quiz-message").empty();
-    $("#quiz-message").append($('<button id="quiz-submit">Submit</button>'));
+    $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
 });
 
 // reset submit button so user can try again and reshuffle books
 $(document).on("click", "#quiz-try-again", function () {
-    loadPractice();
-    $("#quiz-message").empty();
-    $("#quiz-message").append($('<button id="quiz-submit">Submit</button'));
+    const myApp = getApp();
+    myApp.hideModal();
+    loadQuiz();
+    $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
 });
 
 // self executes this function immediately
@@ -979,6 +1050,7 @@ function shuffleLevel() {
 
 $(document).ready(function () {
     let myApp = getApp();
-    myApp.setView('view-module-overview');
+    myApp.setView('view-title');
+    loadModuleOverview();
     console.log(shuffleLevel());
 });

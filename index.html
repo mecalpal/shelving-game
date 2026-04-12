@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body id="app">
@@ -41,6 +43,7 @@
     <!-- MODULE OVERVIEW SCREENS -->
     <div class="view-module-overview">
         <h2>Overview</h2>
+        <div id="overview-cards"></div>
         <button target="view-quiz">Next</button>
     </div>
 
@@ -55,7 +58,7 @@
             <div id="read-content"></div>
             <button id="read-next">Next</button>
         </div>
-        <div id="quiz-section" style="display:none;">
+        <div id="quiz-section" class="modal-container" style="display:none;">
             <h2 class="quiz-heading">Placeholder</h2>
             <p class="quiz-body">Placeholder</p>
             <ul class="book-container module-quiz"></ul>
