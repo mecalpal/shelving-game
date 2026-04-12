@@ -19,10 +19,11 @@
 - [ ] Explore practice game phase styling
 - [ ] Fill out practice questions in config
 - [ ] Style intro story to feel more game-like
-- [ ] Talking owl ;)
+- [X] Talking owl ;)
 - [ ] Review how to do drag drop between lists
-- [ ] Resize books
-- [ ] Styling cleanup for introduction/tutorials
+- [X] Added mobile drag/drop support
+- [X] Resize books
+- [X] Styling cleanup for introduction/tutorials
 - [ ] Some responsive styling cleanup
 - [ ] Firebase authentication & database
 - [ ] UI for authentication
