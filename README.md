@@ -16,6 +16,7 @@
     - [ ] Create books (using existing function) passing in shuffled answers
   - [ ] Check answers & pop ups for right or wrong - could be refactor of existing checkQuizAnswers or a new function
   - [ ] Increment practice level function (optional)
+- [ ] Explore practice game phase styling
 - [ ] Fill out practice questions in config
 - [ ] Style intro story to feel more game-like
 - [ ] Talking owl ;)
