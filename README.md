@@ -20,6 +20,7 @@
 - [ ] Fill out practice questions in config
 - [ ] Style intro story to feel more game-like
 - [ ] Talking owl ;)
+- [ ] Review how to do drag drop between lists
 - [ ] Resize books
 - [ ] Styling cleanup for introduction/tutorials
 - [ ] Some responsive styling cleanup
