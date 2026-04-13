@@ -1,13 +1,21 @@
+:root {
+  --font: #FFF; /* Main font color */
+  --background: #3e2547; /* Lighter purple background color */
+  --background-accent: #25142C; /* Darker purple background color */
+  --accent-action: #4F7A64; /* Buttons, owl background */
+  --accent-bright: #B3DB7C; /* Emphasized headings, owl border */
+  font-size: 16px;
+}
+
 html {
   height: 100%;
 }
 
 body {
   font-family: "Montserrat", "Arial", sans-serif;
-  background-color: #3e2547;
-  color: #fff;
+  background-color: var(--background);
+  color:var(--font);
 }
-
 
 #app {
   margin: 0;
@@ -21,69 +29,54 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
   align-items: center;
-  justify-content: center;
   box-sizing: border-box;
+  padding: 3rem 1rem;
 }
 .view-orientation, .view-onboarding {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 3rem 1rem;
   align-items: center;
-  justify-content: center;
   height: 100%;
   box-sizing: border-box;
 }
 #onboarding-text, #orientation-text {
-  padding: 16px 24px;
+  padding: 1rem 1.5rem;
   background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 36px;
-  font-size: 1.3em;
-  line-height: 1.5em;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
   font-weight: 500;
   border: 7px solid rgba(0, 0, 0, 0.25);
   max-width: 900px;
-}
-#title-owl {
-  height: 350px;
-  width: 350px;
-  background-color: #3c6b51;
-  border-radius: 350px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   box-sizing: border-box;
 }
 
-#title-owl img {
-  width: 100%;
-  margin-top: 20%;
-}
-
 h1 {
-  margin-top: 16px;
-  margin-bottom: 36px;
-  font-size: 3em;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
   text-shadow: 2px 8px 2px rgba(0, 0, 0, 0.45);
+  text-align: center;
 }
 
 h2 {
-  font-size: 1.8em;
+  font-size: 1.8rem;
+  text-shadow: 2px 4px 2px rgba(0, 0, 0, 0.45);
 }
 
 #read-section {
   background-color: rgba(0, 0, 0, 0.3);
-  padding: 24px;
-  width: 33%;
+  padding: 1rem;
+  width: 100%;
   box-sizing: border-box;
 }
 
 #quiz-section {
-  padding: 24px;
-  width: 67%;
+  padding: 1rem;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -97,7 +90,7 @@ h2 {
 
 .view-quiz {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -112,7 +105,7 @@ h2 {
 #progress-bar:after {
   content: "";
   position: absolute;
-  background-color: #b4db7c;
+  background-color: var(--accent-bright);
   height: 100%;
   width: 1em;
   border-radius: 1em;
@@ -140,10 +133,10 @@ h2 {
 }
 
 #read-eyebrow {
-  font-size: 1.2em;
+  font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #b4db7c;
+  color: var(--accent-bright);
   font-weight: 600;
 }
 
@@ -154,26 +147,28 @@ h2 {
 
 button {
   font-family: "Montserrat", "Arial", sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1rem;
   border: none;
   outline: none;
   background-color: #4F7A64;
-  padding: 0.6em 1.2em;
+  padding: 0.7rem 1.2rem;
   border-radius: 100px;
   color: #FFF;
   font-weight: 600;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45);
   transition: all 0.2s;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 24rem;
 }
 
 .view-title button {
-  min-width: 400px;
+  min-width: 375px;
 }
 
 button:hover {
   background-color: #295840;
 }
-
 
 .book .book-decoration {
   position: absolute;
@@ -207,9 +202,9 @@ button:hover {
 .book {
   background-color: #7aa97d;
   color: #000;
-  height: 350px;
-  width: 75px;
-  padding: 0.5em;
+  height: 16rem;
+  width: 5rem;
+  padding: 0.5rem;
   box-sizing: border-box;
   display: flex;
   position: relative;
@@ -217,14 +212,15 @@ button:hover {
   justify-content: center;
   align-items: end;
   z-index: 2;
+  cursor: pointer;
 }
 
 .book.book-color-red {
-  background-color: #DA4646;
+  background-color: #ff6666;
 }
 
 .book.book-color-orange {
-  background-color: #DA7042;
+  background-color: #ff9363;
 }
 
 .book.book-color-brown {
@@ -232,77 +228,82 @@ button:hover {
 }
 
 .book.book-color-yellow {
-  background-color: #F6AF67;
+  background-color: #ffd782;
 }
 
 .book.book-color-light-green {
-  background-color: #809F55;
+  background-color: #75d184;
 }
 
 .book.book-color-dark-green {
-  background-color: #3E875F;
+  background-color: #64c38e;
 }
 
 .book.book-color-light-blue {
-  background-color: #578EA2;
+  background-color: #7dceec;
 }
 
 .book.book-color-dark-blue {
-  background-color: #644C96;
+  background-color: #9692fd;
 }
 
 .book.book-color-purple {
-  background-color: #A95DC2;
+  background-color: #e6a0ff;
 }
 
 .book.book-color-maroon {
-  background-color: #BD595B;
+  background-color: #dc6a6a;
 }
 
 .book.book-size-1 {
-  height: 405px;
-  width: 106px;
+  height: 21rem;
+  width: 5.5rem;
 }
 
 .book.book-size-2 {
-  height: 505px;
-  width: 78px;
+  height: 22rem;
+  width: 6rem;
 }
 
 .book.book-size-3 {
-  height: 545px;
-  width: 98px;
+  height: 20rem;
+  width: 5rem;
 }
 
 .book.book-size-4 {
-  height: 405px;
-  width: 142px;
+  height: 19rem;
+  width: 6rem;
 }
 
 .book.book-size-5 {
-  height: 471px;
-  width: 107px;
+  height: 20.5rem;
+  width: 5.5rem;
 }
 
 .book.book-size-6 {
-  height: 505px;
-  width: 123px;
+  height: 21.25rem;
+  width: 5rem;
 }
 
 .book.book-size-7 {
-  height: 441px;
-  width: 98px;
+  height: 18rem;
+  width: 5rem;
 }
 
 .book p {
   background-color: #fff;
   font-family: 'Arial', sans-serif;
-  padding: 0.5em;
+  padding: 0.25rem;
   font-weight: 600;
   width: 100%;
-  height: 75px;
+  height: 5rem;
   z-index: 2;
   border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#quiz-section li.book p {
+  font-size: 0.85rem;
 }
 
 .modal-container {
@@ -325,7 +326,7 @@ button:hover {
 }
 
 .modal {
-  background-color: #3e2547;
+  background-color: var(--background);
   border-radius: 24px;
   display: flex;
   flex-direction: column;
@@ -372,7 +373,7 @@ button:hover {
 .module-card {
   border-radius: 12px;
   padding: 16px;
-  background-color: #3e2547;
+  background-color: var(--background);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -458,8 +459,8 @@ button:hover {
   bottom: 48px;
 }*/
 .title-owl-wrapper {
-  height: 300px;
-  width: 300px;
+  height: 10rem;
+  width: 10rem;
   overflow: hidden;
   border-radius: 400px;
   box-sizing: border-box;
@@ -554,6 +555,81 @@ button:hover {
   animation: talk 0.35s infinite linear;
 }
 
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: fit-content;
+  height: 100%;
+}
+.cart-top-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  height: 29rem;
+}
+.cart-left {
+  background-image: url(https://mecalpal.github.io/shelving-game/images/cart-left.svg);
+  background-color: rgba(62, 37, 71, 0.3);
+  background-blend-mode: darken;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 10rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.cart-center {
+  background-image: url(https://mecalpal.github.io/shelving-game/images/cart-center.svg);
+  background-size: 100% 100%;
+  background-color: rgba(62, 37, 71, 0.3);
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  width: fit-content;
+  height: 100%;
+  padding: 0px 3rem;
+  box-sizing: border-box;
+}
+.cart-right {
+  background-image: url(https://mecalpal.github.io/shelving-game/images/cart-right.svg);
+  background-size: 100% 100%;
+  background-color: rgba(62, 37, 71, 0.3);
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  width: 10rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.cart-bottom-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  height: calc(100% - 29rem);
+  width: 100%;
+}
+.cart-legs-left {
+  background-image: url(https://mecalpal.github.io/shelving-game/images/cart-legs-left.svg);
+  background-size: 100% 100%;
+  background-color: rgba(62, 37, 71, 0.3);
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  width: 10rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.cart-legs-right {
+  background-image: url(https://mecalpal.github.io/shelving-game/images/cart-legs-right.svg);
+  background-size: 100% 100%;
+  background-color: rgba(62, 37, 71, 0.3);
+  background-blend-mode: darken;
+  background-repeat: no-repeat;
+  width: 10rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.cart-legs-center {
+  width: calc(100% - 20rem);
+  box-sizing: border-box;
+}
 @keyframes gentle-rotate {
   0% {transform: rotate(8deg)}
   50% {transform: rotate(-8deg)}
@@ -578,3 +654,32 @@ button:hover {
   100% {opacity: 0}
 }
 
+@media only screen and (min-width: 650px) {
+  :root {
+    font-size: 18px;
+  }
+  .view-quiz {
+    flex-direction: column;
+  }
+  #quiz-section {
+    width: 100%;
+  }
+  #read-section {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  :root {
+    font-size: 22px;
+  }
+  .view-quiz {
+    flex-direction: row;
+  }
+  #quiz-section {
+    width: 70%;
+  }
+  #read-section {
+    width: 30%;
+  }
+}
