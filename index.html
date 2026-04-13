@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.2/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
-  <!--<script type="text/javascript">
+  <script type="text/javascript">
   /*!
    * jQuery UI Touch Punch 0.2.3
    *
@@ -21,7 +21,7 @@
    *  jquery.ui.mouse.js
    */
     !function(a){function f(a,b){if(!(a.originalEvent.touches.length>1)){a.preventDefault();var c=a.originalEvent.changedTouches[0],d=document.createEvent("MouseEvents");d.initMouseEvent(b,!0,!0,window,1,c.screenX,c.screenY,c.clientX,c.clientY,!1,!1,!1,!1,0,null),a.target.dispatchEvent(d)}}if(a.support.touch="ontouchend"in document,a.support.touch){var e,b=a.ui.mouse.prototype,c=b._mouseInit,d=b._mouseDestroy;b._touchStart=function(a){var b=this;!e&&b._mouseCapture(a.originalEvent.changedTouches[0])&&(e=!0,b._touchMoved=!1,f(a,"mouseover"),f(a,"mousemove"),f(a,"mousedown"))},b._touchMove=function(a){e&&(this._touchMoved=!0,f(a,"mousemove"))},b._touchEnd=function(a){e&&(f(a,"mouseup"),f(a,"mouseout"),this._touchMoved||f(a,"click"),e=!1)},b._mouseInit=function(){var b=this;b.element.bind({touchstart:a.proxy(b,"_touchStart"),touchmove:a.proxy(b,"_touchMove"),touchend:a.proxy(b,"_touchEnd")}),c.call(b)},b._mouseDestroy=function(){var b=this;b.element.unbind({touchstart:a.proxy(b,"_touchStart"),touchmove:a.proxy(b,"_touchMove"),touchend:a.proxy(b,"_touchEnd")}),d.call(b)}}}(jQuery);
-  </script>-->
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -125,128 +125,6 @@
         <div class="cart-legs-right"></div>
       </div>
     </div>
-  </div>
-</div>
-
-<script type="text/javascript" src="script.js"> </script>
-<link rel="stylesheet" type="text/css" href="styles.css">
-</body>
-
-</html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Shelving Game</title>
-  <link rel="icon" type="image/x-icon" href="https://mecalpal.github.io/shelving-game/images/shelving-favicon.png">
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.2/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
-  <script type="text/javascript">
-  /*!
-   * jQuery UI Touch Punch 0.2.3
-   *
-   * Copyright 2011–2014, Dave Furfero
-   * Dual licensed under the MIT or GPL Version 2 licenses.
-   *
-   * Depends:
-   *  jquery.ui.widget.js
-   *  jquery.ui.mouse.js
-   */
-    !function(a){function f(a,b){if(!(a.originalEvent.touches.length>1)){a.preventDefault();var c=a.originalEvent.changedTouches[0],d=document.createEvent("MouseEvents");d.initMouseEvent(b,!0,!0,window,1,c.screenX,c.screenY,c.clientX,c.clientY,!1,!1,!1,!1,0,null),a.target.dispatchEvent(d)}}if(a.support.touch="ontouchend"in document,a.support.touch){var e,b=a.ui.mouse.prototype,c=b._mouseInit,d=b._mouseDestroy;b._touchStart=function(a){var b=this;!e&&b._mouseCapture(a.originalEvent.changedTouches[0])&&(e=!0,b._touchMoved=!1,f(a,"mouseover"),f(a,"mousemove"),f(a,"mousedown"))},b._touchMove=function(a){e&&(this._touchMoved=!0,f(a,"mousemove"))},b._touchEnd=function(a){e&&(f(a,"mouseup"),f(a,"mouseout"),this._touchMoved||f(a,"click"),e=!1)},b._mouseInit=function(){var b=this;b.element.bind({touchstart:a.proxy(b,"_touchStart"),touchmove:a.proxy(b,"_touchMove"),touchend:a.proxy(b,"_touchEnd")}),c.call(b)},b._mouseDestroy=function(){var b=this;b.element.unbind({touchstart:a.proxy(b,"_touchStart"),touchmove:a.proxy(b,"_touchMove"),touchend:a.proxy(b,"_touchEnd")}),d.call(b)}}}(jQuery);
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-</head>
-
-<body id="app">
-
-<!-- TITLE SCREEN -->
-<div class="view-title">
-  <div class="title-owl-wrapper">
-    <div class="owl-animated">
-      <div class="left-wing"></div>
-      <div class="right-wing"></div>
-      <div class="torso"></div>
-      <div class="head">
-        <div class="eyes"></div>
-        <!--<div class="beak"></div>-->
-      </div>
-    </div>
-  </div>
-  <h1> The Shelving Game</h1>
-  <button target="view-onboarding">Library of Congress Classification</button>
-  <button>Dewey Decimal</button>
-</div>
-
-<!-- ONBOARDING SCREENS -->
-<div class="view-onboarding">
-  <h2>Onboarding</h2>
-  <div class="talking-owl-wrapper">
-    <div class="owl-animated">
-      <div class="left-wing"></div>
-      <div class="right-wing"></div>
-      <div class="torso"></div>
-      <div class="head">
-        <div class="eyes"></div>
-        <div class="beak"></div>
-      </div>
-    </div>
-  </div>
-  <p id="onboarding-text"></p>
-  <button id="onboarding-next">Next</button>
-</div>
-
-<!-- ORIENTATION SCREENS -->
-<div class="view-orientation">
-  <h2>Orientation</h2>
-  <!--<div class="owl-whiteboard-wrapper">
-    <div class="whiteboard"></div>-->
-    <div class="talking-owl-wrapper">
-      <div class="owl-animated">
-        <div class="left-wing"></div>
-        <div class="right-wing"></div>
-        <div class="torso"></div>
-        <div class="head">
-          <div class="eyes"></div>
-          <div class="beak"></div>
-        </div>
-      </div>
-    </div>
-  <!--</div>-->
-  <p id="orientation-text"></p>
-  <button id="orientation-next">Next</button>
-</div>
-
-<!-- MODULE OVERVIEW SCREENS -->
-<div class="view-module-overview">
-  <h2>Overview</h2>
-  <div id="overview-cards"></div>
-  <button target="view-quiz">Next</button>
-</div>
-
-
-<!-- QUIZ SCREENS -->
-<div class="view-quiz">
-  <!-- READ SCREENS -->
-  <div id="read-section">
-    <div id="progress-bar" progress="1"></div>
-    <p id="read-eyebrow"></p>
-    <h2 id="read-heading"></h2>
-    <div id="read-content"></div>
-    <button id="read-next">Next</button>
-  </div>
-  <div id="quiz-section" class="modal-container" style="display:none;">
-    <h2 class="quiz-heading">Placeholder</h2>
-    <p class="quiz-body">Placeholder</p>
-    <ul class="book-container module-quiz"></ul>
-    <div id="quiz-message"><button id="quiz-submit">Submit</button></div>
   </div>
 </div>
 
