@@ -76,8 +76,8 @@ function animateTextIn(element) {
   const animationSpeed = 2;
   animatedElement.height('unset');
   animatedElement.width('unset');
-  animatedElement.height(animatedElement.css('height'));
-  animatedElement.width(animatedElement.css('width'));
+  animatedElement.height(animatedElement.height());
+  animatedElement.width(animatedElement.width());
   animatedElement.text('');
   animatedElement.css('display', 'inline-block');
   let i = 0;
@@ -531,7 +531,6 @@ $(document).on("click", "#quiz-try-again", function () {
 const appState = (function () {
   // create app instance for the whole application - one and done!
   const app = new App($('#app'));
-
   const letterMatrix = [
     ['B', 'BD', 'BH', 'BL', 'BR', 'BS'],
     ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
@@ -770,19 +769,18 @@ const appState = (function () {
   };
 
   // enables access app instance from anywhere in the script
-  window.getApp = function () {
+  window.getApp = function() {
     return app;
   }
 
   // enables access to config from anywhere in the script
-  window.getConfig = function () {
+  window.getConfig = function() {
     return config;
   }
 
-  window.getLetterMatrix = function () {
+  window.getLetterMatrix = function() {
     return letterMatrix;
   }
-
 })();
 
 $(function () {
@@ -1079,7 +1077,6 @@ function shuffleLevel() {
   // determine appropriate shift parameter that works for all call numbers
   // loop through array and shift all call numbers and store shifted call numbers in a new array
   // return the array of shifted call numbers
-
 }
 
 $(document).ready(function () {
