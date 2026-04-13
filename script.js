@@ -1,5 +1,3 @@
-
-
 class App {
   constructor(element) {
     this.element = element;
