@@ -1,3 +1,4 @@
+// Will this comment fix everything?
 class App {
   constructor(element) {
     this.element = element;
