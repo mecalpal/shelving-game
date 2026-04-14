@@ -336,7 +336,7 @@ function incrementQuiz() {
         loadModuleOverview();
       } else {
         // if none of these conditions are met (on the final question in the final part of the final module), return false
-        return false;
+        myApp.setView('view-practice-overview');
       }
     }
     // if one of the conditions are met, return true
@@ -396,7 +396,24 @@ function loadQuiz() {
   createBooks(viewElement, config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
 
   $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
-  console.log(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`]);
+}
+
+function loadPractice() {
+
+  const config = getConfig();
+
+  const viewElement = $('.view-practice');
+
+  const myApp = getApp();
+
+  viewElement.find('.practice-heading').text(config.practice[`level${myApp.level}`][myApp.gamePhase].heading);
+
+  viewElement.find('.practice-body').text(config.practice[`level${myApp.level}`][myApp.gamePhase].text);
+
+  let shuffledAnswer = shuffleLevel();
+
+  createBooks(viewElement, shuffledAnswer);
+  
 }
 
 function loadModuleOverview() {
@@ -454,6 +471,9 @@ $("button").on("click", function () {
   }
   if (target === "view-onboarding") {
     loadOnboarding();
+  }
+  if (target === "view-practice") {
+    loadPractice();
   }
 });
 
@@ -1079,7 +1099,7 @@ function shuffleLevel() {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-title');
+  myApp.setView('view-practice-overview');
   //loadModuleOverview();
   console.log(shuffleLevel());
 });
