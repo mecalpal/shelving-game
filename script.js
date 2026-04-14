@@ -140,28 +140,28 @@ function checkQuizAnswers() {
 }
 
 
-function checkPracticeAnswers() {
-  console.log('Answer key', myApp[`${myApp.gamePhase}AnswerKey`]);
-  console.log('User Answers:', $('.view-practice').find('.book p').map(function () { return $(this).text(); }).get());
-  const myApp = getApp();
-  const answerKey = myApp[`${myApp.gamePhase}AnswerKey`];
-  const userAnswers = $('.view-practice').find($('.book')).toArray();
-  let correct = 0;
 
-  for (let i = 0; i < answerKey.length; i++) {
-    if (answerKey[i] === $(userAnswers[i].find)('p').text()) {
-      correct++;
+  function checkPracticeAnswers() {
+    const myApp = getApp();
+    const answerKey = myApp[`${myApp.gamePhase}AnswerKey`];
+    const userAnswers = $('.view-practice').find('.book').toArray();
+
+    let correct = 0;
+
+    for (let i = 0; i < answerKey.length; i++) {
+      if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
+        correct++;
+      } else {
+        break;
+      }
+    }
+
+    if (correct === answerKey.length) {
+      myApp.displayModal(true, 'Correct!', 'Great Work! Move on to the next job.', { text: 'Next', id: 'practice-next' });
     } else {
-      break;
+      myApp.displayModal(false, 'Not quite!', 'You will be deployed to a new job and can try again.', { text: 'Try again', id: 'practice-try-again' });
     }
   }
-
-  if (correct === answerKey.length) {
-    myApp.displayModal(true, 'Correct!', 'Great Work! Move on to the next job.', { text: 'Next', id: 'practice-next' });
-  } else {
-    myApp.displayModal(false, 'Not quite!', 'You will be deployed to a new job and can try again.', { text: 'Try again', id: 'practice-try-again' });
-  }
-}
 
 /* shuffles answer array and display a book for each call number.
         element is the quiz view and answer is the correct answer array from config
@@ -580,7 +580,7 @@ $(document).on("click", "#quiz-try-again", function () {
 });
 
 $(document).on("click", "#practice-submit", function () {
-  checkQuizAnswers();
+  checkPracticeAnswers();
 });
 
 $(document).on("click", "#practice-try-again", function () {
