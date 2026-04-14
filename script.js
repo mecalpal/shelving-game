@@ -85,11 +85,11 @@ function animateTextIn(element) {
       clearInterval(timer);
       buttonTarget.fadeIn(0);
     } else if (i + 2 > storedText.length) {
-      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i+1)}`);
+      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i + 1)}`);
       clearInterval(timer);
       buttonTarget.fadeIn(0);
     } else {
-      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i+1)}`);
+      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i + 1)}`);
     }
     i = i + 2;
   }, animationSpeed);
@@ -413,7 +413,7 @@ function loadPractice() {
   let shuffledAnswer = shuffleLevel();
 
   createBooks(viewElement, shuffledAnswer);
-  
+
 }
 
 function loadModuleOverview() {
@@ -559,7 +559,7 @@ const appState = (function () {
   // content data for the app
   const config = {
     onboarding: [
-      "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!",
+      { text: "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!" },
       "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found. Your job is to get them there.",
       "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf. ",
       "Once you know how to read a call number, you can deliver the book to its home.",
@@ -787,16 +787,16 @@ const appState = (function () {
   };
 
   // enables access app instance from anywhere in the script
-  window.getApp = function() {
+  window.getApp = function () {
     return app;
   }
 
   // enables access to config from anywhere in the script
-  window.getConfig = function() {
+  window.getConfig = function () {
     return config;
   }
 
-  window.getLetterMatrix = function() {
+  window.getLetterMatrix = function () {
     return letterMatrix;
   }
 })();
@@ -1099,7 +1099,7 @@ function shuffleLevel() {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-practice-overview');
+  myApp.setView('view-title');
   //loadModuleOverview();
   console.log(shuffleLevel());
 });
