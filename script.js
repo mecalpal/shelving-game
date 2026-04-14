@@ -1099,7 +1099,7 @@ function shuffleLevel() {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-practice-overview');
+  myApp.setView('view-title');
   //loadModuleOverview();
   console.log(shuffleLevel());
 });
