@@ -9,6 +9,9 @@ class App {
     this.orientationStep = 0;
     this.level = 1;
     this.gamePhase = 'cartSort';
+    this.cartSortAnswerKey = [];
+    this.shelfSortAnswerKey = [];
+    this.QAAnswerKey = [];
   }
 
   // sets a view and hides all others
@@ -109,8 +112,6 @@ function checkQuizAnswers() {
 
   // loop through the answerKey array
   for (let i = 0; i < answerKey.length; i++) {
-    // console.log(answerKey[i]);
-    // console.log($(userAnswers[i]).find('p').text());
     if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
       correct++;
     } else {
@@ -138,6 +139,29 @@ function checkQuizAnswers() {
   // $("#quiz-message").append(element);
 }
 
+
+function checkPracticeAnswers() {
+  console.log('Answer key', myApp[`${myApp.gamePhase}AnswerKey`]);
+  console.log('User Answers:', $('.view-practice').find('.book p').map(function () { return $(this).text(); }).get());
+  const myApp = getApp();
+  const answerKey = myApp[`${myApp.gamePhase}AnswerKey`];
+  const userAnswers = $('.view-practice').find($('.book')).toArray();
+  let correct = 0;
+
+  for (let i = 0; i < answerKey.length; i++) {
+    if (answerKey[i] === $(userAnswers[i].find)('p').text()) {
+      correct++;
+    } else {
+      break;
+    }
+  }
+
+  if (correct === answerKey.length) {
+    myApp.displayModal(true, 'Correct!', 'Great Work! Move on to the next job.', { text: 'Next', id: 'practice-next' });
+  } else {
+    myApp.displayModal(false, 'Not quite!', 'You will be deployed to a new job and can try again.', { text: 'Try again', id: 'practice-try-again' });
+  }
+}
 
 /* shuffles answer array and display a book for each call number.
         element is the quiz view and answer is the correct answer array from config
@@ -420,6 +444,8 @@ function loadPractice() {
 
   let shuffledAnswer = shuffleLevel();
 
+  myApp[`${myApp.gamePhase}AnswerKey`] = shuffledAnswer;
+
   createBooks(viewElement, shuffledAnswer);
 
 }
@@ -553,9 +579,25 @@ $(document).on("click", "#quiz-try-again", function () {
   $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
 });
 
+$(document).on("click", "#practice-submit", function () {
+  checkQuizAnswers();
+});
+
+$(document).on("click", "#practice-try-again", function () {
+  const myApp = getApp();
+  myApp.hideModal();
+  loadPractice();
+});
+
+$(document).on("click", "#practice-next", function () {
+  const myApp = getApp();
+  myApp.hideModal();
+  // incrementPractice() when shelfSort and QA are built
+});
+
 // self executes this function immediately
 const appState = (function () {
-  // create app instance for the whole application - one and done!
+  // create app instance for the whole application 
   const app = new App($('#app'));
   const letterMatrix = [
     ['B', 'BD', 'BH', 'BL', 'BR', 'BS'],
@@ -1109,5 +1151,4 @@ $(document).ready(function () {
   let myApp = getApp();
   myApp.setView('view-practice-overview');
   //loadModuleOverview();
-  console.log(shuffleLevel());
 });
