@@ -349,7 +349,8 @@ function loadOnboarding() {
   const config = getConfig();
 
   // display current step text
-  $("#onboarding-text").text(config.onboarding[myApp.onboardingStep]);
+  const step = config.onboarding[myApp.onboardingStep];
+  $("#onboarding-text").text(step.text);
   animateTextIn($('#onboarding-text'));
 
   // increment step for next click
@@ -369,7 +370,7 @@ function loadOrientation() {
   } else {
     $('#call-number-diagram').hide();
   }
-  
+
   myApp.orientationStep++;
 }
 
@@ -566,24 +567,24 @@ const appState = (function () {
   // content data for the app
   const config = {
     onboarding: [
-      {text: "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!" },
-      {text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found. Your job is to get them there." },
-      {text: "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf." },
-      {text: "Once you know how to read a call number, you can deliver the book to its home." },
-      {text: "Here’s how training works:" },
-      {text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
-      {text: "Remember, call number ordering is the key to delivering a book to its correct location." },
-      {text: "Complete the training program, and you’ll be ready to take your first job assignment." }
+      { text: "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!" },
+      { text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found. Your job is to get them there." },
+      { text: "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf." },
+      { text: "Once you know how to read a call number, you can deliver the book to its home." },
+      { text: "Here’s how training works:" },
+      { text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
+      { text: "Remember, call number ordering is the key to delivering a book to its correct location." },
+      { text: "Complete the training program, and you’ll be ready to take your first job assignment." }
     ],
     orientation: [
-      {text: "A call number is the unique address of a book on the shelf. Every item in the collection has one and no two items share the same address." },
-      {text: "Call numbers consist of letters, whole numbers, decimals, often a publication date, and occasionally a volume and/or copy number." },
-      {text: "The entire call number should be read as one line in a database." }, // image will go here later
-      {text: "However, a call number on the physical item will be printed on the spine label and read from top to bottom." }, // image goes here later
-      {text: "Every call number has two main parts, divided by a decimal point. Subject — everything before the decimal (identifies the broad topic area). Cutter — everything after the decimal (identifies the specific item)." },
-      {text: "The more components a call number has, the more specific its address. Some call numbers include additional cutters, a publication year, a volume number, and/or a copy number." },
-      {text: "Before you start training, there is one governing rule to know because it applies at every stage." },
-      {text: "A shorter call number always comes before a longer one when all preceding elements match. This is called the 'Nothing before Something' rule." }
+      { text: "A call number is the unique address of a book on the shelf. Every item in the collection has one and no two items share the same address." },
+      { text: "Call numbers consist of letters, whole numbers, decimals, often a publication date, and occasionally a volume and/or copy number.", image: "images/callnumber.png" },
+      { text: "The entire call number should be read as one line in a database." }, // image will go here later
+      { text: "However, a call number on the physical item will be printed on the spine label and read from top to bottom." }, // image goes here later
+      { text: "Every call number has two main parts, divided by a decimal point. Subject — everything before the decimal (identifies the broad topic area). Cutter — everything after the decimal (identifies the specific item)." },
+      { text: "The more components a call number has, the more specific its address. Some call numbers include additional cutters, a publication year, a volume number, and/or a copy number." },
+      { text: "Before you start training, there is one governing rule to know because it applies at every stage." },
+      { text: "A shorter call number always comes before a longer one when all preceding elements match. This is called the 'Nothing before Something' rule." }
     ],
     quiz: {
       module1: {
@@ -1106,7 +1107,7 @@ function shuffleLevel() {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-title');
+  myApp.setView('view-practice-overview');
   //loadModuleOverview();
   console.log(shuffleLevel());
 });

@@ -1,9 +1,14 @@
 :root {
-  --font: #FFF; /* Main font color */
-  --background: #3e2547; /* Lighter purple background color */
-  --background-accent: #25142C; /* Darker purple background color */
-  --accent-action: #4F7A64; /* Buttons, owl background */
-  --accent-bright: #B3DB7C; /* Emphasized headings, owl border */
+  --font: #FFF;
+  /* Main font color */
+  --background: #3e2547;
+  /* Lighter purple background color */
+  --background-accent: #25142C;
+  /* Darker purple background color */
+  --accent-action: #4F7A64;
+  /* Buttons, owl background */
+  --accent-bright: #B3DB7C;
+  /* Emphasized headings, owl border */
   font-size: 16px;
 }
 
@@ -14,7 +19,7 @@ html {
 body {
   font-family: "Montserrat", "Arial", sans-serif;
   background-color: var(--background);
-  color:var(--font);
+  color: var(--font);
 }
 
 #app {
@@ -34,7 +39,9 @@ body {
   box-sizing: border-box;
   padding: 3rem 1rem;
 }
-.view-orientation, .view-onboarding {
+
+.view-orientation,
+.view-onboarding {
   display: flex;
   flex-direction: column;
   padding: 3rem 1rem;
@@ -42,7 +49,9 @@ body {
   height: 100%;
   box-sizing: border-box;
 }
-#onboarding-text, #orientation-text {
+
+#onboarding-text,
+#orientation-text {
   padding: 1rem 1.5rem;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 2rem;
@@ -65,6 +74,10 @@ h1 {
 h2 {
   font-size: 1.8rem;
   text-shadow: 2px 4px 2px rgba(0, 0, 0, 0.45);
+}
+
+#call-number-diagram {
+  width: 200px; 
 }
 
 #read-section {
@@ -431,7 +444,9 @@ button:hover {
 
 .module-card span {
   font-size: 24px;
-}/*
+}
+
+/*
 .owl-whiteboard-wrapper {
   height: 100%;
   width: 100%;
@@ -467,6 +482,7 @@ button:hover {
   background-color: #3c6b51;
   border: 6px solid #B3DB7C;
 }
+
 .talking-owl-wrapper {
   height: 200px;
   width: 200px;
@@ -476,6 +492,7 @@ button:hover {
   background-color: #3c6b51;
   border: 6px solid #B3DB7C;
 }
+
 .owl-animated {
   margin-top: 10%;
   position: relative;
@@ -483,6 +500,7 @@ button:hover {
   width: 90%;
   left: 5%;
 }
+
 .owl-animated .left-wing {
   position: absolute;
   background-image: url(https://mecalpal.github.io/shelving-game/images/owl-wing.png);
@@ -495,6 +513,7 @@ button:hover {
   animation: gentle-rotate 4s linear infinite;
   transform-origin: 70% 10%;
 }
+
 .owl-animated .right-wing {
   position: absolute;
   background-image: url('https://mecalpal.github.io/shelving-game/images/owl-wing 2.png');
@@ -508,6 +527,7 @@ button:hover {
   animation-direction: reverse;
   transform-origin: 30% 10%;
 }
+
 .owl-animated .torso {
   position: absolute;
   bottom: 3%;
@@ -518,6 +538,7 @@ button:hover {
   background-repeat: no-repeat;
   left: 17%
 }
+
 .owl-animated .head {
   position: absolute;
   background-image: url(https://mecalpal.github.io/shelving-game/images/owl-head.png);
@@ -529,9 +550,11 @@ button:hover {
   animation: gentle-rotate 2.5s linear infinite;
   transform-origin: 50% 90%;
 }
+
 .title-owl-wrapper .owl-animated .head {
   animation: gentle-rotate 5s linear infinite;
 }
+
 .owl-animated .head .eyes {
   position: absolute;
   background-image: url(https://mecalpal.github.io/shelving-game/images/owl-eyes.png);
@@ -543,6 +566,7 @@ button:hover {
   top: 48%;
   animation: blink 3s infinite linear;
 }
+
 .owl-animated .head .beak {
   position: absolute;
   background-image: url(https://mecalpal.github.io/shelving-game/images/owl-beak.png);
@@ -562,12 +586,14 @@ button:hover {
   width: fit-content;
   height: 100%;
 }
+
 .cart-top-row {
   display: flex;
   flex-direction: row;
   gap: 0;
   height: 29rem;
 }
+
 .cart-left {
   background-image: url(https://mecalpal.github.io/shelving-game/images/cart-left.svg);
   background-color: rgba(62, 37, 71, 0.3);
@@ -578,6 +604,7 @@ button:hover {
   height: 100%;
   box-sizing: border-box;
 }
+
 .cart-center {
   background-image: url(https://mecalpal.github.io/shelving-game/images/cart-center.svg);
   background-size: 100% 100%;
@@ -589,6 +616,7 @@ button:hover {
   padding: 0px 3rem;
   box-sizing: border-box;
 }
+
 .cart-right {
   background-image: url(https://mecalpal.github.io/shelving-game/images/cart-right.svg);
   background-size: 100% 100%;
@@ -599,6 +627,7 @@ button:hover {
   height: 100%;
   box-sizing: border-box;
 }
+
 .cart-bottom-row {
   display: flex;
   flex-direction: row;
@@ -606,6 +635,7 @@ button:hover {
   height: calc(100% - 29rem);
   width: 100%;
 }
+
 .cart-legs-left {
   background-image: url(https://mecalpal.github.io/shelving-game/images/cart-legs-left.svg);
   background-size: 100% 100%;
@@ -616,6 +646,7 @@ button:hover {
   height: 100%;
   box-sizing: border-box;
 }
+
 .cart-legs-right {
   background-image: url(https://mecalpal.github.io/shelving-game/images/cart-legs-right.svg);
   background-size: 100% 100%;
@@ -626,44 +657,91 @@ button:hover {
   height: 100%;
   box-sizing: border-box;
 }
+
 .cart-legs-center {
   width: calc(100% - 20rem);
   box-sizing: border-box;
 }
+
 @keyframes gentle-rotate {
-  0% {transform: rotate(8deg)}
-  50% {transform: rotate(-8deg)}
-  100% {transform: rotate(8deg)}
+  0% {
+    transform: rotate(8deg)
+  }
+
+  50% {
+    transform: rotate(-8deg)
+  }
+
+  100% {
+    transform: rotate(8deg)
+  }
 }
 
 @keyframes blink {
-  0% {opacity: 0}
-  46% {opacity: 0}
-  48% {opacity: 1}
-  52% {opacity: 1}
-  54% {opacity: 0}
-  100% {opacity: 0}
+  0% {
+    opacity: 0
+  }
+
+  46% {
+    opacity: 0
+  }
+
+  48% {
+    opacity: 1
+  }
+
+  52% {
+    opacity: 1
+  }
+
+  54% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: 0
+  }
 }
 
 @keyframes talk {
-  0% {opacity: 0}
-  25% {opacity: 0}
-  40% {opacity: 1}
-  60% {opacity: 1}
-  75% {opacity: 0}
-  100% {opacity: 0}
+  0% {
+    opacity: 0
+  }
+
+  25% {
+    opacity: 0
+  }
+
+  40% {
+    opacity: 1
+  }
+
+  60% {
+    opacity: 1
+  }
+
+  75% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: 0
+  }
 }
 
 @media only screen and (min-width: 650px) {
   :root {
     font-size: 18px;
   }
+
   .view-quiz {
     flex-direction: column;
   }
+
   #quiz-section {
     width: 100%;
   }
+
   #read-section {
     width: 100%;
   }
@@ -673,12 +751,15 @@ button:hover {
   :root {
     font-size: 22px;
   }
+
   .view-quiz {
     flex-direction: row;
   }
+
   #quiz-section {
     width: 70%;
   }
+
   #read-section {
     width: 30%;
   }
