@@ -1150,6 +1150,6 @@ function shuffleLevel() {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-module-overview');
+  myApp.setView('view-title');
   //loadModuleOverview();
 });
