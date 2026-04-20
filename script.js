@@ -79,10 +79,10 @@ const appState = (function () {
   // create app instance for the whole application 
   const app = new App($('#app'));
   const letterMatrix = [
-    ['B', 'BD', 'BH', 'BL', 'BR', 'BS'],
+    ['B', 'BD', 'BF', 'BH', 'BR', 'BS'],
     ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
     ['G', 'GA', 'GE', 'GF', 'GR', 'GV'],
-    ['H', 'HA', 'HD', 'HF', 'HQ', 'HV'],
+    ['H', 'HA', 'HB', 'HD', 'HG', 'HQ'],
     ['L', 'LB', 'LF', 'LH', 'LJ', 'LT']
   ];
   // content data for the app
@@ -746,6 +746,7 @@ function incrementQuiz() {
       } else {
         // if none of these conditions are met (on the final question in the final part of the final module), return false
         myApp.setView('view-practice-overview');
+        loadPracticeOverview();
       }
     }
     // if one of the conditions are met, return true
@@ -772,6 +773,7 @@ function incrementPractice() {
       myApp.gamePhase = 'cartSort';
       myApp.level++;
       myApp.setView('view-practice-overview');
+      loadPracticeOverview();
     } else {
       myApp.setView('view-end');
     }
@@ -1353,6 +1355,6 @@ $(document).on("click", "#practice-next", function () {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-title');
+  myApp.setView('view-module-overview');
   //loadModuleOverview();
 });

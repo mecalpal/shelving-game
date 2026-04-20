@@ -450,6 +450,28 @@ button:hover {
   font-size: 24px;
 }
 
+.view-practice-overview {
+  background-color: #25142c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 32px;
+}
+
+.view-practice-overview h2 {
+  margin: 0;
+}
+
+#practice-overview-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+  width: 100%;
+}
+
 /*
 .owl-whiteboard-wrapper {
   height: 100%;
