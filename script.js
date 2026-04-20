@@ -644,20 +644,20 @@ const appState = (function () {
           question1: {
             heading: "Level 1: Single letters",
             text: "Sort subject letters",
-            answer: ['B', 'H', 'L', 'P'],
+            answer: ['B', 'H', 'L', 'M', 'P'],
             feedback: "Subject letters sort alphabetically."
           },
           question2: {
             heading: "Level 2: Single & double letters",
             text: "Sort subject letters",
-            answer: ['B', 'L', 'LA', 'LB'],
+            answer: ['B', 'BR', 'L', 'LA', 'LB'],
             feedback: "A single letter always comes before a double letter that starts with the same letter. L comes before LA and LB."
           },
 
           question3: {
             heading: "Level 3: Single & double letters, larger range",
             text: "Sort subject letters",
-            answer: ['G', 'M', 'P', 'PA', 'PB'],
+            answer: ['G', 'GN', 'M', 'P', 'PA', 'PB'],
             feedback: "A single letter always comes before a double letter that starts with the same letter. P comes before PA and PB."
           },
         },
@@ -737,19 +737,19 @@ const appState = (function () {
           question1: {
             heading: "Different additional cutter letters",
             text: "Sort subject letters + subject numbers + cutter number + additional cutter",
-            answer: ['GV 706 .R423 A12', 'GV 706 .R423 M34', 'GV 706 .R423 S55'],
+            answer: ['GV 706 .R423 A12', 'GV 706 .R423 G2214', 'GV 706 .R423 M34', 'GV 706 .R423 S55'],
             feedback: "The additional cutter sorts alphabetically by letter, just like the main cutter."
           },
           question2: {
             heading: "Same additional cutter letter, decimal fraction differences",
             text: "Sort subject letters + subject numbers + cutter number + additional cutter",
-            answer: ['BF 408 .R423 H127', 'BF 408 .R423 H3', 'BF 408 .R423 H52'],
+            answer: ['BF 408 .R423 H127', 'BF 408 .R423 H3', 'BF 408 .R423 H52', 'BF 408 .R423 H5579'],
             feedback: "The numbers in an additional cutter are decimal fractions, just like the main cutter. H127 = 0.127,  H3 = 0.30,  H52 = 0.52"
           },
           question3: {
             heading: "With and without additional cutter mixed",
             text: "Sort subject letters + subject numbers + cutter number + additional cutter",
-            answer: ['DS 135 .S55', 'DS 135 .S55 A12', 'DS 135 .S55 H3', 'DS 135 .S55 H52'],
+            answer: ['DS 135 .S55', 'DS 135 .S55 A12', 'DS 135 .S55 A212', 'DS 135 .S55 H378', 'DS 135 .S55 H52'],
             feedback: "A call number with no additional cutter comes before one that has one."
           }
         }
@@ -768,7 +768,7 @@ const appState = (function () {
           question1: {
             heading: "Same base, different years",
             text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['LA 212 .R423', 'LA 212 .R423 2005', 'LA 212 .R423 2010'],
+            answer: ['LA 212 .R423', 'LA 212 .R423 2005', 'LA 212 .R423 2010', 'LA 212 .R423 2022'],
             feedback: "A call number with no year shelves before its dated edition. Dated editions sort chronologically. "
           },
           question2: {
@@ -778,7 +778,7 @@ const appState = (function () {
             feedback: "Sort by cutter first. When two items share the same cutter, the one without a year shelves first. Notice that .H3 has a year but still shelves before .S22, which has none. A year only affects placement when two items share the same cutter."
           },
           question3: {
-            heading: "PLACEHOLDER",
+            heading: "Mixed shelf, some with years",
             text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
             answer: ['PS 1234 .A3', 'PS 1234 .A3 1995', 'PS 1234 .A3 2008', 'PS 1234 .B12 2001', 'PS 1234 .C44'],
             feedback: "Sort by cutter first. .A3 comes before .B12, .B12 comes before .C44. Within the same .A3 group, no year shelves first, then sort the rest chronologically. .B12 has a year and .C44 does not, but .B12 still shelves first because B comes before C."
@@ -795,23 +795,23 @@ const appState = (function () {
                         </ul>`
           },
           question1: {
-            heading: "PLACEHOLDER",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['PLACEHOLDER'],
-            feedback: "PLACEHOLDER"
+            heading: "Same base, different volumes",
+            text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+            answer: ['HQ 1870 .A5 v.1', 'HQ 1870 .A5 v.2', 'HQ 1870 .A5 v.3'],
+            feedback: "When the entire base call number is identical, volumes sort numerically. v.1 comes before v.2, which comes before v.3."
           },
           question2: {
-            heading: "PLACEHOLDER",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['PLACEHOLDER'],
-            feedback: "PLACEHOLDER"
+            heading: "With and without volume, same base",
+            text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+            answer: ['GV 706 .R423 M34', 'GV 706 .R423 M34 v.1', 'GV 706 .R423 M34 v.2', 'GV 706 .R423 M34 v.3'],
+            feedback: "A call number without a volume designation comes before the same call number with one. Among volumes, sort numerically: v.1 before v.2 before v.3."
           },
           question3: {
-            heading: "PLACEHOLDER",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['PLACEHOLDER'],
-            feedback: "PLACEHOLDER"
-          }
+            heading: "Mixed volumes and copies",
+            text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+            answer: ['BF 408 .C55 2014', 'BF 408 .C55 2014 c.1', 'BF 408 .C55 2014 c.2', 'BF 408 .H3 2009 v.1', 'BF 408 .H3 2009 v.2', 'BF 408 .S22'],
+            feedback: "Sort by cutter letter first (.C before .H, .H before .S). When cutters match, items without volume/copy come before those with them. Among copies or volumes, sort numerically."
+          },
         }
       }
     },
