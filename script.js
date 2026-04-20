@@ -1,3 +1,7 @@
+// ============================================================
+// SECTION 1: APP CLASS
+// The core state manager. Defined first because everything depends on it.
+// ============================================================
 class App {
   constructor(element) {
     this.element = element;
@@ -63,537 +67,12 @@ class App {
   }
 }
 
-function animateTextIn(element) {
-  const myApp = getApp();
-  let buttonTarget;
-  if (myApp.view === 'view-onboarding') {
-    buttonTarget = $('#onboarding-next');
-  } else if (myApp.view === 'view-orientation') {
-    buttonTarget = $('#orientation-next');
-  }
-  buttonTarget.css('display', 'none');
-  const animatedElement = $(element);
-  const storedText = animatedElement.text();
-  const animationSpeed = 2;
-  animatedElement.height('unset');
-  animatedElement.width('unset');
-  animatedElement.height(animatedElement.height());
-  animatedElement.width(animatedElement.width());
-  animatedElement.text('');
-  animatedElement.css('display', 'inline-block');
-  let i = 0;
-  let timer = setInterval(function () {
-    if (i + 1 > storedText.length) {
-      animatedElement.text(`${animatedElement.text() + storedText.charAt(i)}`);
-      clearInterval(timer);
-      buttonTarget.fadeIn(0);
-    } else if (i + 2 > storedText.length) {
-      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i + 1)}`);
-      clearInterval(timer);
-      buttonTarget.fadeIn(0);
-    } else {
-      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i + 1)}`);
-    }
-    i = i + 2;
-  }, animationSpeed);
-}
-
-function checkQuizAnswers() {
-  // access config
-  const config = getConfig();
-  // access app instance
-  const myApp = getApp();
-  // access answer key for current view state in the config and save to answerKey array variable
-  const answerKey = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer;
-  // convert user's book list to an array
-  const userAnswers = $('.view-quiz').find($('.book')).toArray();
-  // set correct variable to 0
-  let correct = 0;
-
-  // loop through the answerKey array
-  for (let i = 0; i < answerKey.length; i++) {
-    if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
-      correct++;
-    } else {
-      break;
-    }
-  }
-
-  let element;
-  /* if correct counter is equal to the answerKey length,
-  then all answers are correct and user gets feedback and next button */
-  if (correct === answerKey.length) {
-    // grab feedback from config for current view
-    const feedback = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
-    // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
-    myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
-    /* otherwise, if correct counter is not equal to the answerKey length,
-    then user gets a try again button  */
-  } else {
-    // element = $('<p></p><button id="quiz-try-again">Try Again</button>');
-    myApp.displayModal(false, 'Not quite!', 'Double check the order and try again.', { text: 'Try again', id: 'quiz-try-again' });
-  }
-  // clears the submit button
-  // $("#quiz-message").empty();
-  // adds the element (either a next + feedback or try again)
-  // $("#quiz-message").append(element);
-}
-
-
-
-function checkPracticeAnswers() {
-  const myApp = getApp();
-  const answerKey = myApp[`${myApp.gamePhase}AnswerKey`];
-  const userAnswers = $('.view-practice').find('.book').toArray();
-
-  let correct = 0;
-
-  for (let i = 0; i < answerKey.length; i++) {
-    if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
-      correct++;
-    } else {
-      break;
-    }
-  }
-
-  if (correct === answerKey.length) {
-    myApp.displayModal(true, 'Correct!', 'Great Work! Move on to the next job.', { text: 'Next', id: 'practice-next' });
-  } else {
-    myApp.displayModal(false, 'Not quite!', 'You will be deployed to a new job and can try again.', { text: 'Try again', id: 'practice-try-again' });
-  }
-}
-
-/* shuffles answer array and display a book for each call number.
-        element is the quiz view and answer is the correct answer array from config
-        */
-function createBooks(element, answer) {
-  const decoration = [
-    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 106 449" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="106" height="449" fill="url(#paint0_linear_336_572)" fill-opacity="0.2"/>
-                    <rect x="33" y="75.4241" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 75.4241)" stroke="url(#paint1_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
-                    <rect x="33" y="150.272" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 150.272)" stroke="url(#paint2_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
-                    <rect x="33" y="225.12" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 225.12)" stroke="url(#paint3_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
-                    <rect x="33" y="299.968" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 299.968)" stroke="url(#paint4_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
-                    <rect x="33" y="374.816" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 374.816)" stroke="url(#paint5_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
-                    <defs>
-                        <linearGradient id="paint0_linear_336_572" x1="106" y1="224.5" x2="0" y2="224.5" gradientUnits="userSpaceOnUse">
-                            <stop/>
-                            <stop offset="0.25" stop-opacity="0.407407"/>
-                            <stop offset="0.75" stop-opacity="0"/>
-                            <stop offset="0.985577" stop-opacity="0.25"/>
-                        </linearGradient>
-                        <linearGradient id="paint1_linear_336_572" x1="47.4419" y1="75.4241" x2="47.4419" y2="104.308" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                        <linearGradient id="paint2_linear_336_572" x1="47.4419" y1="150.272" x2="47.4419" y2="179.156" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                        <linearGradient id="paint3_linear_336_572" x1="47.4419" y1="225.12" x2="47.4419" y2="254.004" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                        <linearGradient id="paint4_linear_336_572" x1="47.4419" y1="299.968" x2="47.4419" y2="328.852" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                        <linearGradient id="paint5_linear_336_572" x1="47.4419" y1="374.816" x2="47.4419" y2="403.7" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                    </defs>
-                </svg>`),
-    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 98 487" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="98" height="487" fill="url(#paint0_linear_336_570)" fill-opacity="0.2"/>
-                    <rect y="42" width="100%" height="11" fill="url(#paint1_linear_336_570)"/>
-                    <rect y="434" width="100%" height="11" fill="url(#paint2_linear_336_570)"/>
-                    <defs>
-                        <linearGradient id="paint0_linear_336_570" x1="98" y1="243.5" x2="0" y2="243.5" gradientUnits="userSpaceOnUse">
-                            <stop/>
-                            <stop offset="0.25" stop-opacity="0.407407"/>
-                            <stop offset="0.75" stop-opacity="0"/>
-                            <stop offset="0.985577" stop-opacity="0.25"/>
-                        </linearGradient>
-                        <linearGradient id="paint1_linear_336_570" x1="0" y1="47.5" x2="98" y2="47.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFCF76"/>
-                            <stop offset="0.25" stop-color="#FFDFA3"/>
-                            <stop offset="0.75" stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                        <linearGradient id="paint2_linear_336_570" x1="0" y1="439.5" x2="98" y2="439.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFCF76"/>
-                            <stop offset="0.25" stop-color="#FFDFA3"/>
-                            <stop offset="0.75" stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF76"/>
-                        </linearGradient>
-                    </defs>
-                </svg>`),
-    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 106 449" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="106" height="449" fill="url(#paint0_linear_336_571)" fill-opacity="0.2"/>
-                        <rect x="14" y="23" width="77" height="53" stroke="url(#paint1_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="14" y="93" width="77" height="53" stroke="url(#paint2_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="14" y="163" width="77" height="53" stroke="url(#paint3_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="14" y="233" width="77" height="53" stroke="url(#paint4_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="14" y="303" width="77" height="53" stroke="url(#paint5_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
-                        <rect x="14" y="373" width="77" height="53" stroke="url(#paint6_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
-                        <defs>
-                        <linearGradient id="paint0_linear_336_571" x1="106" y1="224.5" x2="0" y2="224.5" gradientUnits="userSpaceOnUse">
-                            <stop/>
-                            <stop offset="0.25" stop-opacity="0.407407"/>
-                            <stop offset="0.75" stop-opacity="0"/>
-                            <stop offset="0.985577" stop-opacity="0.25"/>
-                        </linearGradient>
-                        <linearGradient id="paint1_linear_336_571" x1="14" y1="49.5" x2="91" y2="49.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF77"/>
-                        </linearGradient>
-                        <linearGradient id="paint2_linear_336_571" x1="14" y1="119.5" x2="91" y2="119.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF77"/>
-                        </linearGradient>
-                        <linearGradient id="paint3_linear_336_571" x1="14" y1="189.5" x2="91" y2="189.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF77"/>
-                        </linearGradient>
-                        <linearGradient id="paint4_linear_336_571" x1="14" y1="259.5" x2="91" y2="259.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF77"/>
-                        </linearGradient>
-                        <linearGradient id="paint5_linear_336_571" x1="14" y1="329.5" x2="91" y2="329.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF77"/>
-                        </linearGradient>
-                        <linearGradient id="paint6_linear_336_571" x1="14" y1="399.5" x2="91" y2="399.5" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FFDFA3"/>
-                            <stop offset="1" stop-color="#FFCF77"/>
-                        </linearGradient>
-                    </defs>
-                </svg>`),
-    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 98 487" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="98" height="487" fill="url(#paint0_linear_336_592)" fill-opacity="0.2"/>
-                    <defs>
-                        <linearGradient id="paint0_linear_336_592" x1="98" y1="243.5" x2="0" y2="243.5" gradientUnits="userSpaceOnUse">
-                            <stop/>
-                            <stop offset="0.25" stop-opacity="0.407407"/>
-                            <stop offset="0.75" stop-opacity="0"/>
-                            <stop offset="0.985577" stop-opacity="0.25"/>
-                        </linearGradient>
-                    </defs>
-                </svg>`)];
-  let colorOptions = ['light-blue', 'light-green', 'red', 'yellow', 'purple', 'dark-green', 'dark-blue', 'maroon', 'orange'];
-  let sizes = ['1', '2', '3', '4', '5', '6', '7'];
-
-  // Helper to create a shuffled copy of an array
-  const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
-
-  // Initialize our "decks"
-  let colorDeck = shuffle(colorOptions);
-  let sizeDeck = shuffle(sizes);
-
-  let shuffledAnswers = shuffle(answer);
-  // finds the ul with class book-container inside the quiz view and save to bookContainer variable
-  let bookContainer = element.find('.book-container');
-  // clear any previous books from the container before adding new ones
-  bookContainer.empty();
-  // loop through each call number in the shuffled answers array
-  for (let i = 0; i < shuffledAnswers.length; i++) {
-    // 1. Refresh decks if they run out of unique items
-    if (colorDeck.length === 0) colorDeck = shuffle(colorOptions);
-    if (sizeDeck.length === 0) sizeDeck = shuffle(sizes);
-
-    // 2. "Pop" the last item off the shuffled deck to guarantee uniqueness
-    let color = colorDeck.pop();
-    let size = sizeDeck.pop();
-
-    // 3. Create and style the element
-    let bookElement = $(`<li class="book"><p>${shuffledAnswers[i]}</p></li>`);
-
-    $(decoration[Math.floor(Math.random() * (decoration.length))]).clone().appendTo(bookElement);
-
-    bookElement.addClass(`book-color-${color}`).addClass(`book-size-${size}`);
-    bookContainer.append(bookElement);
-  }
-}
-
-
-// advances the screen state to the next question, part, or module
-function incrementQuiz() {
-  // access app
-  const myApp = getApp();
-  // access config data
-  const config = getConfig();
-  // save module variable in app to currentModule (starts at 1)
-  const currentModule = myApp.module;
-  // save part variable in app to currentPart (starts at 1)
-  const currentPart = myApp.part;
-  // save question variable in app to currentQuestion (starts at 1)
-  const currentQuestion = myApp.question;
-
-  /* grabs the question keys and puts them in an array of length 3
-   (there are 3 questions in the part).
-   check if 3 is greater than the currentQuestion number (starts at 1)
-   */
-  if (Object.keys(config.quiz[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
-    // move to the next question in the same part if 3 is greater than currentQuestion
-    myApp.question++;
-  } else {
-    /* if currentQuestion is 3, grab the part keys in the module
-    and put them in an array of length 2 (there are 2 parts in the module)
-    check if 2 is greater than the currentPart number (starts at 1)*/
-    if (Object.keys(config.quiz[`module${myApp.module}`]).length > currentPart) {
-      // if on question 3 of part 1, then set question to 1 and increment part to 2
-      myApp.question = 1;
-      myApp.part++;
-      myApp.setView('view-module-overview');
-      loadModuleOverview();
-    } else {
-      /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
-      and put them in an array of length 3 (there are 3 modules).
-      check if 3 is greater than currentModule number (starts at 1)*/
-      if (Object.keys(config.quiz).length > currentModule) {
-        // set question to 1, part to 1, and increment module by 1
-        myApp.question = 1;
-        myApp.part = 1;
-        myApp.module++;
-        myApp.setView('view-module-overview');
-        loadModuleOverview();
-      } else {
-        // if none of these conditions are met (on the final question in the final part of the final module), return false
-        myApp.setView('view-practice-overview');
-      }
-    }
-    // if one of the conditions are met, return true
-  } return true;
-}
-
-
-function loadOnboarding() {
-  const myApp = getApp();
-  const config = getConfig();
-
-  // display current step text
-  const step = config.onboarding[myApp.onboardingStep];
-  $("#onboarding-text").text(step.text);
-  animateTextIn($('#onboarding-text'));
-
-  // increment step for next click
-  myApp.onboardingStep++;
-}
-
-function loadOrientation() {
-  const myApp = getApp();
-  const config = getConfig();
-
-  const step = config.orientation[myApp.orientationStep];
-  $("#orientation-text").text(step.text);
-  animateTextIn($('#orientation-text'));
-
-  if (step.image) {
-    $('#call-number-diagram').attr('src', step.image).show();
-  } else {
-    $('#call-number-diagram').hide();
-  }
-
-  myApp.orientationStep++;
-}
-
-function loadRead() {
-  const myApp = getApp();
-  const config = getConfig();
-
-  const readContent = config.quiz[`module${myApp.module}`][`part${myApp.part}`].read;
-  if (myApp.part === 2) {
-    $("#progress-bar").attr("progress", 4);
-  }
-
-  $("#read-eyebrow").text(`Module ${myApp.module}`);
-  $("#read-heading").text(readContent.heading);
-  $("#read-content").html(readContent.content);
-}
-
-// reads the current question from config and populates the quiz view
-function loadQuiz() {
-  // access config
-  const config = getConfig();
-  // select the view-quiz div and saves to viewElement variable
-  const viewElement = $('.view-quiz');
-  // access app instance
-  const myApp = getApp();
-  // sets h2 to the text found in heading key in config for the current view state in app instance
-  viewElement.find('.quiz-heading').text(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].heading);
-  // sets p to the text found in text key in config for the current view state in app instance
-  viewElement.find('.quiz-body').text(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].text);
-  // calls createBooks by passing in viewElement and the answer key content in config for the current view state in app instance
-  createBooks(viewElement, config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
-
-  $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
-}
-
-function loadPractice() {
-
-  const config = getConfig();
-
-  const viewElement = $('.view-practice');
-
-  const myApp = getApp();
-
-  viewElement.find('.practice-heading').text(config.practice[`level${myApp.level}`][myApp.gamePhase].heading);
-
-  viewElement.find('.practice-body').text(config.practice[`level${myApp.level}`][myApp.gamePhase].text);
-
-  let shuffledAnswer = shuffleLevel();
-
-  myApp[`${myApp.gamePhase}AnswerKey`] = shuffledAnswer;
-
-  createBooks(viewElement, shuffledAnswer);
-
-}
-
-function loadModuleOverview() {
-  const myApp = getApp();
-  const config = getConfig();
-  let moduleIteration = 1;
-
-  $(`#overview-cards`).empty();
-
-  for (let module in config.quiz) {
-    let partIteration = 1;
-    let completed = false;
-    let moduleCard = $(`
-            <div class="module-card">
-            <p class="module-title">Module ${moduleIteration}</p>
-            </div>
-        `);
-    if (myApp.module > moduleIteration) {
-      completed = true;
-    }
-    for (let part in config.quiz[module]) {
-      let completedPart = false;
-      if ((myApp.module === moduleIteration && myApp.part > partIteration) || completed) {
-        completedPart = true;
-      }
-      let partCard = $(`
-
-                <div class ="part-section" completed="${completedPart}">
-                <span class="material-symbols-outlined">${completedPart ? "check_circle" : "radio_button_unchecked"}</span>
-                <p><strong>Part ${partIteration}: </strong>${config.quiz[module][part].read.heading}</p>
-
-                </div>
-
-            `);
-      moduleCard.append(partCard);
-      partIteration++;
-    }
-    $(`#overview-cards`).append(moduleCard);
-    moduleIteration++;
-  }
-}
-
-$("button").on("click", function () {
-  // access app instance
-  const myApp = getApp();
-  // access the target attribute in the current view state
-  const target = $(this).attr("target");
-  // if the current view has a target attribute, call setView with the current target
-  if (target !== undefined) {
-    myApp.setView(target);
-  }
-  // if current view has nextQuestion attribute equal to true, then call loadQuiz()
-  if (target === "view-quiz") {
-    loadRead();
-  }
-  if (target === "view-onboarding") {
-    loadOnboarding();
-  }
-  if (target === "view-practice") {
-    loadPractice();
-  }
-});
-
-$(document).on("click", "#onboarding-next", function () {
-  const myApp = getApp();
-  const config = getConfig();
-
-  // if there are more steps, load the next one
-  if (myApp.onboardingStep < config.onboarding.length) {
-    loadOnboarding();
-  } else {
-    // otherwise transition to orientation
-    myApp.setView("view-orientation");
-    myApp.onboardingStep = 0; // reset for if they ever come back
-    loadOrientation();
-  }
-});
-
-$(document).on("click", "#orientation-next", function () {
-  const myApp = getApp();
-  const config = getConfig();
-
-  if (myApp.orientationStep < config.orientation.length) {
-    loadOrientation();
-  } else {
-    myApp.setView("view-module-overview");
-    loadModuleOverview();
-    myApp.orientationStep = 0;
-  }
-});
-
-$(document).on("click", "#read-next", function () {
-  $("#quiz-section").fadeIn(200);
-  $("#read-next").hide();
-  loadQuiz();
-});
-
-// call checkQuizAnswers on submit button click
-$(document).on("click", "#quiz-submit", function () {
-  checkQuizAnswers();
-});
-
-// advance to next quiz question
-$(document).on("click", "#quiz-next", function () {
-  const myApp = getApp();
-  const previousPart = myApp.part;
-  const previousModule = myApp.module;
-
-  myApp.hideModal();
-  incrementQuiz(); // this might change myApp.part
-
-  // if part changed after incrementing, load new read content
-  if (myApp.part !== previousPart || myApp.module !== previousModule) {
-    $("#quiz-section").hide();
-    $("#read-next").show();
-    loadRead();
-  } else {
-    loadQuiz();
-  }
-
-  $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
-});
-
-// reset submit button so user can try again and reshuffle books
-$(document).on("click", "#quiz-try-again", function () {
-  const myApp = getApp();
-  myApp.hideModal();
-  loadQuiz();
-  $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
-});
-
-$(document).on("click", "#practice-submit", function () {
-  checkPracticeAnswers();
-});
-
-$(document).on("click", "#practice-try-again", function () {
-  const myApp = getApp();
-  myApp.hideModal();
-  loadPractice();
-});
-
-$(document).on("click", "#practice-next", function () {
-  const myApp = getApp();
-  myApp.hideModal();
-  // incrementPractice() when shelfSort and QA are built
-});
+// ============================================================
+// SECTION 2: IIFE — STATE & CONFIG INITIALIZATION
+// Runs immediately. Creates the app instance and config data,
+// and exposes them globally via getApp(), getConfig(), getLetterMatrix().
+// Must come before any function that calls those getters.
+// ============================================================
 
 // self executes this function immediately
 const appState = (function () {
@@ -834,6 +313,75 @@ const appState = (function () {
           answer: ['PLACEHOLDER']
         }
       },
+      level2: {
+        cartSort: {
+          heading: "Task 1: Cart Sort",
+        },
+        shelfSort: {
+          heading: "Task 2: Shelf Sort",
+
+        },
+        QA: {
+          heading: "Task 3: Quality Assurance",
+
+        }
+      },
+      level3: {
+        cartSort: {
+          heading: "Task 1: Cart Sort",
+
+        },
+        shelfSort: {
+          heading: "Task 2: Shelf Sort",
+
+        },
+        QA: {
+          heading: "Task 3: Quality Assurance",
+
+        }
+      },
+      level4: {
+        cartSort: {
+          heading: "Task 1: Cart Sort",
+
+        },
+        shelfSort: {
+          heading: "Task 2: Shelf Sort",
+
+        },
+        QA: {
+          heading: "Task 3: Quality Assurance",
+
+        }
+      },
+      level5: {
+        cartSort: {
+          heading: "Task 1: Cart Sort",
+
+        },
+        shelfSort: {
+          heading: "Task 2: Shelf Sort",
+
+        },
+        QA: {
+          heading: "Task 3: Quality Assurance",
+
+        }
+      },
+      level6: {
+        cartSort: {
+          heading: "Task 1: Cart Sort",
+
+        },
+        shelfSort: {
+          heading: "Task 2: Shelf Sort",
+
+        },
+        QA: {
+          heading: "Task 3: Quality Assurance",
+
+        }
+      }
     }
   };
 
@@ -852,17 +400,543 @@ const appState = (function () {
   }
 })();
 
-$(function () {
-  $("#list1, #list2").sortable({
-    connectWith: "#list1, #list2",
-    tolerance: "pointer"
-  }).disableSelection();
-});
+// ============================================================
+// SECTION 3: SCREEN LOADER FUNCTIONS
+// These populate views with content from the config.
+// Ordered by the flow a user experiences:
+//   Title → Onboarding → Orientation → Module Overview → Quiz → Practice
+// ============================================================
 
-$(function () {
-  $(".book-container.module-quiz").sortable({ tolerance: "pointer" });
-  $(".book-container.module-quiz").disableSelection(); // Optional: Prevents text selection while dragging
-});
+function animateTextIn(element) {
+  const myApp = getApp();
+  let buttonTarget;
+  if (myApp.view === 'view-onboarding') {
+    buttonTarget = $('#onboarding-next');
+  } else if (myApp.view === 'view-orientation') {
+    buttonTarget = $('#orientation-next');
+  }
+  buttonTarget.css('display', 'none');
+  const animatedElement = $(element);
+  const storedText = animatedElement.text();
+  const animationSpeed = 2;
+  animatedElement.height('unset');
+  animatedElement.width('unset');
+  animatedElement.height(animatedElement.height());
+  animatedElement.width(animatedElement.width());
+  animatedElement.text('');
+  animatedElement.css('display', 'inline-block');
+  let i = 0;
+  let timer = setInterval(function () {
+    if (i + 1 > storedText.length) {
+      animatedElement.text(`${animatedElement.text() + storedText.charAt(i)}`);
+      clearInterval(timer);
+      buttonTarget.fadeIn(0);
+    } else if (i + 2 > storedText.length) {
+      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i + 1)}`);
+      clearInterval(timer);
+      buttonTarget.fadeIn(0);
+    } else {
+      animatedElement.text(`${animatedElement.text() + storedText.charAt(i) + storedText.charAt(i + 1)}`);
+    }
+    i = i + 2;
+  }, animationSpeed);
+}
+
+function loadOnboarding() {
+  const myApp = getApp();
+  const config = getConfig();
+
+  // display current step text
+  const step = config.onboarding[myApp.onboardingStep];
+  $("#onboarding-text").text(step.text);
+  animateTextIn($('#onboarding-text'));
+
+  // increment step for next click
+  myApp.onboardingStep++;
+}
+
+function loadOrientation() {
+  const myApp = getApp();
+  const config = getConfig();
+
+  const step = config.orientation[myApp.orientationStep];
+  $("#orientation-text").text(step.text);
+  animateTextIn($('#orientation-text'));
+
+  if (step.image) {
+    $('#call-number-diagram').attr('src', step.image).show();
+  } else {
+    $('#call-number-diagram').hide();
+  }
+
+  myApp.orientationStep++;
+}
+
+function loadModuleOverview() {
+  const myApp = getApp();
+  const config = getConfig();
+  let moduleIteration = 1;
+
+  $(`#overview-cards`).empty();
+
+  for (let module in config.quiz) {
+    let partIteration = 1;
+    let completed = false;
+    let moduleCard = $(`
+            <div class="module-card">
+            <p class="module-title">Module ${moduleIteration}</p>
+            </div>
+        `);
+    if (myApp.module > moduleIteration) {
+      completed = true;
+    }
+    for (let part in config.quiz[module]) {
+      let completedPart = false;
+      if ((myApp.module === moduleIteration && myApp.part > partIteration) || completed) {
+        completedPart = true;
+      }
+      let partCard = $(`
+
+                <div class ="part-section" completed="${completedPart}">
+                <span class="material-symbols-outlined">${completedPart ? "check_circle" : "radio_button_unchecked"}</span>
+                <p><strong>Part ${partIteration}: </strong>${config.quiz[module][part].read.heading}</p>
+
+                </div>
+
+            `);
+      moduleCard.append(partCard);
+      partIteration++;
+    }
+    $(`#overview-cards`).append(moduleCard);
+    moduleIteration++;
+  }
+}
+
+function loadRead() {
+  const myApp = getApp();
+  const config = getConfig();
+
+  const readContent = config.quiz[`module${myApp.module}`][`part${myApp.part}`].read;
+  if (myApp.part === 2) {
+    $("#progress-bar").attr("progress", 4);
+  }
+
+  $("#read-eyebrow").text(`Module ${myApp.module}`);
+  $("#read-heading").text(readContent.heading);
+  $("#read-content").html(readContent.content);
+}
+
+// reads the current question from config and populates the quiz view
+function loadQuiz() {
+  // access config
+  const config = getConfig();
+  // select the view-quiz div and saves to viewElement variable
+  const viewElement = $('.view-quiz');
+  // access app instance
+  const myApp = getApp();
+  // sets h2 to the text found in heading key in config for the current view state in app instance
+  viewElement.find('.quiz-heading').text(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].heading);
+  // sets p to the text found in text key in config for the current view state in app instance
+  viewElement.find('.quiz-body').text(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].text);
+  // calls createBooks by passing in viewElement and the answer key content in config for the current view state in app instance
+  createBooks(viewElement, config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
+
+  $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
+}
+
+function loadPracticeOverview() {
+  const myApp = getApp();
+  const config = getConfig();
+
+  const phases = ['cartSort', 'shelfSort', 'QA'];
+  const phaseLabels = {
+    cartSort: 'Cart Sort',
+    shelfSort: 'Shelf Sort',
+    QA: 'Quality Assurance'
+  };
+
+  const currentPhaseIndex = phases.indexOf(myApp.gamePhase);
+
+  $('#practice-overview-cards').empty();
+
+  let levelIteration = 1;
+
+  for (let level in config.practice) {
+    let levelCard;
+
+    if (levelIteration < myApp.level) {
+      levelCard = $(`
+        <div class ="module-card">
+          <div class="part-section" completed="true">
+            <span class="material-symbols-outlined">check_circle</span>
+            <p><strong>Level ${levelIteration}</strong></p>
+          </div>
+        </div>
+      `);
+    } else if (levelIteration === myApp.level) {
+      levelCard = $(`
+        <div class="module-card">
+          <p class="module-title">Level ${levelIteration}</p>
+        </div>
+      `)
+
+      for (let i = 0; i < phases.length; i++) {
+        let phaseCompleted = i < currentPhaseIndex;
+        let phaseCurrent = i === currentPhaseIndex;
+        let icon = phaseCompleted ? 'check_circle' : phaseCurrent ? 'pending' : 'radio_button_unchecked';
+        let completedAttr = phaseCompleted ? 'true' : 'false';
+
+        let phaseCard = $(`
+          <div class="part-section" completed="${completedAttr}">
+            <span class="material-symbols-outlined">${icon}</span>
+            <p>${phaseLabels[phases[i]]}</p>
+          </div>
+        `)
+        levelCard.append(phaseCard);
+      }
+    } else {
+      levelCard = $(`
+        <div class="module-card">
+          <div class="part-section" completed="false">
+            <span class="material-symbols-outlined">radio_button_unchecked</span>
+            <p><strong>Level ${levelIteration}</strong></p>
+          </div>
+        </div>
+      `);
+    }
+
+    $('#practice-overview-cards').append(levelCard);
+    levelIteration++;
+  }
+}
+
+function loadPractice() {
+
+  const config = getConfig();
+
+  const viewElement = $('.view-practice');
+
+  const myApp = getApp();
+
+  viewElement.find('.practice-heading').text(config.practice[`level${myApp.level}`][myApp.gamePhase].heading);
+
+  viewElement.find('.practice-body').text(config.practice[`level${myApp.level}`][myApp.gamePhase].text);
+
+  let shuffledAnswer = shuffleLevel();
+
+  myApp[`${myApp.gamePhase}AnswerKey`] = shuffledAnswer;
+
+  createBooks(viewElement, shuffledAnswer);
+}
+
+// ============================================================
+// SECTION 4: ANSWER CHECKING FUNCTIONS
+// Called when the user submits an answer.
+// ============================================================
+
+function checkQuizAnswers() {
+  // access config
+  const config = getConfig();
+  // access app instance
+  const myApp = getApp();
+  // access answer key for current view state in the config and save to answerKey array variable
+  const answerKey = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer;
+  // convert user's book list to an array
+  const userAnswers = $('.view-quiz').find($('.book')).toArray();
+  // set correct variable to 0
+  let correct = 0;
+
+  // loop through the answerKey array
+  for (let i = 0; i < answerKey.length; i++) {
+    if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
+      correct++;
+    } else {
+      break;
+    }
+  }
+
+  let element;
+  /* if correct counter is equal to the answerKey length,
+  then all answers are correct and user gets feedback and next button */
+  if (correct === answerKey.length) {
+    // grab feedback from config for current view
+    const feedback = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
+    // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
+    myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
+    /* otherwise, if correct counter is not equal to the answerKey length,
+    then user gets a try again button  */
+  } else {
+    // element = $('<p></p><button id="quiz-try-again">Try Again</button>');
+    myApp.displayModal(false, 'Not quite!', 'Double check the order and try again.', { text: 'Try again', id: 'quiz-try-again' });
+  }
+  // clears the submit button
+  // $("#quiz-message").empty();
+  // adds the element (either a next + feedback or try again)
+  // $("#quiz-message").append(element);
+}
+
+function checkPracticeAnswers() {
+  const myApp = getApp();
+  const answerKey = myApp[`${myApp.gamePhase}AnswerKey`];
+  const userAnswers = $('.view-practice').find('.book').toArray();
+
+  let correct = 0;
+
+  for (let i = 0; i < answerKey.length; i++) {
+    if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
+      correct++;
+    } else {
+      break;
+    }
+  }
+
+  if (correct === answerKey.length) {
+    myApp.displayModal(true, 'Correct!', 'Great Work! Move on to the next job.', { text: 'Next', id: 'practice-next' });
+  } else {
+    myApp.displayModal(false, 'Not quite!', 'You will be deployed to a new job and can try again.', { text: 'Try again', id: 'practice-try-again' });
+  }
+}
+
+// ============================================================
+// SECTION 5: PROGRESSION FUNCTIONS
+// Control what happens after a correct answer — what loads next.
+// ============================================================
+
+// advances the screen state to the next question, part, or module
+function incrementQuiz() {
+  // access app
+  const myApp = getApp();
+  // access config data
+  const config = getConfig();
+  // save module variable in app to currentModule (starts at 1)
+  const currentModule = myApp.module;
+  // save part variable in app to currentPart (starts at 1)
+  const currentPart = myApp.part;
+  // save question variable in app to currentQuestion (starts at 1)
+  const currentQuestion = myApp.question;
+
+  /* grabs the question keys and puts them in an array of length 3
+   (there are 3 questions in the part).
+   check if 3 is greater than the currentQuestion number (starts at 1)
+   */
+  if (Object.keys(config.quiz[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
+    // move to the next question in the same part if 3 is greater than currentQuestion
+    myApp.question++;
+  } else {
+    /* if currentQuestion is 3, grab the part keys in the module
+    and put them in an array of length 2 (there are 2 parts in the module)
+    check if 2 is greater than the currentPart number (starts at 1)*/
+    if (Object.keys(config.quiz[`module${myApp.module}`]).length > currentPart) {
+      // if on question 3 of part 1, then set question to 1 and increment part to 2
+      myApp.question = 1;
+      myApp.part++;
+      myApp.setView('view-module-overview');
+      loadModuleOverview();
+    } else {
+      /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
+      and put them in an array of length 3 (there are 3 modules).
+      check if 3 is greater than currentModule number (starts at 1)*/
+      if (Object.keys(config.quiz).length > currentModule) {
+        // set question to 1, part to 1, and increment module by 1
+        myApp.question = 1;
+        myApp.part = 1;
+        myApp.module++;
+        myApp.setView('view-module-overview');
+        loadModuleOverview();
+      } else {
+        // if none of these conditions are met (on the final question in the final part of the final module), return false
+        myApp.setView('view-practice-overview');
+      }
+    }
+    // if one of the conditions are met, return true
+  } return true;
+}
+
+function incrementPractice() {
+  const myApp = getApp();
+  const config = getConfig();
+  const currentLevel = myApp.level;
+  const currentPhase = myApp.gamePhase;
+
+  const phases = ['cartSort', 'shelfSort', 'QA'];
+  const currentPhaseIndex = phases.indexOf(currentPhase);
+
+  // if there are more phases in this level, move to the next one
+  if (currentPhaseIndex > phases.length - 1) {
+    myApp.gamePhase = phases[currentPhaseIndex + 1];
+    loadPractice();
+  } else {
+    // all three phases done — check if there are more levels
+    if (Object.keys(config.practice).length > currentLevel) {
+      // reset phase and increment level
+      myApp.gamePhase = 'cartSort';
+      myApp.level++;
+      myApp.setView('view-practice-overview');
+    } else {
+      myApp.setView('view-end');
+    }
+  }
+  return true;
+}
+
+// ============================================================
+// SECTION 6: UTILITY / HELPER FUNCTIONS
+// Supporting functions used by loaders and progression above.
+// No direct user interaction — called by other functions.
+// ============================================================
+
+/* shuffles answer array and display a book for each call number.
+        element is the quiz view and answer is the correct answer array from config
+        */
+function createBooks(element, answer) {
+  const decoration = [
+    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 106 449" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="106" height="449" fill="url(#paint0_linear_336_572)" fill-opacity="0.2"/>
+                    <rect x="33" y="75.4241" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 75.4241)" stroke="url(#paint1_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="33" y="150.272" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 150.272)" stroke="url(#paint2_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="33" y="225.12" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 225.12)" stroke="url(#paint3_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="33" y="299.968" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 299.968)" stroke="url(#paint4_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
+                    <rect x="33" y="374.816" width="28.8839" height="28.8839" rx="2" transform="rotate(-45 33 374.816)" stroke="url(#paint5_linear_336_572)" stroke-width="3" stroke-linejoin="round"/>
+                    <defs>
+                        <linearGradient id="paint0_linear_336_572" x1="106" y1="224.5" x2="0" y2="224.5" gradientUnits="userSpaceOnUse">
+                            <stop/>
+                            <stop offset="0.25" stop-opacity="0.407407"/>
+                            <stop offset="0.75" stop-opacity="0"/>
+                            <stop offset="0.985577" stop-opacity="0.25"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_336_572" x1="47.4419" y1="75.4241" x2="47.4419" y2="104.308" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                        <linearGradient id="paint2_linear_336_572" x1="47.4419" y1="150.272" x2="47.4419" y2="179.156" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                        <linearGradient id="paint3_linear_336_572" x1="47.4419" y1="225.12" x2="47.4419" y2="254.004" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                        <linearGradient id="paint4_linear_336_572" x1="47.4419" y1="299.968" x2="47.4419" y2="328.852" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                        <linearGradient id="paint5_linear_336_572" x1="47.4419" y1="374.816" x2="47.4419" y2="403.7" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                    </defs>
+                </svg>`),
+    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 98 487" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="98" height="487" fill="url(#paint0_linear_336_570)" fill-opacity="0.2"/>
+                    <rect y="42" width="100%" height="11" fill="url(#paint1_linear_336_570)"/>
+                    <rect y="434" width="100%" height="11" fill="url(#paint2_linear_336_570)"/>
+                    <defs>
+                        <linearGradient id="paint0_linear_336_570" x1="98" y1="243.5" x2="0" y2="243.5" gradientUnits="userSpaceOnUse">
+                            <stop/>
+                            <stop offset="0.25" stop-opacity="0.407407"/>
+                            <stop offset="0.75" stop-opacity="0"/>
+                            <stop offset="0.985577" stop-opacity="0.25"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_336_570" x1="0" y1="47.5" x2="98" y2="47.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFCF76"/>
+                            <stop offset="0.25" stop-color="#FFDFA3"/>
+                            <stop offset="0.75" stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                        <linearGradient id="paint2_linear_336_570" x1="0" y1="439.5" x2="98" y2="439.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFCF76"/>
+                            <stop offset="0.25" stop-color="#FFDFA3"/>
+                            <stop offset="0.75" stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF76"/>
+                        </linearGradient>
+                    </defs>
+                </svg>`),
+    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 106 449" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="106" height="449" fill="url(#paint0_linear_336_571)" fill-opacity="0.2"/>
+                        <rect x="14" y="23" width="77" height="53" stroke="url(#paint1_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
+                        <rect x="14" y="93" width="77" height="53" stroke="url(#paint2_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
+                        <rect x="14" y="163" width="77" height="53" stroke="url(#paint3_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
+                        <rect x="14" y="233" width="77" height="53" stroke="url(#paint4_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
+                        <rect x="14" y="303" width="77" height="53" stroke="url(#paint5_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
+                        <rect x="14" y="373" width="77" height="53" stroke="url(#paint6_linear_336_571)" stroke-width="3" stroke-linejoin="round"/>
+                        <defs>
+                        <linearGradient id="paint0_linear_336_571" x1="106" y1="224.5" x2="0" y2="224.5" gradientUnits="userSpaceOnUse">
+                            <stop/>
+                            <stop offset="0.25" stop-opacity="0.407407"/>
+                            <stop offset="0.75" stop-opacity="0"/>
+                            <stop offset="0.985577" stop-opacity="0.25"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_336_571" x1="14" y1="49.5" x2="91" y2="49.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF77"/>
+                        </linearGradient>
+                        <linearGradient id="paint2_linear_336_571" x1="14" y1="119.5" x2="91" y2="119.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF77"/>
+                        </linearGradient>
+                        <linearGradient id="paint3_linear_336_571" x1="14" y1="189.5" x2="91" y2="189.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF77"/>
+                        </linearGradient>
+                        <linearGradient id="paint4_linear_336_571" x1="14" y1="259.5" x2="91" y2="259.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF77"/>
+                        </linearGradient>
+                        <linearGradient id="paint5_linear_336_571" x1="14" y1="329.5" x2="91" y2="329.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF77"/>
+                        </linearGradient>
+                        <linearGradient id="paint6_linear_336_571" x1="14" y1="399.5" x2="91" y2="399.5" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#FFDFA3"/>
+                            <stop offset="1" stop-color="#FFCF77"/>
+                        </linearGradient>
+                    </defs>
+                </svg>`),
+    $(`<svg preserveAspectRatio="none" class="book-decoration" width="100%" height="100%" viewBox="0 0 98 487" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="98" height="487" fill="url(#paint0_linear_336_592)" fill-opacity="0.2"/>
+                    <defs>
+                        <linearGradient id="paint0_linear_336_592" x1="98" y1="243.5" x2="0" y2="243.5" gradientUnits="userSpaceOnUse">
+                            <stop/>
+                            <stop offset="0.25" stop-opacity="0.407407"/>
+                            <stop offset="0.75" stop-opacity="0"/>
+                            <stop offset="0.985577" stop-opacity="0.25"/>
+                        </linearGradient>
+                    </defs>
+                </svg>`)];
+  let colorOptions = ['light-blue', 'light-green', 'red', 'yellow', 'purple', 'dark-green', 'dark-blue', 'maroon', 'orange'];
+  let sizes = ['1', '2', '3', '4', '5', '6', '7'];
+
+  // Helper to create a shuffled copy of an array
+  const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
+
+  // Initialize our "decks"
+  let colorDeck = shuffle(colorOptions);
+  let sizeDeck = shuffle(sizes);
+
+  let shuffledAnswers = shuffle(answer);
+  // finds the ul with class book-container inside the quiz view and save to bookContainer variable
+  let bookContainer = element.find('.book-container');
+  // clear any previous books from the container before adding new ones
+  bookContainer.empty();
+  // loop through each call number in the shuffled answers array
+  for (let i = 0; i < shuffledAnswers.length; i++) {
+    // 1. Refresh decks if they run out of unique items
+    if (colorDeck.length === 0) colorDeck = shuffle(colorOptions);
+    if (sizeDeck.length === 0) sizeDeck = shuffle(sizes);
+
+    // 2. "Pop" the last item off the shuffled deck to guarantee uniqueness
+    let color = colorDeck.pop();
+    let size = sizeDeck.pop();
+
+    // 3. Create and style the element
+    let bookElement = $(`<li class="book"><p>${shuffledAnswers[i]}</p></li>`);
+
+    $(decoration[Math.floor(Math.random() * (decoration.length))]).clone().appendTo(bookElement);
+
+    bookElement.addClass(`book-color-${color}`).addClass(`book-size-${size}`);
+    bookContainer.append(bookElement);
+  }
+}
 
 // 1. parse call number function, one parameter (call number string)
 function parseCallNumber(callNumber) {
@@ -1147,6 +1221,135 @@ function shuffleLevel() {
   // loop through array and shift all call numbers and store shifted call numbers in a new array
   // return the array of shifted call numbers
 }
+
+// ============================================================
+// SECTION 7: EVENT LISTENERS
+// All click handlers in one place at the bottom.
+// Ordered by user flow: title → onboarding → orientation → quiz → practice
+// ============================================================
+
+// drag and drop initialization 
+$(function () {
+  $("#list1, #list2").sortable({
+    connectWith: "#list1, #list2",
+    tolerance: "pointer"
+  }).disableSelection();
+});
+
+$(function () {
+  $(".book-container.module-quiz").sortable({ tolerance: "pointer" });
+  $(".book-container.module-quiz").disableSelection(); // Optional: Prevents text selection while dragging
+});
+
+$("button").on("click", function () {
+  // access app instance
+  const myApp = getApp();
+  // access the target attribute in the current view state
+  const target = $(this).attr("target");
+  // if the current view has a target attribute, call setView with the current target
+  if (target !== undefined) {
+    myApp.setView(target);
+  }
+  // if current view has nextQuestion attribute equal to true, then call loadQuiz()
+  if (target === "view-quiz") {
+    loadRead();
+  }
+  if (target === "view-onboarding") {
+    loadOnboarding();
+  }
+  if (target === "view-practice") {
+    loadPractice();
+  }
+});
+
+$(document).on("click", "#onboarding-next", function () {
+  const myApp = getApp();
+  const config = getConfig();
+
+  // if there are more steps, load the next one
+  if (myApp.onboardingStep < config.onboarding.length) {
+    loadOnboarding();
+  } else {
+    // otherwise transition to orientation
+    myApp.setView("view-orientation");
+    myApp.onboardingStep = 0; // reset for if they ever come back
+    loadOrientation();
+  }
+});
+
+$(document).on("click", "#orientation-next", function () {
+  const myApp = getApp();
+  const config = getConfig();
+
+  if (myApp.orientationStep < config.orientation.length) {
+    loadOrientation();
+  } else {
+    myApp.setView("view-module-overview");
+    loadModuleOverview();
+    myApp.orientationStep = 0;
+  }
+});
+
+$(document).on("click", "#read-next", function () {
+  $("#quiz-section").fadeIn(200);
+  $("#read-next").hide();
+  loadQuiz();
+});
+
+// call checkQuizAnswers on submit button click
+$(document).on("click", "#quiz-submit", function () {
+  checkQuizAnswers();
+});
+
+// advance to next quiz question
+$(document).on("click", "#quiz-next", function () {
+  const myApp = getApp();
+  const previousPart = myApp.part;
+  const previousModule = myApp.module;
+
+  myApp.hideModal();
+  incrementQuiz(); // this might change myApp.part
+
+  // if part changed after incrementing, load new read content
+  if (myApp.part !== previousPart || myApp.module !== previousModule) {
+    $("#quiz-section").hide();
+    $("#read-next").show();
+    loadRead();
+  } else {
+    loadQuiz();
+  }
+
+  $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
+});
+
+// reset submit button so user can try again and reshuffle books
+$(document).on("click", "#quiz-try-again", function () {
+  const myApp = getApp();
+  myApp.hideModal();
+  loadQuiz();
+  $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
+});
+
+$(document).on("click", "#practice-submit", function () {
+  checkPracticeAnswers();
+});
+
+$(document).on("click", "#practice-try-again", function () {
+  const myApp = getApp();
+  myApp.hideModal();
+  loadPractice();
+});
+
+$(document).on("click", "#practice-next", function () {
+  const myApp = getApp();
+  myApp.hideModal();
+  incrementPractice();
+});
+
+// ============================================================
+// SECTION 8: DOCUMENT READY
+// Entry point — kicks everything off.
+// ============================================================
 
 $(document).ready(function () {
   let myApp = getApp();
