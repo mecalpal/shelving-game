@@ -1355,6 +1355,6 @@ $(document).on("click", "#practice-next", function () {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-module-overview');
+  myApp.setView('view-title');
   //loadModuleOverview();
 });
