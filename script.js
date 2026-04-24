@@ -1,3 +1,21 @@
+// Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDK1b9QLYxiP2Q_Y9AlbwpdBjBkR0uEroU",
+  authDomain: "the-shelving-game.firebaseapp.com",
+  projectId: "the-shelving-game",
+  storageBucket: "the-shelving-game.firebasestorage.app",
+  messagingSenderId: "68391362762",
+  appId: "1:68391362762:web:f85d19288c1428a4545433",
+  measurementId: "G-FXBXX9GTWD"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+
 // ============================================================
 // SECTION 1: APP CLASS
 // The core state manager. Defined first because everything depends on it.
@@ -1230,6 +1248,44 @@ function shuffleLevel() {
 // Ordered by user flow: title → onboarding → orientation → quiz → practice
 // ============================================================
 
+function switchLoginTab(tab) {
+  if (tab === 'login') {
+    $('#loginPanel').show();
+    $('#signupPanel').hide();
+  } else {
+    $('#loginPanel').hide();
+    $('#signupPanel').show();
+  }
+  $('.login-tab').removeClass('active');
+  if (tab === 'login') {
+    $('.login-tab').first().addClass('active');
+  } else {
+    $('.login-tab').last().addClass('active');
+  }
+}
+
+async function handleLogin() {
+  const email = $('#login-email').val();
+  const password = $('#login-password').val();
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    // onAuthStateChanged will fire automatically and switch the view
+  } catch (err) {
+    $('#login-error').text('Incorrect email or password.').show();
+  }
+}
+
+async function handleSignup() {
+  const email = $('#signup-email').val();
+  const password = $('#signup-password').val();
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    // onAuthStateChanged fires automatically
+  } catch (err) {
+    $('#signup-error').text(err.message).show();
+  }
+}
+
 // drag and drop initialization 
 $(function () {
   $("#list1, #list2").sortable({
@@ -1348,6 +1404,22 @@ $(document).on("click", "#practice-next", function () {
   incrementPractice();
 });
 
+$(document).on('click', '#tab-login', function () {
+  switchLoginTab('login');
+});
+
+$(document).on('click', '#tab-signup', function () {
+  switchLoginTab('signup');
+});
+
+$(document).on('click', '#loginBtn', function () {
+  handleLogin();
+});
+
+$(document).on('click', '#signupBtn', function () {
+  handleSignup();
+});
+
 // ============================================================
 // SECTION 8: DOCUMENT READY
 // Entry point — kicks everything off.
@@ -1355,6 +1427,17 @@ $(document).on("click", "#practice-next", function () {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-title');
-  //loadModuleOverview();
+
+  // Show login first while Firebase checks auth status
+  myApp.setView('view-login');
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is already logged in — skip login, go to title
+      myApp.setView('view-title');
+    } else {
+      // Not logged in — show login
+      myApp.setView('view-login');
+    }
+  });
 });
