@@ -1428,16 +1428,17 @@ $(document).on('click', '#signupBtn', function () {
 $(document).ready(function () {
   let myApp = getApp();
 
-  // Show login first while Firebase checks auth status
+  // Show login immediately while Firebase checks
   myApp.setView('view-login');
 
-  onAuthStateChanged(auth, (user) => {
+  // unsubscribe after first call so it only runs once
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    unsubscribe(); // stop listening after first check
     if (user) {
-      // User is already logged in — skip login, go to title
       myApp.setView('view-title');
     } else {
-      // Not logged in — show login
       myApp.setView('view-login');
     }
   });
 });
+
