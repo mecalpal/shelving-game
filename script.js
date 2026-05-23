@@ -233,66 +233,66 @@ const appState = (function () {
               answer: ['DS 135 .S55', 'DS 135 .S55 A12', 'DS 135 .S55 A212', 'DS 135 .S55 H378', 'DS 135 .S55 H52'],
               feedback: "A call number with no additional cutter comes before one that has one."
             }
-          },
-          module3: {
-            part1: {
-              read: {
-                heading: "Publication Year",
-                content: `<ul>
+          }
+        },
+        module3: {
+          part1: {
+            read: {
+              heading: "Publication Year",
+              content: `<ul>
                             <li>Appears at the end of a call number, indicates the year the item was published.</li>
                             <li>Occasionally, the year may appear <strong>before</strong> the cutter.</li>
                             <li>Sorted chronologically: earlier year first.</li>
                             <li><strong>1978 &lt; 2007</strong></li>
                          </ul>`
-              },
-              question1: {
-                heading: "Same base, different years",
-                text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-                answer: ['LA 212 .R423', 'LA 212 .R423 2005', 'LA 212 .R423 2010', 'LA 212 .R423 2022'],
-                feedback: "A call number with no year shelves before its dated edition. Dated editions sort chronologically. "
-              },
-              question2: {
-                heading: "Mixed shelf, some with years",
-                text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-                answer: ['BF 408 .C55', 'BF 408 .C55 2014', 'BF 408 .H3 2009', 'BF 408 .S22'],
-                feedback: "Sort by cutter first. When two items share the same cutter, the one without a year shelves first. Notice that .H3 has a year but still shelves before .S22, which has none. A year only affects placement when two items share the same cutter."
-              },
-              question3: {
-                heading: "Mixed shelf, some with years",
-                text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-                answer: ['PS 1234 .A3', 'PS 1234 .A3 1995', 'PS 1234 .A3 2008', 'PS 1234 .B12 2001', 'PS 1234 .C44'],
-                feedback: "Sort by cutter first. .A3 comes before .B12, .B12 comes before .C44. Within the same .A3 group, no year shelves first, then sort the rest chronologically. .B12 has a year and .C44 does not, but .B12 still shelves first because B comes before C."
-              }
             },
-            part2: {
-              read: {
-                heading: "Volume/Copy",
-                content: `<ul>
+            question1: {
+              heading: "Same base, different years",
+              text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
+              answer: ['LA 212 .R423', 'LA 212 .R423 2005', 'LA 212 .R423 2010', 'LA 212 .R423 2022'],
+              feedback: "A call number with no year shelves before its dated edition. Dated editions sort chronologically. "
+            },
+            question2: {
+              heading: "Mixed shelf, some with years",
+              text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
+              answer: ['BF 408 .C55', 'BF 408 .C55 2014', 'BF 408 .H3 2009', 'BF 408 .S22'],
+              feedback: "Sort by cutter first. When two items share the same cutter, the one without a year shelves first. Notice that .H3 has a year but still shelves before .S22, which has none. A year only affects placement when two items share the same cutter."
+            },
+            question3: {
+              heading: "Mixed shelf, some with years",
+              text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
+              answer: ['PS 1234 .A3', 'PS 1234 .A3 1995', 'PS 1234 .A3 2008', 'PS 1234 .B12 2001', 'PS 1234 .C44'],
+              feedback: "Sort by cutter first. .A3 comes before .B12, .B12 comes before .C44. Within the same .A3 group, no year shelves first, then sort the rest chronologically. .B12 has a year and .C44 does not, but .B12 still shelves first because B comes before C."
+            }
+          },
+          part2: {
+            read: {
+              heading: "Volume/Copy",
+              content: `<ul>
                             <li>Appears at the end of a call number, indicates which volume or copy of a work the item is. Volume refers to an item in a multi-volume series, whereas copy refers to a duplicate of the same item.</li>
                             <li>Sorted numerically: lowest number first.</li>
                             <li><strong>v.1 &lt; v.2 &lt; v.3</strong></li>
                             <li><strong>c.1 &lt; c.2</strong></li>
                         </ul>`
-              },
-              question1: {
-                heading: "Same base, different volumes",
-                text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
-                answer: ['HQ 1870 .A5 v.1', 'HQ 1870 .A5 v.2', 'HQ 1870 .A5 v.3'],
-                feedback: "When the entire base call number is identical, volumes sort numerically. v.1 comes before v.2, which comes before v.3."
-              },
-              question2: {
-                heading: "With and without volume, same base",
-                text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
-                answer: ['GV 706 .R423 M34', 'GV 706 .R423 M34 v.1', 'GV 706 .R423 M34 v.2', 'GV 706 .R423 M34 v.3'],
-                feedback: "A call number without a volume designation comes before the same call number with one. Among volumes, sort numerically: v.1 before v.2 before v.3."
-              },
-              question3: {
-                heading: "Mixed volumes and copies",
-                text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
-                answer: ['BF 408 .C55 2014', 'BF 408 .C55 2014 c.1', 'BF 408 .C55 2014 c.2', 'BF 408 .H3 2009 v.1', 'BF 408 .H3 2009 v.2', 'BF 408 .S22'],
-                feedback: "Sort by cutter letter first (.C before .H, .H before .S). When cutters match, items without volume/copy come before those with them. Among copies or volumes, sort numerically."
-              },
-            }
+            },
+            question1: {
+              heading: "Same base, different volumes",
+              text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+              answer: ['HQ 1870 .A5 v.1', 'HQ 1870 .A5 v.2', 'HQ 1870 .A5 v.3'],
+              feedback: "When the entire base call number is identical, volumes sort numerically. v.1 comes before v.2, which comes before v.3."
+            },
+            question2: {
+              heading: "With and without volume, same base",
+              text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+              answer: ['GV 706 .R423 M34', 'GV 706 .R423 M34 v.1', 'GV 706 .R423 M34 v.2', 'GV 706 .R423 M34 v.3'],
+              feedback: "A call number without a volume designation comes before the same call number with one. Among volumes, sort numerically: v.1 before v.2 before v.3."
+            },
+            question3: {
+              heading: "Mixed volumes and copies",
+              text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+              answer: ['BF 408 .C55 2014', 'BF 408 .C55 2014 c.1', 'BF 408 .C55 2014 c.2', 'BF 408 .H3 2009 v.1', 'BF 408 .H3 2009 v.2', 'BF 408 .S22'],
+              feedback: "Sort by cutter letter first (.C before .H, .H before .S). When cutters match, items without volume/copy come before those with them. Among copies or volumes, sort numerically."
+            },
           }
         }
       },
@@ -372,12 +372,8 @@ const appState = (function () {
     },
 
     dewey: {
-      onboarding: {
-
-      },
-      orientation: {
-
-      },
+      onboarding: [],
+      orientation: [],
       training: {
         module1: {
           part1: {
