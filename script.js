@@ -12,11 +12,11 @@ class App {
     this.question = 1;
     this.onboardingStep = 0;
     this.orientationStep = 0;
+    this.pathway = 'lcc';
     this.level = 1;
     this.gamePhase = 'cartSort';
     this.cartSortAnswerKey = [];
-    this.shelfSortAnswerKey = [];
-    this.QAAnswerKey = [];
+    this.deliveryAnswerKey = [];
   }
 
   // sets a view and hides all others
@@ -643,7 +643,7 @@ function loadOnboarding() {
   const config = getConfig();
 
   // display current step text
-  const step = config.onboarding[myApp.onboardingStep];
+  const step = config[myApp.pathway].onboarding[myApp.onboardingStep];
   $("#onboarding-text").text(step.text);
   animateTextIn($('#onboarding-text'));
 
@@ -655,7 +655,7 @@ function loadOrientation() {
   const myApp = getApp();
   const config = getConfig();
 
-  const step = config.orientation[myApp.orientationStep];
+  const step = config[myApp.pathway].orientation[myApp.orientationStep];
   $("#orientation-text").text(step.text);
   animateTextIn($('#orientation-text'));
 
@@ -675,7 +675,7 @@ function loadModuleOverview() {
 
   $(`#overview-cards`).empty();
 
-  for (let module in config.quiz) {
+  for (let module in config[myApp.pathway].training) {
     let partIteration = 1;
     let completed = false;
     let moduleCard = $(`
@@ -686,7 +686,7 @@ function loadModuleOverview() {
     if (myApp.module > moduleIteration) {
       completed = true;
     }
-    for (let part in config.quiz[module]) {
+    for (let part in config[myApp.pathway].training[module]) {
       let completedPart = false;
       if ((myApp.module === moduleIteration && myApp.part > partIteration) || completed) {
         completedPart = true;
@@ -695,7 +695,7 @@ function loadModuleOverview() {
 
                 <div class ="part-section" completed="${completedPart}">
                 <span class="material-symbols-outlined">${completedPart ? "check_circle" : "radio_button_unchecked"}</span>
-                <p><strong>Part ${partIteration}: </strong>${config.quiz[module][part].read.heading}</p>
+                <p><strong>Part ${partIteration}: </strong>${config[myApp.pathway].training[module][part].read.heading}</p>
 
                 </div>
 
@@ -712,7 +712,7 @@ function loadRead() {
   const myApp = getApp();
   const config = getConfig();
 
-  const readContent = config.quiz[`module${myApp.module}`][`part${myApp.part}`].read;
+  const readContent = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`].read;
   if (myApp.part === 2) {
     $("#progress-bar").attr("progress", 4);
   }
@@ -731,11 +731,11 @@ function loadQuiz() {
   // access app instance
   const myApp = getApp();
   // sets h2 to the text found in heading key in config for the current view state in app instance
-  viewElement.find('.quiz-heading').text(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].heading);
+  viewElement.find('.quiz-heading').text(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].heading);
   // sets p to the text found in text key in config for the current view state in app instance
-  viewElement.find('.quiz-body').text(config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].text);
+  viewElement.find('.quiz-body').text(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].text);
   // calls createBooks by passing in viewElement and the answer key content in config for the current view state in app instance
-  createBooks(viewElement, config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
+  createBooks(viewElement, config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
 
   $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
 }
@@ -744,11 +744,10 @@ function loadPracticeOverview() {
   const myApp = getApp();
   const config = getConfig();
 
-  const phases = ['cartSort', 'shelfSort', 'QA'];
+  const phases = ['cartSort', 'delivery'];
   const phaseLabels = {
     cartSort: 'Cart Sort',
-    shelfSort: 'Shelf Sort',
-    QA: 'Quality Assurance'
+    delivery: 'Delivery'
   };
 
   const currentPhaseIndex = phases.indexOf(myApp.gamePhase);
@@ -757,7 +756,7 @@ function loadPracticeOverview() {
 
   let levelIteration = 1;
 
-  for (let level in config.practice) {
+  for (let level in config[myApp.pathway].practice) {
     let levelCard;
 
     if (levelIteration < myApp.level) {
@@ -814,9 +813,9 @@ function loadPractice() {
 
   const myApp = getApp();
 
-  viewElement.find('.practice-heading').text(config.practice[`level${myApp.level}`][myApp.gamePhase].heading);
+  viewElement.find('.practice-heading').text(config[myApp.pathway].practice[`level${myApp.level}`][myApp.gamePhase].heading);
 
-  viewElement.find('.practice-body').text(config.practice[`level${myApp.level}`][myApp.gamePhase].text);
+  viewElement.find('.practice-body').text(config[myApp.pathway].practice[`level${myApp.level}`][myApp.gamePhase].text);
 
   let shuffledAnswer = shuffleLevel();
 
@@ -836,7 +835,7 @@ function checkQuizAnswers() {
   // access app instance
   const myApp = getApp();
   // access answer key for current view state in the config and save to answerKey array variable
-  const answerKey = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer;
+  const answerKey = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer;
   // convert user's book list to an array
   const userAnswers = $('.view-quiz').find($('.book')).toArray();
   // set correct variable to 0
@@ -856,7 +855,7 @@ function checkQuizAnswers() {
   then all answers are correct and user gets feedback and next button */
   if (correct === answerKey.length) {
     // grab feedback from config for current view
-    const feedback = config.quiz[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
+    const feedback = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
     // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
     myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
     /* otherwise, if correct counter is not equal to the answerKey length,
@@ -915,14 +914,14 @@ function incrementQuiz() {
    (there are 3 questions in the part).
    check if 3 is greater than the currentQuestion number (starts at 1)
    */
-  if (Object.keys(config.quiz[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
+  if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
     // move to the next question in the same part if 3 is greater than currentQuestion
     myApp.question++;
   } else {
     /* if currentQuestion is 3, grab the part keys in the module
     and put them in an array of length 2 (there are 2 parts in the module)
     check if 2 is greater than the currentPart number (starts at 1)*/
-    if (Object.keys(config.quiz[`module${myApp.module}`]).length > currentPart) {
+    if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`]).length > currentPart) {
       // if on question 3 of part 1, then set question to 1 and increment part to 2
       myApp.question = 1;
       myApp.part++;
@@ -932,7 +931,7 @@ function incrementQuiz() {
       /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
       and put them in an array of length 3 (there are 3 modules).
       check if 3 is greater than currentModule number (starts at 1)*/
-      if (Object.keys(config.quiz).length > currentModule) {
+      if (Object.keys(config[myApp.pathway].training).length > currentModule) {
         // set question to 1, part to 1, and increment module by 1
         myApp.question = 1;
         myApp.part = 1;
@@ -955,16 +954,16 @@ function incrementPractice() {
   const currentLevel = myApp.level;
   const currentPhase = myApp.gamePhase;
 
-  const phases = ['cartSort', 'shelfSort', 'QA'];
+  const phases = ['cartSort', 'delivery'];
   const currentPhaseIndex = phases.indexOf(currentPhase);
 
   // if there are more phases in this level, move to the next one
-  if (currentPhaseIndex > phases.length - 1) {
+  if (currentPhaseIndex < phases.length - 1) {
     myApp.gamePhase = phases[currentPhaseIndex + 1];
     loadPractice();
   } else {
-    // all three phases done — check if there are more levels
-    if (Object.keys(config.practice).length > currentLevel) {
+    // all phases done — check if there are more levels
+    if (Object.keys(config[myApp.pathway].practice).length > currentLevel) {
       // reset phase and increment level
       myApp.gamePhase = 'cartSort';
       myApp.level++;
@@ -1284,7 +1283,7 @@ function shuffleLevel() {
   const config = getConfig();
 
   // get all call numbers from the corresponding level listing
-  const originalCallNumbers = config.practice[`level${myApp.level}`][myApp.gamePhase].answer;
+  const originalCallNumbers = config[myApp.pathway].practice[`level${myApp.level}`][myApp.gamePhase].answer;
 
   const wiggleSubjectLetter = function (letters) {
     const letterMatrix = getLetterMatrix();
@@ -1466,7 +1465,7 @@ $(document).on("click", "#onboarding-next", function () {
   const config = getConfig();
 
   // if there are more steps, load the next one
-  if (myApp.onboardingStep < config.onboarding.length) {
+  if (myApp.onboardingStep < config[myApp.pathway].onboarding.length) {
     loadOnboarding();
   } else {
     // otherwise transition to orientation
@@ -1480,7 +1479,7 @@ $(document).on("click", "#orientation-next", function () {
   const myApp = getApp();
   const config = getConfig();
 
-  if (myApp.orientationStep < config.orientation.length) {
+  if (myApp.orientationStep < config[myApp.pathway].orientation.length) {
     loadOrientation();
   } else {
     myApp.setView("view-module-overview");
