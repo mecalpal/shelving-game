@@ -88,95 +88,96 @@ const appState = (function () {
   ];
   // content data for the app
   const config = {
-    onboarding: [
-      { text: "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!" },
-      { text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found. Your job is to get them there." },
-      { text: "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf." },
-      { text: "Once you know how to read a call number, you can deliver the book to its home." },
-      { text: "Here’s how training works:" },
-      { text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
-      { text: "Remember, call number ordering is the key to delivering a book to its correct location." },
-      { text: "Complete the training program, and you’ll be ready to take your first job assignment." }
-    ],
-    orientation: [
-      { text: "A call number is the unique address of a book on the shelf. Every item in the collection has one and no two items share the same address." },
-      { text: "Call numbers consist of letters, whole numbers, decimals, often a publication date, and occasionally a volume and/or copy number.", image: "images/callnumber.png" },
-      { text: "The entire call number should be read as one line in a database." }, // image will go here later
-      { text: "However, a call number on the physical item will be printed on the spine label and read from top to bottom." }, // image goes here later
-      { text: "Every call number has two main parts, divided by a decimal point. Subject — everything before the decimal (identifies the broad topic area). Cutter — everything after the decimal (identifies the specific item)." },
-      { text: "The more components a call number has, the more specific its address. Some call numbers include additional cutters, a publication year, a volume number, and/or a copy number." },
-      { text: "Before you start training, there is one governing rule to know because it applies at every stage." },
-      { text: "A shorter call number always comes before a longer one when all preceding elements match. This is called the 'Nothing before Something' rule." }
-    ],
-    quiz: {
-      module1: {
-        part1: {
-          read: {
-            heading: "Subject Letters",
-            content: `<ul>
+    lcc: {
+      onboarding: [
+        { text: "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!" },
+        { text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found. Your job is to get them there." },
+        { text: "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf." },
+        { text: "Once you know how to read a call number, you can deliver the book to its home." },
+        { text: "Here’s how training works:" },
+        { text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
+        { text: "Remember, call number ordering is the key to delivering a book to its correct location." },
+        { text: "Complete the training program, and you’ll be ready to take your first job assignment." }
+      ],
+      orientation: [
+        { text: "A call number is the unique address of a book on the shelf. Every item in the collection has one and no two items share the same address." },
+        { text: "Call numbers consist of letters, whole numbers, decimals, often a publication date, and occasionally a volume and/or copy number.", image: "images/callnumber.png" },
+        { text: "The entire call number should be read as one line in a database." }, // image will go here later
+        { text: "However, a call number on the physical item will be printed on the spine label and read from top to bottom." }, // image goes here later
+        { text: "Every call number has two main parts, divided by a decimal point. Subject — everything before the decimal (identifies the broad topic area). Cutter — everything after the decimal (identifies the specific item)." },
+        { text: "The more components a call number has, the more specific its address. Some call numbers include additional cutters, a publication year, a volume number, and/or a copy number." },
+        { text: "Before you start training, there is one governing rule to know because it applies at every stage." },
+        { text: "A shorter call number always comes before a longer one when all preceding elements match. This is called the 'Nothing before Something' rule." }
+      ],
+      training: {
+        module1: {
+          part1: {
+            read: {
+              heading: "Subject Letters",
+              content: `<ul>
                             <li> The letter(s) at the start of a call number identify the broad subject area.</li>
                             <li>Sorted alphabetically</li>
                             <li>Single letters come before double letters with the same starting letter</li>
                             <li><strong>L &lt; LA &lt; LB &lt; N</strong></li>
                         </ul > `
 
-          },
-          question1: {
-            heading: "Level 1: Single letters",
-            text: "Sort subject letters",
-            answer: ['B', 'H', 'L', 'M', 'P'],
-            feedback: "Subject letters sort alphabetically."
-          },
-          question2: {
-            heading: "Level 2: Single & double letters",
-            text: "Sort subject letters",
-            answer: ['B', 'BR', 'L', 'LA', 'LB'],
-            feedback: "A single letter always comes before a double letter that starts with the same letter. L comes before LA and LB."
-          },
+            },
+            question1: {
+              heading: "Level 1: Single letters",
+              text: "Sort subject letters",
+              answer: ['B', 'H', 'L', 'M', 'P'],
+              feedback: "Subject letters sort alphabetically."
+            },
+            question2: {
+              heading: "Level 2: Single & double letters",
+              text: "Sort subject letters",
+              answer: ['B', 'BR', 'L', 'LA', 'LB'],
+              feedback: "A single letter always comes before a double letter that starts with the same letter. L comes before LA and LB."
+            },
 
-          question3: {
-            heading: "Level 3: Single & double letters, larger range",
-            text: "Sort subject letters",
-            answer: ['G', 'GN', 'M', 'P', 'PA', 'PB'],
-            feedback: "A single letter always comes before a double letter that starts with the same letter. P comes before PA and PB."
+            question3: {
+              heading: "Level 3: Single & double letters, larger range",
+              text: "Sort subject letters",
+              answer: ['G', 'GN', 'M', 'P', 'PA', 'PB'],
+              feedback: "A single letter always comes before a double letter that starts with the same letter. P comes before PA and PB."
+            },
           },
-        },
-        part2: {
-          read: {
-            heading: "Subject Numbers",
-            content: `<ul>
+          part2: {
+            read: {
+              heading: "Subject Numbers",
+              content: `<ul>
                             <li>The number that follows the subject letters. It narrows the classification to a more specific topic within the subject area.</li>
                             <li>Sorted numerically: read as integers first, then by decimal. A whole number comes before the same number with a decimal extension.</li>
                             <li><strong>212 &lt; 212.16 &lt; 212.5 &lt; 213</strong></li>
                         </ul>`
 
-          },
-          question1: {
-            heading: "Whole numbers, same letter prefix",
-            text: "Sort subject letters + subject numbers",
-            answer: ['L 73', 'L 100', 'L 250', 'L 412'],
-            feedback: "Subject numbers sort as whole integers. 73 is less than 100, so 73 comes first."
-          },
+            },
+            question1: {
+              heading: "Whole numbers, same letter prefix",
+              text: "Sort subject letters + subject numbers",
+              answer: ['L 73', 'L 100', 'L 250', 'L 412'],
+              feedback: "Subject numbers sort as whole integers. 73 is less than 100, so 73 comes first."
+            },
 
-          question2: {
-            heading: "Whole numbers & decimals mixed, same prefix",
-            text: "Sort subject letters + subject numbers",
-            answer: ['LA 100', 'LA 212', 'LA 212.16', 'LA 212.5'],
-            feedback: "A whole number comes before its decimal extensions. .16 is less than .50, so 212.16 comes before 212.5"
-          },
-          question3: {
-            heading: "Whole numbers & decimals mixed, different prefixes",
-            text: "Sort subject letters + subject numbers",
-            answer: ['Q 55', 'QA 10.5', 'QA 101', 'QB 300'],
-            feedback: "When letter groups differ, sort by letter first: Q before QA, QA before QB. Within the same letter group, sort next by number."
-          },
-        }
-      },
-      module2: {
-        part1: {
-          read: {
-            heading: "Cutter",
-            content: `<ul>
+            question2: {
+              heading: "Whole numbers & decimals mixed, same prefix",
+              text: "Sort subject letters + subject numbers",
+              answer: ['LA 100', 'LA 212', 'LA 212.16', 'LA 212.5'],
+              feedback: "A whole number comes before its decimal extensions. .16 is less than .50, so 212.16 comes before 212.5"
+            },
+            question3: {
+              heading: "Whole numbers & decimals mixed, different prefixes",
+              text: "Sort subject letters + subject numbers",
+              answer: ['Q 55', 'QA 10.5', 'QA 101', 'QB 300'],
+              feedback: "When letter groups differ, sort by letter first: Q before QA, QA before QB. Within the same letter group, sort next by number."
+            },
+          }
+        },
+        module2: {
+          part1: {
+            read: {
+              heading: "Cutter",
+              content: `<ul>
                         <li>The part of the call number that follows the decimal point. Represents more specific classification within the main class.</li>
                         <li>Always starts with a period and a letter</li>
                         <li>Letters are sorted alphabetically: <strong>.R &lt; .S</strong></li>
@@ -184,222 +185,420 @@ const appState = (function () {
                         <li><strong>.R23 &lt; .R3 &lt; .R423</strong></li>
                         <li>In the example above 0.23 is less than 0.30 which is less than 0.423</li>
                     </ul>`
+            },
+            question1: {
+              heading: "Different cutter letters",
+              text: "Sort subject letters + subject numbers + cutter number",
+              answer: ['LA 212 .A13', 'LA 212 .B42', 'LA 212 .R5', 'LA 212 .S22'],
+              feedback: "The letter after the decimal sorts alphabetically first: A before B, B before R, R before S."
+            },
+            question2: {
+              heading: "Same cutter letter, different decimal fraction ",
+              text: "Sort subject letters + subject numbers + cutter number",
+              answer: ['PR 6019 .R1', 'PR 6019 .R23', 'PR 6019 .R3', 'PR 6019 .R423'],
+              feedback: "After the cutter letter, read the number as a decimal fraction, not as whole numbers. .R1 = 0.10,  .R23 = 0.23,  .R3 = 0.30,  .R423 = 0.423"
+            },
+            question3: {
+              heading: "Mixed cutter letters and tricky decimals",
+              text: "Sort subject letters + subject numbers + cutter number",
+              answer: ['HQ 1870 .A5', 'HQ 1870 .R23', 'HQ 1870 .R3', 'HQ 1870 .R423', 'HQ 1870 .S1'],
+              feedback: "Sort by cutter letter first (A before R, R before S). Within the same cutter letter, treat the numbers as fractions. .R23 before .R3 and .R3 before .R423"
+            }
           },
-          question1: {
-            heading: "Different cutter letters",
-            text: "Sort subject letters + subject numbers + cutter number",
-            answer: ['LA 212 .A13', 'LA 212 .B42', 'LA 212 .R5', 'LA 212 .S22'],
-            feedback: "The letter after the decimal sorts alphabetically first: A before B, B before R, R before S."
-          },
-          question2: {
-            heading: "Same cutter letter, different decimal fraction ",
-            text: "Sort subject letters + subject numbers + cutter number",
-            answer: ['PR 6019 .R1', 'PR 6019 .R23', 'PR 6019 .R3', 'PR 6019 .R423'],
-            feedback: "After the cutter letter, read the number as a decimal fraction, not as whole numbers. .R1 = 0.10,  .R23 = 0.23,  .R3 = 0.30,  .R423 = 0.423"
-          },
-          question3: {
-            heading: "Mixed cutter letters and tricky decimals",
-            text: "Sort subject letters + subject numbers + cutter number",
-            answer: ['HQ 1870 .A5', 'HQ 1870 .R23', 'HQ 1870 .R3', 'HQ 1870 .R423', 'HQ 1870 .S1'],
-            feedback: "Sort by cutter letter first (A before R, R before S). Within the same cutter letter, treat the numbers as fractions. .R23 before .R3 and .R3 before .R423"
-          }
-        },
-        part2: {
-          read: {
-            heading: "Additional Cutters",
-            content: `<ul>
+          part2: {
+            read: {
+              heading: "Additional Cutters",
+              content: `<ul>
                             <li>Some call numbers have multiple cutter numbers, particularly in subjects with an abundance of material.</li>
                             <li>Each subsequent cutter number follows the same sorting rules as the first: alphabetical, then decimal fractions.</li>
                             <li><strong>.R423 B55</strong></li>
                             <li><strong>.R423 A2 &lt; .R423 B55</strong></li>
                         </ul>`
+            },
+            question1: {
+              heading: "Different additional cutter letters",
+              text: "Sort subject letters + subject numbers + cutter number + additional cutter",
+              answer: ['GV 706 .R423 A12', 'GV 706 .R423 G2214', 'GV 706 .R423 M34', 'GV 706 .R423 S55'],
+              feedback: "The additional cutter sorts alphabetically by letter, just like the main cutter."
+            },
+            question2: {
+              heading: "Same additional cutter letter, decimal fraction differences",
+              text: "Sort subject letters + subject numbers + cutter number + additional cutter",
+              answer: ['BF 408 .R423 H127', 'BF 408 .R423 H3', 'BF 408 .R423 H52', 'BF 408 .R423 H5579'],
+              feedback: "The numbers in an additional cutter are decimal fractions, just like the main cutter. H127 = 0.127,  H3 = 0.30,  H52 = 0.52"
+            },
+            question3: {
+              heading: "With and without additional cutter mixed",
+              text: "Sort subject letters + subject numbers + cutter number + additional cutter",
+              answer: ['DS 135 .S55', 'DS 135 .S55 A12', 'DS 135 .S55 A212', 'DS 135 .S55 H378', 'DS 135 .S55 H52'],
+              feedback: "A call number with no additional cutter comes before one that has one."
+            }
           },
-          question1: {
-            heading: "Different additional cutter letters",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter",
-            answer: ['GV 706 .R423 A12', 'GV 706 .R423 G2214', 'GV 706 .R423 M34', 'GV 706 .R423 S55'],
-            feedback: "The additional cutter sorts alphabetically by letter, just like the main cutter."
-          },
-          question2: {
-            heading: "Same additional cutter letter, decimal fraction differences",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter",
-            answer: ['BF 408 .R423 H127', 'BF 408 .R423 H3', 'BF 408 .R423 H52', 'BF 408 .R423 H5579'],
-            feedback: "The numbers in an additional cutter are decimal fractions, just like the main cutter. H127 = 0.127,  H3 = 0.30,  H52 = 0.52"
-          },
-          question3: {
-            heading: "With and without additional cutter mixed",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter",
-            answer: ['DS 135 .S55', 'DS 135 .S55 A12', 'DS 135 .S55 A212', 'DS 135 .S55 H378', 'DS 135 .S55 H52'],
-            feedback: "A call number with no additional cutter comes before one that has one."
-          }
-        }
-      },
-      module3: {
-        part1: {
-          read: {
-            heading: "Publication Year",
-            content: `<ul>
+          module3: {
+            part1: {
+              read: {
+                heading: "Publication Year",
+                content: `<ul>
                             <li>Appears at the end of a call number, indicates the year the item was published.</li>
                             <li>Occasionally, the year may appear <strong>before</strong> the cutter.</li>
                             <li>Sorted chronologically: earlier year first.</li>
                             <li><strong>1978 &lt; 2007</strong></li>
                          </ul>`
-          },
-          question1: {
-            heading: "Same base, different years",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['LA 212 .R423', 'LA 212 .R423 2005', 'LA 212 .R423 2010', 'LA 212 .R423 2022'],
-            feedback: "A call number with no year shelves before its dated edition. Dated editions sort chronologically. "
-          },
-          question2: {
-            heading: "Mixed shelf, some with years",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['BF 408 .C55', 'BF 408 .C55 2014', 'BF 408 .H3 2009', 'BF 408 .S22'],
-            feedback: "Sort by cutter first. When two items share the same cutter, the one without a year shelves first. Notice that .H3 has a year but still shelves before .S22, which has none. A year only affects placement when two items share the same cutter."
-          },
-          question3: {
-            heading: "Mixed shelf, some with years",
-            text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
-            answer: ['PS 1234 .A3', 'PS 1234 .A3 1995', 'PS 1234 .A3 2008', 'PS 1234 .B12 2001', 'PS 1234 .C44'],
-            feedback: "Sort by cutter first. .A3 comes before .B12, .B12 comes before .C44. Within the same .A3 group, no year shelves first, then sort the rest chronologically. .B12 has a year and .C44 does not, but .B12 still shelves first because B comes before C."
-          }
-        },
-        part2: {
-          read: {
-            heading: "Volume/Copy",
-            content: `<ul>
+              },
+              question1: {
+                heading: "Same base, different years",
+                text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
+                answer: ['LA 212 .R423', 'LA 212 .R423 2005', 'LA 212 .R423 2010', 'LA 212 .R423 2022'],
+                feedback: "A call number with no year shelves before its dated edition. Dated editions sort chronologically. "
+              },
+              question2: {
+                heading: "Mixed shelf, some with years",
+                text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
+                answer: ['BF 408 .C55', 'BF 408 .C55 2014', 'BF 408 .H3 2009', 'BF 408 .S22'],
+                feedback: "Sort by cutter first. When two items share the same cutter, the one without a year shelves first. Notice that .H3 has a year but still shelves before .S22, which has none. A year only affects placement when two items share the same cutter."
+              },
+              question3: {
+                heading: "Mixed shelf, some with years",
+                text: "Sort subject letters + subject numbers + cutter number + additional cutter + publication year",
+                answer: ['PS 1234 .A3', 'PS 1234 .A3 1995', 'PS 1234 .A3 2008', 'PS 1234 .B12 2001', 'PS 1234 .C44'],
+                feedback: "Sort by cutter first. .A3 comes before .B12, .B12 comes before .C44. Within the same .A3 group, no year shelves first, then sort the rest chronologically. .B12 has a year and .C44 does not, but .B12 still shelves first because B comes before C."
+              }
+            },
+            part2: {
+              read: {
+                heading: "Volume/Copy",
+                content: `<ul>
                             <li>Appears at the end of a call number, indicates which volume or copy of a work the item is. Volume refers to an item in a multi-volume series, whereas copy refers to a duplicate of the same item.</li>
                             <li>Sorted numerically: lowest number first.</li>
                             <li><strong>v.1 &lt; v.2 &lt; v.3</strong></li>
                             <li><strong>c.1 &lt; c.2</strong></li>
                         </ul>`
+              },
+              question1: {
+                heading: "Same base, different volumes",
+                text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+                answer: ['HQ 1870 .A5 v.1', 'HQ 1870 .A5 v.2', 'HQ 1870 .A5 v.3'],
+                feedback: "When the entire base call number is identical, volumes sort numerically. v.1 comes before v.2, which comes before v.3."
+              },
+              question2: {
+                heading: "With and without volume, same base",
+                text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+                answer: ['GV 706 .R423 M34', 'GV 706 .R423 M34 v.1', 'GV 706 .R423 M34 v.2', 'GV 706 .R423 M34 v.3'],
+                feedback: "A call number without a volume designation comes before the same call number with one. Among volumes, sort numerically: v.1 before v.2 before v.3."
+              },
+              question3: {
+                heading: "Mixed volumes and copies",
+                text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
+                answer: ['BF 408 .C55 2014', 'BF 408 .C55 2014 c.1', 'BF 408 .C55 2014 c.2', 'BF 408 .H3 2009 v.1', 'BF 408 .H3 2009 v.2', 'BF 408 .S22'],
+                feedback: "Sort by cutter letter first (.C before .H, .H before .S). When cutters match, items without volume/copy come before those with them. Among copies or volumes, sort numerically."
+              },
+            }
+          }
+        }
+      },
+
+      practice: {
+        level1: {
+          cartSort: {
+            heading: "Task 1: Cart Sort",
+            text: "Arrange books on the cart and click submit when done to check work. ",
+            answer: ["BC38 .H59", "BF713 .S53 2022", "BP605 .S2 S35 1992", "DA356 .S77 2001b", "DS771 .P73 2000", "E185.93 .L6 F35 1999", "HD41 .W494 1997", "HM851 .E24 2010", "HQ1061 .N65", "JF799 .F85 2018"]
           },
-          question1: {
-            heading: "Same base, different volumes",
-            text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
-            answer: ['HQ 1870 .A5 v.1', 'HQ 1870 .A5 v.2', 'HQ 1870 .A5 v.3'],
-            feedback: "When the entire base call number is identical, volumes sort numerically. v.1 comes before v.2, which comes before v.3."
+          delivery: {
+            heading: "Task 2: Shelf Sort",
+            text: "placeholder",
+            answer: ['PLACEHOLDER']
+          }
+        },
+        level2: {
+          cartSort: {
+            heading: "Task 1: Cart Sort",
+            text: "",
+            answer: ["BF1655 .L485 1994B", "BR515 .A4 1972", "DD253.5 .B37 2005", "E185.93 .A3 T48 2002", "F1219.8 .Z37 M37 1996", "GF125 .K67", "GN365.9 .S6", "GN400 .T8 1958 PT.1", "HC105 .L43 1984", "LB2342 .I52 2002"]
           },
-          question2: {
-            heading: "With and without volume, same base",
-            text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
-            answer: ['GV 706 .R423 M34', 'GV 706 .R423 M34 v.1', 'GV 706 .R423 M34 v.2', 'GV 706 .R423 M34 v.3'],
-            feedback: "A call number without a volume designation comes before the same call number with one. Among volumes, sort numerically: v.1 before v.2 before v.3."
+          delivery: {
+            heading: "Task 2: Shelf Sort",
+
+          }
+        },
+        level3: {
+          cartSort: {
+            heading: "Task 1: Cart Sort",
+            text: "",
+            answer: ["HQ770.4 .S54 1980b", "KF229 .O24 C46 2016", "ML506 .G54 1997", "N6494 .C63 L56 1997", "PR2400 .A5 R4 1981", "PR6051 .D345 W3 1972", "QA9.4 .E47 1996", "QA445 .W35 1998", "TR654 .S477 1984", "U102 .D835 1983"]
+
           },
-          question3: {
-            heading: "Mixed volumes and copies",
-            text: "Sort subject letters + subject numbers + cutter number + publication year + volume/copy",
-            answer: ['BF 408 .C55 2014', 'BF 408 .C55 2014 c.1', 'BF 408 .C55 2014 c.2', 'BF 408 .H3 2009 v.1', 'BF 408 .H3 2009 v.2', 'BF 408 .S22'],
-            feedback: "Sort by cutter letter first (.C before .H, .H before .S). When cutters match, items without volume/copy come before those with them. Among copies or volumes, sort numerically."
+          delivery: {
+            heading: "Task 2: Shelf Sort",
+
+          }
+        },
+        level4: {
+          cartSort: {
+            heading: "Task 1: Cart Sort",
+            text: "",
+            answer: ["HD58.9 .I473 1994", "HD59 .H64 1994", "HD59 .S365 2012", "HD59.5 .H42 1997", "HD60 .I77 1996", "HD60.5 .U5 .P6", "HD62.15 .A57 1995", "HD62.15 .M47 1997", "HF32 .A53", "HF32 .B2"]
+
           },
+          delivery: {
+            heading: "Task 2: Shelf Sort",
+
+          }
+        },
+        level5: {
+          cartSort: {
+            heading: "Task 1: Cart Sort",
+            text: "",
+            answer: ["BV507 .E8 W65", "DH107 .I87 1995", "GV1469.3 .P66 2000", "HD69 .B7 A216 1996", "HD69 .B7 P647 2012", "HD69 .P75 D57 1990", "HD69 .S8 S9 1998", "HD69 .T54 S4513 1989", "HD1375 .G728", "HD1492 .S65 E43 1984"]
+
+          },
+          delivery: {
+            heading: "Task 2: Shelf Sort",
+          }
+        },
+        level6: {
+          cartSort: {
+            heading: "Task 1: Cart Sort",
+            text: "",
+            answer: ["DA315 .O94 1996", "DA355 .S63 1991", "E185.97 .K5 A2 1992 V.1", "E185.97 .K5 A2 1992 V.2", "E185.97 .K5 E44 2023", "E185.97 .K5 G36 1999", "E185.97 .K5 K5", "E332.74 .G67 2008", "E841 .K34 2011", "HF1418.5 .R6425 2011"]
+
+          },
+          delivery: {
+            heading: "Task 2: Shelf Sort",
+
+          }
         }
       }
     },
 
-    practice: {
-      level1: {
-        cartSort: {
-          heading: "Task 1: Cart Sort",
-          text: "Arrange books on the cart and click submit when done to check work. ",
-          answer: ["HD58.9 .I473 1994", "HD59 .H64 1994", "HD59 .S365 2012", "HD59.5 .H42 1997", "HD60 .I77 1996", "HD60.5 .U5 .P6", "HD62.15 .A57 1995", "HD62.15 .M47 1997", "HF32 .A53", "HF32 .B2"]
+    dewey: {
+      onboarding: {
+
+      },
+      orientation: {
+
+      },
+      training: {
+        module1: {
+          part1: {
+            read: {
+              heading: "",
+              content: ""
+            },
+            question1: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question2: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question3: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            }
+          },
+          part2: {
+            read: {
+              heading: "",
+              content: ""
+            },
+            question1: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question2: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question3: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            }
+          }
         },
-        shelfSort: {
-          heading: "Task 2: Shelf Sort",
-          text: "placeholder",
-          answer: ['PLACEHOLDER']
+        module2: {
+          part1: {
+            read: {
+              heading: "",
+              content: ""
+            },
+            question1: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question2: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question3: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            }
+          },
+          part2: {
+            read: {
+              heading: "",
+              content: ""
+            },
+            question1: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question2: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question3: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            }
+          }
         },
-        QA: {
-          heading: "Task 3: Quality Assurance",
-          text: "placeholder",
-          answer: ['PLACEHOLDER']
+        module3: {
+          part1: {
+            read: {
+              heading: "",
+              content: ""
+            },
+            question1: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question2: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question3: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            }
+          },
+          part2: {
+            read: {
+              heading: "",
+              content: ""
+            },
+            question1: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question2: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            },
+            question3: {
+              heading: "",
+              text: "",
+              answer: [],
+              feedback: ""
+            }
+          }
         }
       },
-      level2: {
-        cartSort: {
-          heading: "Task 1: Cart Sort",
+
+      practice: {
+        level1: {
+          cartSort: {
+
+          },
+          delivery: {
+
+          }
         },
-        shelfSort: {
-          heading: "Task 2: Shelf Sort",
+        level2: {
+          cartSort: {
 
+          },
+          delivery: {
+
+          }
         },
-        QA: {
-          heading: "Task 3: Quality Assurance",
+        level3: {
+          cartSort: {
 
-        }
-      },
-      level3: {
-        cartSort: {
-          heading: "Task 1: Cart Sort",
+          },
+          delivery: {
 
+          }
         },
-        shelfSort: {
-          heading: "Task 2: Shelf Sort",
+        level4: {
+          cartSort: {
 
+          },
+          delivery: {
+
+          }
         },
-        QA: {
-          heading: "Task 3: Quality Assurance",
+        level5: {
+          cartSort: {
 
-        }
-      },
-      level4: {
-        cartSort: {
-          heading: "Task 1: Cart Sort",
+          },
+          delivery: {
 
+          }
         },
-        shelfSort: {
-          heading: "Task 2: Shelf Sort",
+        level6: {
+          cartSort: {
 
-        },
-        QA: {
-          heading: "Task 3: Quality Assurance",
+          },
+          delivery: {
 
-        }
-      },
-      level5: {
-        cartSort: {
-          heading: "Task 1: Cart Sort",
-
-        },
-        shelfSort: {
-          heading: "Task 2: Shelf Sort",
-
-        },
-        QA: {
-          heading: "Task 3: Quality Assurance",
-
-        }
-      },
-      level6: {
-        cartSort: {
-          heading: "Task 1: Cart Sort",
-
-        },
-        shelfSort: {
-          heading: "Task 2: Shelf Sort",
-
-        },
-        QA: {
-          heading: "Task 3: Quality Assurance",
-
+          }
         }
       }
     }
-  };
-
-  // enables access app instance from anywhere in the script
-  window.getApp = function () {
-    return app;
   }
+});
 
-  // enables access to config from anywhere in the script
-  window.getConfig = function () {
-    return config;
-  }
+// enables access app instance from anywhere in the script
+window.getApp = function () {
+  return app;
+}
 
-  window.getLetterMatrix = function () {
-    return letterMatrix;
-  }
-})();
+// enables access to config from anywhere in the script
+window.getConfig = function () {
+  return config;
+}
+
+window.getLetterMatrix = function () {
+  return letterMatrix;
+}
+}) ();
 
 // ============================================================
 // SECTION 3: SCREEN LOADER FUNCTIONS
