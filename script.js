@@ -6,6 +6,7 @@
 class App {
   constructor(element) {
     this.element = element;
+    this.pathway = '';
     this.view = "view-title";
     this.module = 1;
     this.part = 1;
@@ -594,7 +595,6 @@ window.getConfig = function () {
 window.getLetterMatrix = function () {
   return letterMatrix;
 }
-}) ();
 
 // ============================================================
 // SECTION 3: SCREEN LOADER FUNCTIONS
@@ -610,6 +610,10 @@ function animateTextIn(element) {
     buttonTarget = $('#onboarding-next');
   } else if (myApp.view === 'view-orientation') {
     buttonTarget = $('#orientation-next');
+  } else if (myApp.view === 'view-dewey-onboarding') {
+    buttonTarget = $('#dewey-onboarding-next');
+  } else if (myApp.view === 'view-dewey-orientation') {
+    buttonTarget = $('#dewey-orientation-next');
   }
   buttonTarget.css('display', 'none');
   const animatedElement = $(element);
