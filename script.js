@@ -98,14 +98,13 @@ const appState = (function () {
   const config = {
     lcc: {
       onboarding: [
-        { text: "Congratulations on being accepted into the Library Delivery Service training program! Once your training is complete, you will be a certified Delivery Specialist ready for deployment!" },
-        { text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found. Your job is to get them there." },
+        { text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found." },
+        { text: "Your job is to find that home address." },
         { text: "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf." },
-        { text: "Once you know how to read a call number, you can deliver the book to its home." },
+        { text: "Once you know how to read a call number, you can figure out where a book is located." },
         { text: "Here’s how training works:" },
         { text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
-        { text: "Remember, call number ordering is the key to delivering a book to its correct location." },
-        { text: "Complete the training program, and you’ll be ready to take your first job assignment." }
+        { text: "Remember, call number ordering is the key to delivering a book to its correct location." }
       ],
       orientation: [
         { text: "A call number is the unique address of a book on the shelf. Every item in the collection has one and no two items share the same address." },
