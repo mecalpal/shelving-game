@@ -6,14 +6,13 @@
 class App {
   constructor(element) {
     this.element = element;
-    this.pathway = '';
     this.view = "view-title";
     this.module = 1;
     this.part = 1;
     this.question = 1;
     this.onboardingStep = 0;
     this.orientationStep = 0;
-    this.pathway = 'lcc';
+    this.pathway = '';
     this.level = 1;
     this.gamePhase = 'cartSort';
     this.cartSortAnswerKey = [];
@@ -66,6 +65,14 @@ class App {
     $('.modal-background').fadeOut(200, function () {
       $(this).remove();
     })
+  }
+
+  setLccPathway() {
+    this.pathway = 'lcc';
+  }
+  
+  setDeweyPathway() {
+    this.pathway = 'dewey';
   }
 }
 
@@ -580,21 +587,14 @@ const appState = (function () {
       }
     }
   }
-});
 
-// enables access app instance from anywhere in the script
-window.getApp = function () {
-  return app;
-}
+  return { app, config, letterMatrix };
+})();
 
-// enables access to config from anywhere in the script
-window.getConfig = function () {
-  return config;
-}
+window.getApp = () => appState.app;
+window.getConfig = () => appState.config;
+window.getLetterMatrix = () => appState.letterMatrix;
 
-window.getLetterMatrix = function () {
-  return letterMatrix;
-}
 
 // ============================================================
 // SECTION 3: SCREEN LOADER FUNCTIONS
@@ -1457,6 +1457,10 @@ $("button").on("click", function () {
     loadRead();
   }
   if (target === "view-onboarding") {
+    myApp.setLccPathway();
+    loadOnboarding();
+  } else if (target === "view-dewey-onboarding") {
+    myApp.setDeweyPathway();
     loadOnboarding();
   }
   if (target === "view-practice") {
@@ -1556,6 +1560,5 @@ $(document).on("click", "#practice-next", function () {
 
 $(document).ready(function () {
   let myApp = getApp();
-  myApp.setView('view-title');
 });
 
