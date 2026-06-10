@@ -379,7 +379,15 @@ const appState = (function () {
     },
 
     dewey: {
-      onboarding: [],
+      onboarding: [
+        { text: "Books don’t sit just anywhere. Every item in a collection has a precise location on the shelf - its home, waiting to be found." },
+        { text: "Your job is to find that home address." },
+        { text: "Every book’s home address is encoded in its call number: a string of letters and numbers that map to its exact location on the shelf." },
+        { text: "Once you know how to read a call number, you can figure out where a book is located." },
+        { text: "Here’s how training works:" },
+        { text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
+        { text: "Remember, call number ordering is the key to delivering a book to its correct location." }
+      ],
       orientation: [],
       training: {
         module1: {
