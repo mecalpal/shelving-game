@@ -388,7 +388,14 @@ const appState = (function () {
         { text: "You’ll learn to read a call number one section at a time, starting broad and gradually getting more specific. At each stage, you’ll practice call number ordering before moving on." },
         { text: "Remember, call number ordering is the key to delivering a book to its correct location." }
       ],
-      orientation: [],
+      orientation: [
+        { text: "Most public libraries, primary, and secondary schools use the Dewey Decimal Classification system to organize their materials."},
+        { text: "Collections are often divided into fiction and non-fiction sections, with the non-fiction section organized by the DDC numerical structure."},
+        { text: "Call numbers within the Dewey Decimal system use a string of numbers representing the subject or class that the material falls in."},
+        { text: "These are the 10 main classes in the system: "},
+        { text: "For fiction materials, these libraries often organize the collection by the author's last name instead of the class system."},
+        { text: "The call number consists of the subject abbrieviation followed by the author's last name." }
+      ],
       training: {
         module1: {
           part1: {
