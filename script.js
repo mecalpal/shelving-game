@@ -66,14 +66,6 @@ class App {
       $(this).remove();
     })
   }
-
-  setLccPathway() {
-    this.pathway = 'lcc';
-  }
-  
-  setDeweyPathway() {
-    this.pathway = 'dewey';
-  }
 }
 
 // ============================================================
@@ -389,19 +381,31 @@ const appState = (function () {
         { text: "Remember, call number ordering is the key to delivering a book to its correct location." }
       ],
       orientation: [
-        { text: "Most public libraries, primary, and secondary schools use the Dewey Decimal Classification system to organize their materials."},
-        { text: "Collections are often divided into fiction and non-fiction sections, with the non-fiction section organized by the DDC numerical structure."},
-        { text: "Call numbers within the Dewey Decimal system use a string of numbers representing the subject or class that the material falls in."},
-        { text: "These are the 10 main classes in the system: "},
-        { text: "For fiction materials, these libraries often organize the collection by the author's last name instead of the class system."},
+        { text: "Most public libraries, primary, and secondary schools use the Dewey Decimal Classification system to organize their materials." },
+        { text: "Collections are often divided into fiction and non-fiction sections, with the non-fiction section organized by the DDC numerical structure." },
+        { text: "Call numbers within the Dewey Decimal system use a string of numbers representing the subject or class that the material falls in." },
+        { text: "These are the 10 main classes in the system: " },
+        { text: "For fiction materials, these libraries often organize the collection by the author's last name instead of the class system." },
         { text: "The call number consists of the subject abbrieviation followed by the author's last name." }
       ],
       training: {
         module1: {
           part1: {
             read: {
-              heading: "",
-              content: ""
+              heading: "Class Numbers",
+              content: `<ul> 
+              <li>The number at the start of a call number identifies the subject. There are 10 main classes:</li>
+              <li>000 Computer Science, Information and General Works</li>
+              <li>100 Philosophy and Psychology</li>
+              <li>200 Religion</li>
+              <li>300 Social Sciences</li>
+              <li>400 Language</li>
+              <li>500 Science</li>
+              <li>600 Technology</li>
+              <li>700 Arts and Recreation</li>
+              <li>800 Literature</li>
+              <li>900 History and Geography</li>
+              </ul>`
             },
             question1: {
               heading: "",
@@ -495,34 +499,8 @@ const appState = (function () {
               answer: [],
               feedback: ""
             }
-          }
-        },
-        module3: {
-          part1: {
-            read: {
-              heading: "",
-              content: ""
-            },
-            question1: {
-              heading: "",
-              text: "",
-              answer: [],
-              feedback: ""
-            },
-            question2: {
-              heading: "",
-              text: "",
-              answer: [],
-              feedback: ""
-            },
-            question3: {
-              heading: "",
-              text: "",
-              answer: [],
-              feedback: ""
-            }
           },
-          part2: {
+          part3: {
             read: {
               heading: "",
               content: ""
@@ -547,56 +525,56 @@ const appState = (function () {
             }
           }
         }
+      }
+    },
+
+    practice: {
+      level1: {
+        cartSort: {
+
+        },
+        delivery: {
+
+        }
       },
+      level2: {
+        cartSort: {
 
-      practice: {
-        level1: {
-          cartSort: {
-
-          },
-          delivery: {
-
-          }
         },
-        level2: {
-          cartSort: {
+        delivery: {
 
-          },
-          delivery: {
+        }
+      },
+      level3: {
+        cartSort: {
 
-          }
         },
-        level3: {
-          cartSort: {
+        delivery: {
 
-          },
-          delivery: {
+        }
+      },
+      level4: {
+        cartSort: {
 
-          }
         },
-        level4: {
-          cartSort: {
+        delivery: {
 
-          },
-          delivery: {
+        }
+      },
+      level5: {
+        cartSort: {
 
-          }
         },
-        level5: {
-          cartSort: {
+        delivery: {
 
-          },
-          delivery: {
+        }
+      },
+      level6: {
+        cartSort: {
 
-          }
         },
-        level6: {
-          cartSort: {
+        delivery: {
 
-          },
-          delivery: {
-
-          }
         }
       }
     }
@@ -624,10 +602,6 @@ function animateTextIn(element) {
     buttonTarget = $('#onboarding-next');
   } else if (myApp.view === 'view-orientation') {
     buttonTarget = $('#orientation-next');
-  } else if (myApp.view === 'view-dewey-onboarding') {
-    buttonTarget = $('#dewey-onboarding-next');
-  } else if (myApp.view === 'view-dewey-orientation') {
-    buttonTarget = $('#dewey-orientation-next');
   }
   buttonTarget.css('display', 'none');
   const animatedElement = $(element);
@@ -1471,10 +1445,7 @@ $("button").on("click", function () {
     loadRead();
   }
   if (target === "view-onboarding") {
-    myApp.setLccPathway();
-    loadOnboarding();
-  } else if (target === "view-dewey-onboarding") {
-    myApp.setDeweyPathway();
+    myApp.pathway = $(this).attr("pathway");
     loadOnboarding();
   }
   if (target === "view-practice") {

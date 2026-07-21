@@ -47,8 +47,8 @@
     </div>
     <h1>The Shelving Game</h1>
     <h2>Choose your path:</h2>
-    <button target="view-onboarding">Library of Congress</button>
-    <button target="view-dewey-onboarding">Dewey Decimal</button>
+    <button target="view-onboarding" pathway="lcc">Library of Congress</button>
+    <button target="view-onboarding" pathway="dewey">Dewey Decimal</button>
   </div>
 
   <!-- ONBOARDING SCREENS -->
@@ -67,23 +67,6 @@
     </div>
     <p id="onboarding-text"></p>
     <button id="onboarding-next">Next</button>
-  </div>
-
-    <div class="view-dewey-onboarding">
-    <h2>Welcome to Dewey</h2>
-    <div class="talking-owl-wrapper">
-      <div class="owl-animated">
-        <div class="left-wing"></div>
-        <div class="right-wing"></div>
-        <div class="torso"></div>
-        <div class="head">
-          <div class="eyes"></div>
-          <div class="beak"></div>
-        </div>
-      </div>
-    </div>
-    <p id="dewey-onboarding-text"></p>
-    <button id="dewey-onboarding-next">Next</button>
   </div>
 
   <!-- ORIENTATION SCREENS -->
@@ -108,27 +91,6 @@
     <button id="orientation-next">Next</button>
   </div>
 
-    <!-- ORIENTATION SCREENS -->
-  <div class="view-dewey-orientation">
-    <h2>What is a call number?</h2>
-    <!--<div class="owl-whiteboard-wrapper">
-    <div class="whiteboard"></div>-->
-    <div class="talking-owl-wrapper">
-      <div class="owl-animated">
-        <div class="left-wing"></div>
-        <div class="right-wing"></div>
-        <div class="torso"></div>
-        <div class="head">
-          <div class="eyes"></div>
-          <div class="beak"></div>
-        </div>
-      </div>
-    </div>
-    <!--</div>-->
-    <p id="dewey-orientation-text"></p>
-    <button id="dewey-orientation-next">Next</button>
-  </div>
-
   <!-- MODULE OVERVIEW SCREENS -->
   <div class="view-module-overview">
     <h2>Overview</h2>
@@ -136,44 +98,8 @@
     <button target="view-quiz">Next</button>
   </div>
 
-    <div class="view-dewey-module-overview">
-    <h2>Overview</h2>
-    <div id="overview-cards"></div>
-    <button target="view-dewey-quiz">Next</button>
-  </div>
-
   <!-- QUIZ SCREENS -->
   <div class="view-quiz">
-    <!-- READ SCREENS -->
-    <div id="read-section">
-      <div id="progress-bar" progress="1"></div>
-      <p id="read-eyebrow"></p>
-      <h2 id="read-heading"></h2>
-      <div id="read-content"></div>
-      <button id="read-next">Next</button>
-    </div>
-    <div id="quiz-section" class="modal-container" style="display:none;">
-      <h2 class="quiz-heading">Placeholder</h2>
-      <p class="quiz-body">Placeholder</p>
-      <div class="cart">
-        <div class="cart-top-row">
-          <div class="cart-left"></div>
-          <div class="cart-center">
-            <ul class="book-container module-quiz"></ul>
-            <div id="quiz-message"><button id="quiz-submit">Submit</button></div>
-          </div>
-          <div class="cart-right"></div>
-        </div>
-        <div class="cart-bottom-row">
-          <div class="cart-legs-left"></div>
-          <div class="cart-legs-center"></div>
-          <div class="cart-legs-right"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="view-dewey-quiz">
     <!-- READ SCREENS -->
     <div id="read-section">
       <div id="progress-bar" progress="1"></div>
@@ -210,13 +136,6 @@
     <button target="view-practice">Next</button>
   </div>
 
-    <div class="view-dewey-practice-overview">
-    <h2>Title</h2>
-    <div id="practice-overview-cards"></div>
-    <button target="view-dewey-practice">Next</button>
-  </div>
-
-
   <!-- PRACTICE SCREENS -->
   <div class="view-practice">
     <h2 class="practice-heading">Placeholder</h2>
@@ -238,27 +157,7 @@
     </div>
   </div>
 
-  <div class="view-dewey-practice">
-    <h2 class="practice-heading">Placeholder</h2>
-    <p class="practice-body">Placeholder</p>
-    <div class="cart modal-container">
-      <div class="cart-top-row">
-        <div class="cart-left"></div>
-        <div class="cart-center">
-          <ul class="book-container module-quiz"></ul>
-          <div id="practice-message"><button id="practice-submit">Submit</button></div>
-        </div>
-        <div class="cart-right"></div>
-      </div>
-      <div class="cart-bottom-row">
-        <div class="cart-legs-left"></div>
-        <div class="cart-legs-center"></div>
-        <div class="cart-legs-right"></div>
-      </div>
-    </div>
-  </div>
-
-    <script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 
 </html>
