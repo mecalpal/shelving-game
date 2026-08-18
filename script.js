@@ -1439,9 +1439,9 @@ $("button").on("click", function () {
   const pathway = $(this).attr("pathway");
 
   if (pathway === "lcc") {
-    myApp.setLccPathway();
+    myApp.pathway = "lcc";
   } else if (pathway === "dewey") {
-    myApp.setDeweyPathway();
+    myApp.pathway = "dewey";
   }
 
   // if the current view has a target attribute, call setView with the current target
