@@ -7,11 +7,11 @@ class App {
   constructor(element) {
     this.element = element;
     this.view = "view-title";
-    this.module = 1;
-    this.part = 1;
-    this.question = 1;
-    this.onboardingStep = 0;
-    this.orientationStep = 0;
+    // this.module = 1;
+    // this.part = 1;
+    // this.question = 1;
+    // this.onboardingStep = 0;
+    // this.orientationStep = 0;
     this.pathway = '';
     this.level = 1;
     this.gamePhase = 'cartSort';
@@ -595,7 +595,7 @@ window.getLetterMatrix = () => appState.letterMatrix;
 //   Title → Onboarding → Orientation → Module Overview → Quiz → Practice
 // ============================================================
 
-function animateTextIn(element) {
+/* function animateTextIn(element) {
   const myApp = getApp();
   let buttonTarget;
   if (myApp.view === 'view-onboarding') {
@@ -628,9 +628,9 @@ function animateTextIn(element) {
     }
     i = i + 2;
   }, animationSpeed);
-}
+} */
 
-function loadOnboarding() {
+/*function loadOnboarding() {
   const myApp = getApp();
   const config = getConfig();
 
@@ -641,9 +641,9 @@ function loadOnboarding() {
 
   // increment step for next click
   myApp.onboardingStep++;
-}
+} */
 
-function loadOrientation() {
+/* function loadOrientation() {
   const myApp = getApp();
   const config = getConfig();
 
@@ -658,9 +658,9 @@ function loadOrientation() {
   }
 
   myApp.orientationStep++;
-}
+} */
 
-function loadModuleOverview() {
+/* function loadModuleOverview() {
   const myApp = getApp();
   const config = getConfig();
   let moduleIteration = 1;
@@ -698,9 +698,9 @@ function loadModuleOverview() {
     $(`#overview-cards`).append(moduleCard);
     moduleIteration++;
   }
-}
+} */
 
-function loadRead() {
+/* function loadRead() {
   const myApp = getApp();
   const config = getConfig();
 
@@ -712,10 +712,10 @@ function loadRead() {
   $("#read-eyebrow").text(`Module ${myApp.module}`);
   $("#read-heading").text(readContent.heading);
   $("#read-content").html(readContent.content);
-}
+} */
 
 // reads the current question from config and populates the quiz view
-function loadQuiz() {
+/* function loadQuiz() {
   // access config
   const config = getConfig();
   // select the view-quiz div and saves to viewElement variable
@@ -730,7 +730,7 @@ function loadQuiz() {
   createBooks(viewElement, config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
 
   $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
-}
+} */
 
 function loadPracticeOverview() {
   const myApp = getApp();
@@ -821,7 +821,7 @@ function loadPractice() {
 // Called when the user submits an answer.
 // ============================================================
 
-function checkQuizAnswers() {
+/* function checkQuizAnswers() {
   // access config
   const config = getConfig();
   // access app instance
@@ -845,14 +845,14 @@ function checkQuizAnswers() {
   let element;
   /* if correct counter is equal to the answerKey length,
   then all answers are correct and user gets feedback and next button */
-  if (correct === answerKey.length) {
+  /* if (correct === answerKey.length) {
     // grab feedback from config for current view
     const feedback = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
     // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
     myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
     /* otherwise, if correct counter is not equal to the answerKey length,
     then user gets a try again button  */
-  } else {
+  /* } else { 
     // element = $('<p></p><button id="quiz-try-again">Try Again</button>');
     myApp.displayModal(false, 'Not quite!', 'Double check the order and try again.', { text: 'Try again', id: 'quiz-try-again' });
   }
@@ -860,7 +860,7 @@ function checkQuizAnswers() {
   // $("#quiz-message").empty();
   // adds the element (either a next + feedback or try again)
   // $("#quiz-message").append(element);
-}
+} */
 
 function checkPracticeAnswers() {
   const myApp = getApp();
@@ -890,7 +890,7 @@ function checkPracticeAnswers() {
 // ============================================================
 
 // advances the screen state to the next question, part, or module
-function incrementQuiz() {
+/* function incrementQuiz() {
   // access app
   const myApp = getApp();
   // access config data
@@ -906,14 +906,14 @@ function incrementQuiz() {
    (there are 3 questions in the part).
    check if 3 is greater than the currentQuestion number (starts at 1)
    */
-  if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
+  /* if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
     // move to the next question in the same part if 3 is greater than currentQuestion
     myApp.question++;
   } else {
     /* if currentQuestion is 3, grab the part keys in the module
     and put them in an array of length 2 (there are 2 parts in the module)
     check if 2 is greater than the currentPart number (starts at 1)*/
-    if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`]).length > currentPart) {
+    /* if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`]).length > currentPart) {
       // if on question 3 of part 1, then set question to 1 and increment part to 2
       myApp.question = 1;
       myApp.part++;
@@ -923,7 +923,7 @@ function incrementQuiz() {
       /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
       and put them in an array of length 3 (there are 3 modules).
       check if 3 is greater than currentModule number (starts at 1)*/
-      if (Object.keys(config[myApp.pathway].training).length > currentModule) {
+      /* if (Object.keys(config[myApp.pathway].training).length > currentModule) {
         // set question to 1, part to 1, and increment module by 1
         myApp.question = 1;
         myApp.part = 1;
@@ -938,7 +938,7 @@ function incrementQuiz() {
     }
     // if one of the conditions are met, return true
   } return true;
-}
+} */
 
 function incrementPractice() {
   const myApp = getApp();
@@ -1436,24 +1436,40 @@ $("button").on("click", function () {
   const myApp = getApp();
   // access the target attribute in the current view state
   const target = $(this).attr("target");
+  const pathway = $(this).attr("pathway");
+
+  if (pathway === "lcc") {
+    myApp.setLccPathway();
+  } else if (pathway === "dewey") {
+    myApp.setDeweyPathway();
+  }
+
   // if the current view has a target attribute, call setView with the current target
   if (target !== undefined) {
     myApp.setView(target);
   }
-  // if current view has nextQuestion attribute equal to true, then call loadQuiz()
+  
+  /* // if current view has nextQuestion attribute equal to true, then call loadQuiz()
   if (target === "view-quiz") {
     loadRead();
   }
   if (target === "view-onboarding") {
     myApp.pathway = $(this).attr("pathway");
     loadOnboarding();
+  } */
+
+  if (target === "view-practice-overview") {
+    myApp.level = 1;
+    myApp.gamePhase = 'cartSort';
+    loadPracticeOverview();
   }
+
   if (target === "view-practice") {
     loadPractice();
   }
 });
 
-$(document).on("click", "#onboarding-next", function () {
+/* $(document).on("click", "#onboarding-next", function () {
   const myApp = getApp();
   const config = getConfig();
 
@@ -1466,9 +1482,9 @@ $(document).on("click", "#onboarding-next", function () {
     myApp.onboardingStep = 0; // reset for if they ever come back
     loadOrientation();
   }
-});
+}); */
 
-$(document).on("click", "#orientation-next", function () {
+/* $(document).on("click", "#orientation-next", function () {
   const myApp = getApp();
   const config = getConfig();
 
@@ -1479,21 +1495,21 @@ $(document).on("click", "#orientation-next", function () {
     loadModuleOverview();
     myApp.orientationStep = 0;
   }
-});
+}); */
 
-$(document).on("click", "#read-next", function () {
+/* $(document).on("click", "#read-next", function () {
   $("#quiz-section").fadeIn(200);
   $("#read-next").hide();
   loadQuiz();
-});
+}); */
 
 // call checkQuizAnswers on submit button click
-$(document).on("click", "#quiz-submit", function () {
+/* $(document).on("click", "#quiz-submit", function () {
   checkQuizAnswers();
-});
+}); */
 
 // advance to next quiz question
-$(document).on("click", "#quiz-next", function () {
+/* $(document).on("click", "#quiz-next", function () {
   const myApp = getApp();
   const previousPart = myApp.part;
   const previousModule = myApp.module;
@@ -1511,15 +1527,15 @@ $(document).on("click", "#quiz-next", function () {
   }
 
   $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
-});
+}); */
 
 // reset submit button so user can try again and reshuffle books
-$(document).on("click", "#quiz-try-again", function () {
+/* $(document).on("click", "#quiz-try-again", function () {
   const myApp = getApp();
   myApp.hideModal();
   loadQuiz();
   $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
-});
+}); */
 
 $(document).on("click", "#practice-submit", function () {
   checkPracticeAnswers();
