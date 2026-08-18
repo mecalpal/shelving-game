@@ -80,11 +80,22 @@ const appState = (function () {
   // create app instance for the whole application 
   const app = new App($('#app'));
   const letterMatrix = [
-    ['B', 'BD', 'BF', 'BH', 'BR', 'BS'],
+    ['B', 'BC', 'BD', 'BF', 'BH', 'BP', 'BR', 'BS', 'BV'],
     ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
-    ['G', 'GA', 'GE', 'GF', 'GR', 'GV'],
-    ['H', 'HA', 'HB', 'HD', 'HG', 'HQ'],
-    ['L', 'LB', 'LF', 'LH', 'LJ', 'LT']
+    ['D', 'DA', 'DD', 'DH', 'DS'],
+    ['E'],
+    ['F'],
+    ['G', 'GA', 'GE', 'GF', 'GN', 'GR', 'GV'],
+    ['H', 'HA', 'HB', 'HC', 'HD', 'HF', 'HG', 'HM', 'HQ'],
+    ['J', 'JF'],
+    ['K', 'KF'],
+    ['L', 'LB', 'LF', 'LH', 'LJ', 'LT'],
+    ['M', 'ML'],
+    ['N'],
+    ['P', 'PR'],
+    ['Q', 'QA'],
+    ['T', 'TR'],
+    ['U']
   ];
   // content data for the app
   const config = {
