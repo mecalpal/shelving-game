@@ -81,21 +81,12 @@ const appState = (function () {
   const app = new App($('#app'));
   const letterMatrix = [
     ['B', 'BC', 'BD', 'BF', 'BH', 'BP', 'BR', 'BS', 'BV'],
-    ['C', 'CB', 'CE', 'CR', 'CS', 'CT'],
-    ['D', 'DA', 'DD', 'DH', 'DS'],
-    ['E'],
-    ['F'],
-    ['G', 'GA', 'GE', 'GF', 'GN', 'GR', 'GV'],
-    ['H', 'HA', 'HB', 'HC', 'HD', 'HF', 'HG', 'HM', 'HQ'],
-    ['J', 'JF'],
-    ['K', 'KF'],
-    ['L', 'LB', 'LF', 'LH', 'LJ', 'LT'],
-    ['M', 'ML'],
-    ['N'],
-    ['P', 'PR'],
-    ['Q', 'QA'],
-    ['T', 'TR'],
-    ['U']
+    ['C', 'CB', 'CR', 'CS', 'CT', 'D', 'DA', 'DD', 'DH'],
+    ['DS', 'E', 'F', 'G', 'GA', 'GE', 'GF', 'GN', 'GR'],
+    ['GV', 'H', 'HA', 'HB', 'HC', 'HD', 'HF', 'HG', 'HM'],
+    ['HQ', 'J', 'JF', 'K', 'KF', 'L', 'LB', 'LF', 'LH'],
+    ['LJ', 'LT', 'M', 'ML', 'N', 'PH', 'PJ', 'PN', 'PQ'],
+    ['PR', 'PS', 'PT', 'Q', 'QA', 'QB', 'QC', 'QD', 'QH']
   ];
   // content data for the app
   const config = {
