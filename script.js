@@ -525,56 +525,56 @@ const appState = (function () {
             }
           }
         }
-      }
-    },
-
-    practice: {
-      level1: {
-        cartSort: {
-
-        },
-        delivery: {
-
-        }
       },
-      level2: {
-        cartSort: {
 
+      practice: {
+        level1: {
+          cartSort: {
+
+          },
+          delivery: {
+
+          }
         },
-        delivery: {
+        level2: {
+          cartSort: {
 
-        }
-      },
-      level3: {
-        cartSort: {
+          },
+          delivery: {
 
+          }
         },
-        delivery: {
+        level3: {
+          cartSort: {
 
-        }
-      },
-      level4: {
-        cartSort: {
+          },
+          delivery: {
 
+          }
         },
-        delivery: {
+        level4: {
+          cartSort: {
 
-        }
-      },
-      level5: {
-        cartSort: {
+          },
+          delivery: {
 
+          }
         },
-        delivery: {
+        level5: {
+          cartSort: {
 
-        }
-      },
-      level6: {
-        cartSort: {
+          },
+          delivery: {
 
+          }
         },
-        delivery: {
+        level6: {
+          cartSort: {
 
+          },
+          delivery: {
+
+          }
         }
       }
     }
@@ -633,12 +633,12 @@ window.getLetterMatrix = () => appState.letterMatrix;
 /*function loadOnboarding() {
   const myApp = getApp();
   const config = getConfig();
-
+ 
   // display current step text
   const step = config[myApp.pathway].onboarding[myApp.onboardingStep];
   $("#onboarding-text").text(step.text);
   animateTextIn($('#onboarding-text'));
-
+ 
   // increment step for next click
   myApp.onboardingStep++;
 } */
@@ -646,17 +646,17 @@ window.getLetterMatrix = () => appState.letterMatrix;
 /* function loadOrientation() {
   const myApp = getApp();
   const config = getConfig();
-
+ 
   const step = config[myApp.pathway].orientation[myApp.orientationStep];
   $("#orientation-text").text(step.text);
   animateTextIn($('#orientation-text'));
-
+ 
   if (step.image) {
     $('#call-number-diagram').attr('src', step.image).show();
   } else {
     $('#call-number-diagram').hide();
   }
-
+ 
   myApp.orientationStep++;
 } */
 
@@ -664,9 +664,9 @@ window.getLetterMatrix = () => appState.letterMatrix;
   const myApp = getApp();
   const config = getConfig();
   let moduleIteration = 1;
-
+ 
   $(`#overview-cards`).empty();
-
+ 
   for (let module in config[myApp.pathway].training) {
     let partIteration = 1;
     let completed = false;
@@ -684,13 +684,13 @@ window.getLetterMatrix = () => appState.letterMatrix;
         completedPart = true;
       }
       let partCard = $(`
-
+ 
                 <div class ="part-section" completed="${completedPart}">
                 <span class="material-symbols-outlined">${completedPart ? "check_circle" : "radio_button_unchecked"}</span>
                 <p><strong>Part ${partIteration}: </strong>${config[myApp.pathway].training[module][part].read.heading}</p>
-
+ 
                 </div>
-
+ 
             `);
       moduleCard.append(partCard);
       partIteration++;
@@ -703,12 +703,12 @@ window.getLetterMatrix = () => appState.letterMatrix;
 /* function loadRead() {
   const myApp = getApp();
   const config = getConfig();
-
+ 
   const readContent = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`].read;
   if (myApp.part === 2) {
     $("#progress-bar").attr("progress", 4);
   }
-
+ 
   $("#read-eyebrow").text(`Module ${myApp.module}`);
   $("#read-heading").text(readContent.heading);
   $("#read-content").html(readContent.content);
@@ -728,7 +728,7 @@ window.getLetterMatrix = () => appState.letterMatrix;
   viewElement.find('.quiz-body').text(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].text);
   // calls createBooks by passing in viewElement and the answer key content in config for the current view state in app instance
   createBooks(viewElement, config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].answer);
-
+ 
   $("#progress-bar").attr("progress", myApp.part * 3 - 3 + myApp.question);
 } */
 
@@ -832,7 +832,7 @@ function loadPractice() {
   const userAnswers = $('.view-quiz').find($('.book')).toArray();
   // set correct variable to 0
   let correct = 0;
-
+ 
   // loop through the answerKey array
   for (let i = 0; i < answerKey.length; i++) {
     if (answerKey[i] === $(userAnswers[i]).find('p').text()) {
@@ -841,25 +841,25 @@ function loadPractice() {
       break;
     }
   }
-
+ 
   let element;
   /* if correct counter is equal to the answerKey length,
   then all answers are correct and user gets feedback and next button */
-  /* if (correct === answerKey.length) {
-    // grab feedback from config for current view
-    const feedback = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
-    // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
-    myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
-    /* otherwise, if correct counter is not equal to the answerKey length,
-    then user gets a try again button  */
-  /* } else { 
-    // element = $('<p></p><button id="quiz-try-again">Try Again</button>');
-    myApp.displayModal(false, 'Not quite!', 'Double check the order and try again.', { text: 'Try again', id: 'quiz-try-again' });
-  }
-  // clears the submit button
-  // $("#quiz-message").empty();
-  // adds the element (either a next + feedback or try again)
-  // $("#quiz-message").append(element);
+/* if (correct === answerKey.length) {
+  // grab feedback from config for current view
+  const feedback = config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`][`question${myApp.question}`].feedback;
+  // element = $(`<p id="quiz-feedback">${feedback}</p><button id="quiz-next">Next</button>`);
+  myApp.displayModal(true, 'Correct!', feedback, { text: 'Next', id: 'quiz-next' });
+  /* otherwise, if correct counter is not equal to the answerKey length,
+  then user gets a try again button  */
+/* } else { 
+  // element = $('<p></p><button id="quiz-try-again">Try Again</button>');
+  myApp.displayModal(false, 'Not quite!', 'Double check the order and try again.', { text: 'Try again', id: 'quiz-try-again' });
+}
+// clears the submit button
+// $("#quiz-message").empty();
+// adds the element (either a next + feedback or try again)
+// $("#quiz-message").append(element);
 } */
 
 function checkPracticeAnswers() {
@@ -901,43 +901,43 @@ function checkPracticeAnswers() {
   const currentPart = myApp.part;
   // save question variable in app to currentQuestion (starts at 1)
   const currentQuestion = myApp.question;
-
+ 
   /* grabs the question keys and puts them in an array of length 3
    (there are 3 questions in the part).
    check if 3 is greater than the currentQuestion number (starts at 1)
    */
-  /* if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
-    // move to the next question in the same part if 3 is greater than currentQuestion
-    myApp.question++;
-  } else {
-    /* if currentQuestion is 3, grab the part keys in the module
-    and put them in an array of length 2 (there are 2 parts in the module)
-    check if 2 is greater than the currentPart number (starts at 1)*/
-    /* if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`]).length > currentPart) {
-      // if on question 3 of part 1, then set question to 1 and increment part to 2
-      myApp.question = 1;
-      myApp.part++;
-      myApp.setView('view-module-overview');
-      loadModuleOverview();
-    } else {
-      /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
-      and put them in an array of length 3 (there are 3 modules).
-      check if 3 is greater than currentModule number (starts at 1)*/
-      /* if (Object.keys(config[myApp.pathway].training).length > currentModule) {
-        // set question to 1, part to 1, and increment module by 1
-        myApp.question = 1;
-        myApp.part = 1;
-        myApp.module++;
-        myApp.setView('view-module-overview');
-        loadModuleOverview();
-      } else {
-        // if none of these conditions are met (on the final question in the final part of the final module), return false
-        myApp.setView('view-practice-overview');
-        loadPracticeOverview();
-      }
-    }
-    // if one of the conditions are met, return true
-  } return true;
+/* if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`][`part${myApp.part}`]).length - 1 > currentQuestion) {
+  // move to the next question in the same part if 3 is greater than currentQuestion
+  myApp.question++;
+} else {
+  /* if currentQuestion is 3, grab the part keys in the module
+  and put them in an array of length 2 (there are 2 parts in the module)
+  check if 2 is greater than the currentPart number (starts at 1)*/
+/* if (Object.keys(config[myApp.pathway].training[`module${myApp.module}`]).length > currentPart) {
+  // if on question 3 of part 1, then set question to 1 and increment part to 2
+  myApp.question = 1;
+  myApp.part++;
+  myApp.setView('view-module-overview');
+  loadModuleOverview();
+} else {
+  /* if  currentQuestion is 3 and part is 2, grab the module keys in the config
+  and put them in an array of length 3 (there are 3 modules).
+  check if 3 is greater than currentModule number (starts at 1)*/
+/* if (Object.keys(config[myApp.pathway].training).length > currentModule) {
+  // set question to 1, part to 1, and increment module by 1
+  myApp.question = 1;
+  myApp.part = 1;
+  myApp.module++;
+  myApp.setView('view-module-overview');
+  loadModuleOverview();
+} else {
+  // if none of these conditions are met (on the final question in the final part of the final module), return false
+  myApp.setView('view-practice-overview');
+  loadPracticeOverview();
+}
+}
+// if one of the conditions are met, return true
+} return true;
 } */
 
 function incrementPractice() {
@@ -1448,7 +1448,7 @@ $("button").on("click", function () {
   if (target !== undefined) {
     myApp.setView(target);
   }
-  
+
   /* // if current view has nextQuestion attribute equal to true, then call loadQuiz()
   if (target === "view-quiz") {
     loadRead();
@@ -1472,7 +1472,7 @@ $("button").on("click", function () {
 /* $(document).on("click", "#onboarding-next", function () {
   const myApp = getApp();
   const config = getConfig();
-
+ 
   // if there are more steps, load the next one
   if (myApp.onboardingStep < config[myApp.pathway].onboarding.length) {
     loadOnboarding();
@@ -1487,7 +1487,7 @@ $("button").on("click", function () {
 /* $(document).on("click", "#orientation-next", function () {
   const myApp = getApp();
   const config = getConfig();
-
+ 
   if (myApp.orientationStep < config[myApp.pathway].orientation.length) {
     loadOrientation();
   } else {
@@ -1513,10 +1513,10 @@ $("button").on("click", function () {
   const myApp = getApp();
   const previousPart = myApp.part;
   const previousModule = myApp.module;
-
+ 
   myApp.hideModal();
   incrementQuiz(); // this might change myApp.part
-
+ 
   // if part changed after incrementing, load new read content
   if (myApp.part !== previousPart || myApp.module !== previousModule) {
     $("#quiz-section").hide();
@@ -1525,7 +1525,7 @@ $("button").on("click", function () {
   } else {
     loadQuiz();
   }
-
+ 
   $("#quiz-message").empty().append($('<button id="quiz-submit">Submit</button>'));
 }); */
 
