@@ -1020,7 +1020,7 @@ function shuffleLevel() {
       subjectDown = subjectBounds.down;
     }
 
-    for (j = 0; j < cutterBounds.length; j++) {
+    for (let j = 0; j < cutterBounds.length; j++) {
       if (cutterBounds[j].left < cutterLeft) {
         cutterLeft = cutterBounds[j].left;
       }
